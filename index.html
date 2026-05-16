@@ -31,6 +31,7 @@
     --orange: #FF6B35;
     --purple: #C77DFF;
     --gold: #FFD700;
+    --mint: #00E5A0;
 
     --shadow-card: 0 16px 40px rgba(15, 15, 35, 0.06), 0 4px 12px rgba(15, 15, 35, 0.04);
     --shadow-pop: 0 24px 60px rgba(15, 15, 35, 0.10), 0 8px 24px rgba(15, 15, 35, 0.06);
@@ -79,977 +80,513 @@
   ::selection { background: var(--hot); color: #fff; }
 
   /* ---------- Auth ---------- */
-  .auth-wrap {
-    min-height: calc(100vh - 80px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 16px;
-    position: relative;
-  }
-  .auth-card {
-    width: 100%;
-    max-width: 440px;
-    background: var(--surface-strong);
-    backdrop-filter: blur(28px) saturate(1.3);
-    -webkit-backdrop-filter: blur(28px) saturate(1.3);
-    border-radius: 32px;
-    padding: 40px 32px 28px;
-    box-shadow: var(--shadow-pop);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    position: relative;
-    overflow: hidden;
-  }
-  .auth-card::before {
-    content: '';
-    position: absolute;
-    top: -60%;
-    right: -30%;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, var(--hot), transparent 65%);
-    opacity: 0.25;
-    pointer-events: none;
-    filter: blur(20px);
-  }
-  .auth-card::after {
-    content: '';
-    position: absolute;
-    bottom: -50%;
-    left: -30%;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, var(--electric), transparent 65%);
-    opacity: 0.18;
-    pointer-events: none;
-    filter: blur(20px);
-  }
+  .auth-wrap { min-height: calc(100vh - 80px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 16px; position: relative; }
+  .auth-card { width: 100%; max-width: 440px; background: var(--surface-strong); backdrop-filter: blur(28px) saturate(1.3); -webkit-backdrop-filter: blur(28px) saturate(1.3); border-radius: 32px; padding: 40px 32px 28px; box-shadow: var(--shadow-pop); border: 1px solid rgba(255, 255, 255, 0.9); position: relative; overflow: hidden; }
+  .auth-card::before { content: ''; position: absolute; top: -60%; right: -30%; width: 320px; height: 320px; background: radial-gradient(circle, var(--hot), transparent 65%); opacity: 0.25; pointer-events: none; filter: blur(20px); }
+  .auth-card::after { content: ''; position: absolute; bottom: -50%; left: -30%; width: 320px; height: 320px; background: radial-gradient(circle, var(--electric), transparent 65%); opacity: 0.18; pointer-events: none; filter: blur(20px); }
   .auth-card > * { position: relative; z-index: 1; }
-
-  .auth-lang {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    display: flex;
-    background: rgba(10, 10, 20, 0.06);
-    border-radius: 999px;
-    padding: 3px;
-    z-index: 5;
-  }
-  .auth-lang button {
-    border: none;
-    background: transparent;
-    padding: 5px 11px;
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink-soft);
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all 0.2s ease;
-  }
-  .auth-lang button.on {
-    background: var(--ink);
-    color: #fff;
-  }
-
+  .auth-lang { position: absolute; top: 16px; right: 16px; display: flex; background: rgba(10, 10, 20, 0.06); border-radius: 999px; padding: 3px; z-index: 5; }
+  .auth-lang button { border: none; background: transparent; padding: 5px 11px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--ink-soft); cursor: pointer; letter-spacing: 1px; transition: all 0.2s ease; }
+  .auth-lang button.on { background: var(--ink); color: #fff; }
   .auth-head { margin-bottom: 28px; }
-  .auth-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 11px;
-    background: var(--ink);
-    color: #fff;
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-  .auth-tag .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--lime);
-    box-shadow: 0 0 8px var(--lime);
-    animation: dotPulse 1.6s ease-in-out infinite;
-  }
-  @keyframes dotPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50%      { transform: scale(0.7); opacity: 0.6; }
-  }
-  .auth-title {
-    font-family: var(--font-ko);
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--ink);
-    line-height: 1.05;
-    letter-spacing: -1.2px;
-  }
-  .auth-title .accent {
-    background: linear-gradient(135deg, var(--hot), var(--purple));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .auth-sub {
-    font-family: var(--font-en);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    margin-top: 8px;
-    letter-spacing: 0.2px;
-  }
-
-  .auth-tabs {
-    display: flex;
-    background: rgba(10, 10, 20, 0.05);
-    padding: 4px;
-    border-radius: 999px;
-    margin-bottom: 22px;
-  }
-  .auth-tabs button {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 11px;
-    border-radius: 999px;
-    font-family: var(--font-ko);
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .auth-tabs button.on {
-    background: var(--ink);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(10, 10, 20, 0.18);
-  }
-
+  .auth-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; background: var(--ink); color: #fff; border-radius: 999px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 16px; text-transform: uppercase; }
+  .auth-tag .dot, .head-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--lime); animation: dotPulse 1.6s ease-in-out infinite; }
+  @keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.7); opacity: 0.6; } }
+  .auth-title { font-family: var(--font-ko); font-size: 38px; font-weight: 800; color: var(--ink); line-height: 1.05; letter-spacing: -1.2px; }
+  .auth-title .accent { background: linear-gradient(135deg, var(--hot), var(--purple)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .auth-sub { font-family: var(--font-en); font-size: 14px; font-weight: 500; color: var(--ink-soft); margin-top: 8px; letter-spacing: 0.2px; }
+  .auth-tabs { display: flex; background: rgba(10, 10, 20, 0.05); padding: 4px; border-radius: 999px; margin-bottom: 22px; }
+  .auth-tabs button { flex: 1; border: none; background: transparent; padding: 11px; border-radius: 999px; font-family: var(--font-ko); font-weight: 700; font-size: 14px; color: var(--ink-soft); cursor: pointer; transition: all 0.25s ease; }
+  .auth-tabs button.on { background: var(--ink); color: #fff; box-shadow: 0 4px 12px rgba(10, 10, 20, 0.18); }
   .auth-field { margin-bottom: 12px; }
-  .auth-field label {
-    display: block;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 10.5px;
-    color: var(--ink-mute);
-    margin: 0 0 5px 4px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-  }
-  .auth-field .input-wrap {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1.5px solid var(--line);
-    border-radius: 16px;
-    padding: 0 16px;
-    transition: all 0.2s ease;
-  }
-  .auth-field .input-wrap:focus-within {
-    border-color: var(--ink);
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(10, 10, 20, 0.08);
-  }
-  .auth-field.error .input-wrap {
-    border-color: var(--hot);
-    background: #FFF5F8;
-    box-shadow: 0 0 0 4px rgba(255, 27, 107, 0.10);
-  }
-  .auth-field input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 14px 0;
-    font-family: var(--font-ko);
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--ink);
-  }
-  .auth-field input::placeholder {
-    color: var(--ink-mute);
-    font-weight: 400;
-  }
-  .auth-field-key {
-    width: 26px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink-mute);
-    text-align: left;
-  }
-
-  .auth-err {
-    background: linear-gradient(135deg, rgba(255, 27, 107, 0.10), rgba(255, 77, 141, 0.06));
-    border: 1.5px solid var(--hot);
-    color: var(--hot);
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-family: var(--font-ko);
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .auth-err::before {
-    content: '!';
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--hot);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .auth-btn {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 16px;
-    background: linear-gradient(135deg, var(--hot) 0%, var(--purple) 100%);
-    background-size: 200% 200%;
-    color: #fff;
-    font-family: var(--font-ko);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.2px;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(255, 27, 107, 0.30);
-    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
-    margin-top: 8px;
-    position: relative;
-    overflow: hidden;
-  }
-  .auth-btn::after {
-    content: '→';
-    margin-left: 8px;
-    display: inline-block;
-    transition: transform 0.25s ease;
-    font-family: var(--font-en);
-    font-weight: 500;
-  }
-  .auth-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(255, 27, 107, 0.40);
-    background-position: 100% 50%;
-  }
+  .auth-field label { display: block; font-family: var(--font-mono); font-weight: 700; font-size: 10.5px; color: var(--ink-mute); margin: 0 0 5px 4px; letter-spacing: 1.2px; text-transform: uppercase; }
+  .auth-field .input-wrap { display: flex; align-items: center; background: rgba(255, 255, 255, 0.85); border: 1.5px solid var(--line); border-radius: 16px; padding: 0 16px; transition: all 0.2s ease; }
+  .auth-field .input-wrap:focus-within { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(10, 10, 20, 0.08); }
+  .auth-field.error .input-wrap { border-color: var(--hot); background: #FFF5F8; box-shadow: 0 0 0 4px rgba(255, 27, 107, 0.10); }
+  .auth-field input { flex: 1; border: none; outline: none; background: transparent; padding: 14px 0; font-family: var(--font-ko); font-size: 14.5px; font-weight: 500; color: var(--ink); }
+  .auth-field input::placeholder { color: var(--ink-mute); font-weight: 400; }
+  .auth-field-key { width: 26px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--ink-mute); text-align: left; }
+  .auth-err { background: linear-gradient(135deg, rgba(255, 27, 107, 0.10), rgba(255, 77, 141, 0.06)); border: 1.5px solid var(--hot); color: var(--hot); padding: 10px 14px; border-radius: 12px; font-family: var(--font-ko); font-weight: 600; font-size: 13px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .auth-err::before { content: '!'; width: 18px; height: 18px; border-radius: 50%; background: var(--hot); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .auth-btn { width: 100%; padding: 16px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--hot) 0%, var(--purple) 100%); background-size: 200% 200%; color: #fff; font-family: var(--font-ko); font-weight: 700; font-size: 15px; letter-spacing: -0.2px; cursor: pointer; box-shadow: 0 8px 24px rgba(255, 27, 107, 0.30); transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1); margin-top: 8px; position: relative; overflow: hidden; }
+  .auth-btn::after { content: '→'; margin-left: 8px; display: inline-block; transition: transform 0.25s ease; font-family: var(--font-en); font-weight: 500; }
+  .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255, 27, 107, 0.40); background-position: 100% 50%; }
   .auth-btn:hover::after { transform: translateX(4px); }
   .auth-btn:active { transform: translateY(0); }
-  .auth-btn:disabled {
-    background: var(--ink-mute);
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
-  .auth-foot {
-    text-align: center;
-    margin-top: 18px;
-    font-family: var(--font-ko);
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-weight: 500;
-  }
-  .auth-foot a {
-    color: var(--ink);
-    cursor: pointer;
-    font-weight: 700;
-    border-bottom: 2px solid var(--lime);
-    padding-bottom: 1px;
-    transition: all 0.2s ease;
-  }
-  .auth-foot a:hover {
-    color: var(--hot);
-    border-bottom-color: var(--hot);
-  }
-  .auth-note {
-    margin-top: 14px;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--ink-mute);
-    letter-spacing: 0.8px;
-  }
+  .auth-btn:disabled { background: var(--ink-mute); cursor: not-allowed; transform: none; box-shadow: none; }
+  .auth-foot { text-align: center; margin-top: 18px; font-family: var(--font-ko); font-size: 13px; color: var(--ink-soft); font-weight: 500; }
+  .auth-foot a { color: var(--ink); cursor: pointer; font-weight: 700; border-bottom: 2px solid var(--lime); padding-bottom: 1px; transition: all 0.2s ease; }
+  .auth-foot a:hover { color: var(--hot); border-bottom-color: var(--hot); }
+  .auth-note { margin-top: 14px; text-align: center; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-mute); letter-spacing: 0.8px; }
 
   /* ---------- Header ---------- */
-  header.top {
-    margin-bottom: 32px;
-    position: relative;
-    padding-top: 50px;
-  }
+  header.top { margin-bottom: 28px; position: relative; padding-top: 50px; }
+  .lang-toggle { position: absolute; top: 0; right: 0; display: flex; background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 999px; padding: 3px; z-index: 5; }
+  .lang-toggle button { border: none; background: transparent; padding: 5px 12px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--ink-soft); cursor: pointer; transition: all 0.2s ease; letter-spacing: 1px; }
+  .lang-toggle button.on { background: var(--ink); color: #fff; }
+  .user-chip { position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 8px; background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 999px; padding: 4px 6px 4px 14px; font-family: var(--font-ko); font-size: 12px; color: var(--ink); font-weight: 600; max-width: 70%; z-index: 5; }
+  .user-chip .user-avatar { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, var(--hot), var(--purple)); display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-mono); font-size: 9px; font-weight: 700; }
+  .user-chip .user-mail { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; font-family: var(--font-mono); font-size: 11px; }
+  .user-chip .logout-btn { border: none; background: var(--ink); color: #fff; border-radius: 999px; padding: 4px 10px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; cursor: pointer; letter-spacing: 0.8px; text-transform: uppercase; transition: all 0.2s ease; }
+  .user-chip .logout-btn:hover { background: var(--hot); }
+  .head-tag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; background: var(--ink); color: #fff; border-radius: 999px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 14px; text-transform: uppercase; }
+  header.top h1 { font-family: var(--font-ko); font-size: 54px; font-weight: 800; color: var(--ink); line-height: 1.0; letter-spacing: -1.8px; margin-bottom: 6px; }
+  header.top h1 .accent { background: linear-gradient(135deg, var(--hot) 0%, var(--electric) 60%, var(--cyan) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 6s ease-in-out infinite; background-size: 200% 200%; }
+  @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  header.top .sub { font-family: var(--font-en); font-size: 15px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0.2px; }
 
-  .lang-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
+  .glass { background: var(--surface-strong); backdrop-filter: blur(28px) saturate(1.3); -webkit-backdrop-filter: blur(28px) saturate(1.3); border: 1px solid rgba(255, 255, 255, 0.85); border-radius: 28px; box-shadow: var(--shadow-card); }
+
+  /* ---------- View Tabs (My / Open) ---------- */
+  .view-tabs {
     display: flex;
-    background: var(--surface);
+    background: var(--surface-strong);
     backdrop-filter: blur(12px);
     border: 1px solid var(--line);
+    padding: 5px;
     border-radius: 999px;
-    padding: 3px;
-    z-index: 5;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-card);
   }
-  .lang-toggle button {
+  .view-tabs button {
+    flex: 1;
     border: none;
     background: transparent;
-    padding: 5px 12px;
+    padding: 12px 16px;
     border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-ko);
     font-weight: 700;
+    font-size: 14px;
     color: var(--ink-soft);
     cursor: pointer;
-    transition: all 0.2s ease;
-    letter-spacing: 1px;
-  }
-  .lang-toggle button.on {
-    background: var(--ink);
-    color: #fff;
-  }
-
-  .user-chip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 4px 6px 4px 14px;
-    font-family: var(--font-ko);
-    font-size: 12px;
-    color: var(--ink);
-    font-weight: 600;
-    max-width: 70%;
-    z-index: 5;
-  }
-  .user-chip .user-avatar {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--hot), var(--purple));
+    transition: all 0.3s cubic-bezier(.4, 1.4, .6, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 700;
+    gap: 8px;
   }
-  .user-chip .user-mail {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 140px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-  }
-  .user-chip .logout-btn {
-    border: none;
-    background: var(--ink);
-    color: #fff;
-    border-radius: 999px;
-    padding: 4px 10px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
-  }
-  .user-chip .logout-btn:hover {
-    background: var(--hot);
-  }
-
-  .head-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 5px 11px;
-    background: var(--ink);
-    color: #fff;
-    border-radius: 999px;
+  .view-tabs button .cnt {
     font-family: var(--font-mono);
     font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    margin-bottom: 14px;
-    text-transform: uppercase;
+    background: rgba(10, 10, 20, 0.10);
+    color: var(--ink-soft);
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
   }
-  .head-tag .dot {
+  .view-tabs button.on {
+    background: var(--ink);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(10, 10, 20, 0.18);
+  }
+  .view-tabs button.on .cnt {
+    background: rgba(255,255,255,0.20);
+    color: #fff;
+  }
+  .view-tabs button.on .live-dot {
+    background: var(--lime);
+    box-shadow: 0 0 8px var(--lime);
+  }
+  .live-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--lime);
-    box-shadow: 0 0 8px var(--lime);
+    background: var(--ink-mute);
     animation: dotPulse 1.6s ease-in-out infinite;
-  }
-
-  header.top h1 {
-    font-family: var(--font-ko);
-    font-size: 54px;
-    font-weight: 800;
-    color: var(--ink);
-    line-height: 1.0;
-    letter-spacing: -1.8px;
-    margin-bottom: 6px;
-  }
-  header.top h1 .accent {
-    background: linear-gradient(135deg, var(--hot) 0%, var(--electric) 60%, var(--cyan) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradientShift 6s ease-in-out infinite;
-    background-size: 200% 200%;
-  }
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
-  }
-  header.top .sub {
-    font-family: var(--font-en);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    letter-spacing: 0.2px;
-  }
-
-  .glass {
-    background: var(--surface-strong);
-    backdrop-filter: blur(28px) saturate(1.3);
-    -webkit-backdrop-filter: blur(28px) saturate(1.3);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    border-radius: 28px;
-    box-shadow: var(--shadow-card);
   }
 
   /* ---------- Mood picker ---------- */
-  .mood-picker {
-    padding: 24px 22px;
-    margin-bottom: 18px;
-  }
-  .mood-label {
+  .mood-picker { padding: 22px 22px 20px; margin-bottom: 18px; }
+  .mood-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .mood-label .l { font-family: var(--font-ko); font-weight: 700; font-size: 16px; color: var(--ink); letter-spacing: -0.3px; }
+  .mood-label .r { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-mute); letter-spacing: 1.2px; text-transform: uppercase; }
+
+  /* Category chips */
+  .mood-cats {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 6px;
     margin-bottom: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
-  .mood-label .l {
+  .mood-cats::-webkit-scrollbar { display: none; }
+  .mood-cat {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: rgba(255, 255, 255, 0.5);
     font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 16px;
-    color: var(--ink);
-    letter-spacing: -0.3px;
-  }
-  .mood-label .r {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--ink-mute);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-  }
-
-  .mood-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  .mood-btn {
+    font-size: 13px;
+    color: var(--ink-soft);
     cursor: pointer;
-    border: 1.5px solid transparent;
-    background: rgba(255, 255, 255, 0.4);
-    padding: 14px 4px 10px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
+    white-space: nowrap;
+    transition: all 0.25s cubic-bezier(.34, 1.4, .64, 1);
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
-    transition: all 0.35s cubic-bezier(.34, 1.56, .64, 1);
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
+    gap: 6px;
   }
-  .mood-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple)));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 0;
+  .mood-cat .cat-emoji { font-size: 14px; }
+  .mood-cat .cat-count {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    margin-left: 2px;
   }
+  .mood-cat:hover {
+    background: #fff;
+    border-color: var(--ink);
+    color: var(--ink);
+    transform: translateY(-1px);
+  }
+  .mood-cat.on {
+    background: linear-gradient(135deg, var(--cat-color, var(--hot)), var(--cat-end, var(--purple)));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 6px 16px var(--cat-shadow, rgba(255, 27, 107, 0.30));
+    transform: translateY(-1px);
+  }
+  .mood-cat.on .cat-count { color: rgba(255,255,255,0.85); }
+
+  .mood-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mood-btn { cursor: pointer; border: 1.5px solid transparent; background: rgba(255, 255, 255, 0.4); padding: 14px 4px 10px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.35s cubic-bezier(.34, 1.56, .64, 1); font-family: inherit; position: relative; overflow: hidden; }
+  .mood-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple))); opacity: 0; transition: opacity 0.4s ease; z-index: 0; }
   .mood-btn > * { position: relative; z-index: 1; }
-  .mood-btn .emoji {
-    font-size: 32px;
-    line-height: 1;
-    display: inline-block;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.10));
-    animation: moodFloat 3.6s ease-in-out infinite;
-  }
+  .mood-btn .emoji { font-size: 30px; line-height: 1; display: inline-block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.10)); animation: moodFloat 3.6s ease-in-out infinite; }
   .mood-btn:nth-child(4n+1) .emoji { animation-delay: 0s; }
   .mood-btn:nth-child(4n+2) .emoji { animation-delay: -0.9s; }
   .mood-btn:nth-child(4n+3) .emoji { animation-delay: -1.8s; }
   .mood-btn:nth-child(4n+4) .emoji { animation-delay: -2.7s; }
-
-  @keyframes moodFloat {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50%      { transform: translateY(-4px) rotate(2deg); }
-  }
-  .mood-btn .name {
-    font-family: var(--font-ko);
-    font-size: 12px;
-    color: var(--ink-soft);
-    font-weight: 700;
-    margin-top: 2px;
-    letter-spacing: -0.2px;
-    transition: color 0.3s ease;
-  }
-  .mood-btn:hover {
-    transform: translateY(-4px);
-    border-color: var(--mood-color, var(--hot));
-    background: #fff;
-  }
-  .mood-btn:hover .emoji {
-    animation: moodWiggle 0.5s ease-in-out infinite;
-  }
-  @keyframes moodWiggle {
-    0%, 100% { transform: scale(1.2) rotate(-10deg); }
-    50%      { transform: scale(1.2) rotate(10deg); }
-  }
-  .mood-btn.active {
-    transform: translateY(-4px) scale(1.04);
-    border-color: transparent;
-    box-shadow: 0 12px 28px var(--mood-color-shadow, rgba(255, 27, 107, 0.30));
-  }
+  @keyframes moodFloat { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-4px) rotate(2deg); } }
+  .mood-btn .name { font-family: var(--font-ko); font-size: 11.5px; color: var(--ink-soft); font-weight: 700; margin-top: 2px; letter-spacing: -0.2px; transition: color 0.3s ease; }
+  .mood-btn:hover { transform: translateY(-4px); border-color: var(--mood-color, var(--hot)); background: #fff; }
+  .mood-btn:hover .emoji { animation: moodWiggle 0.5s ease-in-out infinite; }
+  @keyframes moodWiggle { 0%, 100% { transform: scale(1.2) rotate(-10deg); } 50% { transform: scale(1.2) rotate(10deg); } }
+  .mood-btn.active { transform: translateY(-4px) scale(1.04); border-color: transparent; box-shadow: 0 12px 28px var(--mood-color-shadow, rgba(255, 27, 107, 0.30)); }
   .mood-btn.active::before { opacity: 1; }
-  .mood-btn.active .name {
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
-  }
-  .mood-btn.active .emoji {
-    animation: moodPop 0.5s cubic-bezier(.34, 1.8, .64, 1);
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.20));
-  }
-  @keyframes moodPop {
-    0%   { transform: scale(0.85) rotate(0); }
-    50%  { transform: scale(1.4) rotate(-8deg); }
-    100% { transform: scale(1.15) rotate(0); }
-  }
+  .mood-btn.active .name { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+  .mood-btn.active .emoji { animation: moodPop 0.5s cubic-bezier(.34, 1.8, .64, 1); filter: drop-shadow(0 3px 6px rgba(0,0,0,0.20)); }
+  @keyframes moodPop { 0% { transform: scale(0.85) rotate(0); } 50% { transform: scale(1.4) rotate(-8deg); } 100% { transform: scale(1.15) rotate(0); } }
 
   /* ---------- Write Card ---------- */
-  .write-card {
-    padding: 28px 26px;
-    margin-bottom: 28px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.6s ease;
-  }
-  .write-card.has-mood {
-    box-shadow: var(--shadow-pop), 0 0 0 1px var(--mood-color, var(--hot));
-  }
-  .write-card.has-mood::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -30%;
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, var(--mood-color, var(--hot)), transparent 65%);
-    opacity: 0.15;
-    pointer-events: none;
-    filter: blur(20px);
-    z-index: 0;
-  }
+  .write-card { padding: 28px 26px; margin-bottom: 28px; position: relative; overflow: hidden; transition: all 0.6s ease; }
+  .write-card.has-mood { box-shadow: var(--shadow-pop), 0 0 0 1px var(--mood-color, var(--hot)); }
+  .write-card.has-mood::before { content: ''; position: absolute; top: -50%; right: -30%; width: 380px; height: 380px; background: radial-gradient(circle, var(--mood-color, var(--hot)), transparent 65%); opacity: 0.15; pointer-events: none; filter: blur(20px); z-index: 0; }
   .write-card > * { position: relative; z-index: 1; }
-
-  .date-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  .date-row .today {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: rgba(10, 10, 20, 0.05);
-    padding: 6px 12px;
-    border-radius: 999px;
-  }
-  .date-row .weather {
-    font-family: var(--font-ko);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    cursor: pointer;
-    background: rgba(10, 10, 20, 0.05);
-    padding: 6px 12px;
-    border-radius: 999px;
-    border: none;
-    outline: none;
-    transition: all 0.2s ease;
-  }
-  .date-row .weather:hover {
-    background: rgba(10, 10, 20, 0.10);
-  }
-
-  .line-input {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--line);
-  }
+  .date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .date-row .today { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--ink); letter-spacing: 1px; text-transform: uppercase; background: rgba(10, 10, 20, 0.05); padding: 6px 12px; border-radius: 999px; }
+  .date-row .weather { font-family: var(--font-ko); font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; background: rgba(10, 10, 20, 0.05); padding: 6px 12px; border-radius: 999px; border: none; outline: none; transition: all 0.2s ease; }
+  .date-row .weather:hover { background: rgba(10, 10, 20, 0.10); }
+  .line-input { display: flex; flex-direction: column; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .line-input:last-of-type { border-bottom: none; }
-  .line-head {
+  .line-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .line-head .num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--mood-color, var(--ink-mute)); letter-spacing: 0.5px; transition: color 0.4s ease; }
+  .line-head .line-emoji { font-size: 18px; line-height: 1; }
+  .line-head .line-name { font-family: var(--font-ko); font-weight: 700; font-size: 14px; color: var(--ink); letter-spacing: -0.2px; }
+  .line-head .line-hint { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; color: var(--ink-mute); letter-spacing: 0.3px; margin-left: 2px; }
+  .line-input input { border: none; outline: none; background: transparent; font-family: var(--font-ko); font-size: 16px; font-weight: 500; color: var(--ink); padding: 6px 0 4px 36px; line-height: 1.5; width: 100%; }
+  .line-input input::placeholder { color: var(--ink-mute); font-weight: 400; }
+
+  /* Share toggle when writing */
+  .share-toggle {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 18px;
+    padding: 12px 14px;
+    background: rgba(10, 10, 20, 0.04);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1.5px solid transparent;
   }
-  .line-head .num {
+  .share-toggle:hover { background: rgba(10, 10, 20, 0.07); }
+  .share-toggle.on {
+    background: linear-gradient(135deg, rgba(212, 255, 61, 0.18), rgba(0, 217, 255, 0.12));
+    border-color: var(--mint);
+  }
+  .share-toggle .box {
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    border: 2px solid var(--ink-mute);
+    background: #fff;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .share-toggle.on .box {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .share-toggle.on .box::after {
+    content: '✓';
+    color: var(--lime);
     font-family: var(--font-mono);
-    font-size: 11px;
     font-weight: 700;
-    color: var(--mood-color, var(--ink-mute));
-    letter-spacing: 0.5px;
-    transition: color 0.4s ease;
-  }
-  .line-head .line-emoji {
-    font-size: 18px;
+    font-size: 13px;
     line-height: 1;
   }
-  .line-head .line-name {
+  .share-toggle .info { flex: 1; }
+  .share-toggle .info-l {
     font-family: var(--font-ko);
+    font-size: 13.5px;
     font-weight: 700;
-    font-size: 14px;
     color: var(--ink);
     letter-spacing: -0.2px;
   }
-  .line-head .line-hint {
+  .share-toggle .info-s {
     font-family: var(--font-mono);
     font-size: 10.5px;
-    font-weight: 600;
     color: var(--ink-mute);
     letter-spacing: 0.3px;
-    margin-left: 2px;
-  }
-  .line-input input {
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: var(--font-ko);
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--ink);
-    padding: 6px 0 4px 36px;
-    line-height: 1.5;
-    width: 100%;
-  }
-  .line-input input::placeholder {
-    color: var(--ink-mute);
-    font-weight: 400;
+    margin-top: 2px;
   }
 
-  .save-btn {
-    margin-top: 24px;
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 16px;
-    background: var(--ink);
-    color: #fff;
-    font-family: var(--font-ko);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.2px;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(10, 10, 20, 0.20);
-    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
-    position: relative;
-    overflow: hidden;
-  }
-  .save-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple)));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 0;
-  }
+  .save-btn { margin-top: 16px; width: 100%; padding: 16px; border: none; border-radius: 16px; background: var(--ink); color: #fff; font-family: var(--font-ko); font-weight: 700; font-size: 15px; letter-spacing: -0.2px; cursor: pointer; box-shadow: 0 8px 20px rgba(10, 10, 20, 0.20); transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1); position: relative; overflow: hidden; }
+  .save-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple))); opacity: 0; transition: opacity 0.4s ease; z-index: 0; }
   .save-btn.ready::before { opacity: 1; }
   .save-btn > * { position: relative; z-index: 1; }
-  .save-btn .arrow {
-    display: inline-block;
-    margin-left: 6px;
-    transition: transform 0.25s ease;
-    font-family: var(--font-en);
-  }
-  .save-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(10, 10, 20, 0.25);
-  }
+  .save-btn .arrow { display: inline-block; margin-left: 6px; transition: transform 0.25s ease; font-family: var(--font-en); }
+  .save-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(10, 10, 20, 0.25); }
   .save-btn:hover .arrow { transform: translateX(5px); }
-  .save-btn:disabled {
-    background: var(--ink-mute);
-    cursor: not-allowed;
-    box-shadow: none;
-  }
+  .save-btn:disabled { background: var(--ink-mute); cursor: not-allowed; box-shadow: none; }
   .save-btn:disabled::before { opacity: 0; }
 
   /* ---------- List ---------- */
-  .list-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 42px 0 18px 4px;
-  }
-  .list-title h2 {
-    font-family: var(--font-ko);
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--ink);
-    letter-spacing: -0.6px;
-  }
-  .list-title .count {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: #fff;
-    background: var(--ink);
-    padding: 4px 10px;
-    border-radius: 999px;
-    letter-spacing: 0.5px;
-  }
+  .list-title { display: flex; align-items: center; gap: 12px; margin: 36px 0 16px 4px; }
+  .list-title h2 { font-family: var(--font-ko); font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.6px; }
+  .list-title .count { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #fff; background: var(--ink); padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px; }
+  .empty { text-align: center; padding: 56px 20px; color: var(--ink-soft); }
+  .empty .empty-mark { font-family: var(--font-en); font-size: 64px; font-weight: 700; background: linear-gradient(135deg, var(--hot), var(--electric), var(--cyan)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 14px; letter-spacing: -3px; animation: gradientShift 5s ease-in-out infinite; }
+  .empty .l1 { font-family: var(--font-ko); font-size: 16px; font-weight: 700; color: var(--ink); }
+  .empty .l2 { font-family: var(--font-ko); font-size: 14px; color: var(--ink-soft); margin-top: 4px; }
 
-  .empty {
-    text-align: center;
-    padding: 56px 20px;
-    color: var(--ink-soft);
-  }
-  .empty .empty-mark {
-    font-family: var(--font-en);
-    font-size: 64px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--hot), var(--electric), var(--cyan));
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1;
-    margin-bottom: 14px;
-    letter-spacing: -3px;
-    animation: gradientShift 5s ease-in-out infinite;
-  }
-  .empty .l1 {
-    font-family: var(--font-ko);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .empty .l2 {
-    font-family: var(--font-ko);
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  .diary-card {
-    padding: 22px 24px;
-    margin-bottom: 14px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(.34, 1.4, .64, 1);
-    background: var(--surface-strong);
-    backdrop-filter: blur(28px) saturate(1.3);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    border-radius: 24px;
-    box-shadow: var(--shadow-card);
-  }
-  .diary-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-pop);
-  }
-  .diary-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple)));
-  }
-  .diary-card::after {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -20%;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, var(--card-mood, var(--hot)), transparent 65%);
-    opacity: 0.10;
-    pointer-events: none;
-    filter: blur(16px);
-    z-index: 0;
-  }
+  .diary-card { padding: 22px 24px; margin-bottom: 14px; position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(.34, 1.4, .64, 1); background: var(--surface-strong); backdrop-filter: blur(28px) saturate(1.3); border: 1px solid rgba(255, 255, 255, 0.85); border-radius: 24px; box-shadow: var(--shadow-card); }
+  .diary-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-pop); }
+  .diary-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple))); }
+  .diary-card::after { content: ''; position: absolute; top: -40%; right: -20%; width: 240px; height: 240px; background: radial-gradient(circle, var(--card-mood, var(--hot)), transparent 65%); opacity: 0.10; pointer-events: none; filter: blur(16px); z-index: 0; }
   .diary-card > * { position: relative; z-index: 1; }
+  .card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .card-mood-bubble { width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(135deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple))); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 6px 18px var(--card-mood-shadow, rgba(255, 27, 107, 0.30)); flex-shrink: 0; }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-date { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 2px; }
+  .card-mood-name { font-family: var(--font-ko); font-size: 13.5px; color: var(--ink-soft); font-weight: 600; letter-spacing: -0.2px; }
+  .card-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .share-pill {
+    border: none;
+    background: linear-gradient(135deg, var(--mint), var(--cyan));
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 217, 255, 0.25);
+  }
+  .share-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 217, 255, 0.40); }
+  .share-pill.shared {
+    background: var(--ink);
+    color: var(--lime);
+    box-shadow: none;
+    cursor: default;
+  }
+  .del-btn { border: none; background: rgba(10, 10, 20, 0.05); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px; color: var(--ink-soft); transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .del-btn:hover { background: var(--hot); color: #fff; transform: rotate(90deg); }
+  .card-line { padding: 10px 0; display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid var(--line); }
+  .card-line:last-child { border-bottom: none; padding-bottom: 0; }
+  .card-line:first-of-type { padding-top: 0; }
+  .card-line-head { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-mute); font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
+  .card-line-emoji { font-size: 14px; line-height: 1; }
+  .card-line-text { padding-left: 24px; color: var(--ink); font-family: var(--font-ko); font-size: 15px; line-height: 1.55; font-weight: 500; }
 
-  .card-head {
+  /* ---------- Open Card extras ---------- */
+  .open-author {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
   }
-  .card-mood-bubble {
-    width: 56px;
-    height: 56px;
-    border-radius: 18px;
+  .open-avatar {
+    width: 40px; height: 40px;
+    border-radius: 14px;
     background: linear-gradient(135deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple)));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
-    box-shadow: 0 6px 18px var(--card-mood-shadow, rgba(255, 27, 107, 0.30));
+    font-size: 20px;
     flex-shrink: 0;
+    box-shadow: 0 4px 12px var(--card-mood-shadow, rgba(255, 27, 107, 0.20));
   }
-  .card-meta { flex: 1; min-width: 0; }
-  .card-date {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-  .card-mood-name {
+  .open-author-meta { flex: 1; min-width: 0; }
+  .open-author-name {
     font-family: var(--font-ko);
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--ink);
     letter-spacing: -0.2px;
   }
-  .del-btn {
-    border: none;
-    background: rgba(10, 10, 20, 0.05);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 14px;
-    color: var(--ink-soft);
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .del-btn:hover {
-    background: var(--hot);
-    color: #fff;
-    transform: rotate(90deg);
-  }
-
-  .card-line {
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    border-bottom: 1px solid var(--line);
-  }
-  .card-line:last-child { border-bottom: none; padding-bottom: 0; }
-  .card-line:first-of-type { padding-top: 0; }
-  .card-line-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .open-author-time {
     font-family: var(--font-mono);
     font-size: 10.5px;
     color: var(--ink-mute);
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 1px;
   }
-  .card-line-emoji { font-size: 14px; line-height: 1; }
-  .card-line-text {
-    padding-left: 24px;
-    color: var(--ink);
+  .open-mood-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple)));
+    color: #fff;
     font-family: var(--font-ko);
-    font-size: 15px;
-    line-height: 1.55;
-    font-weight: 500;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: -0.1px;
+    box-shadow: 0 3px 8px var(--card-mood-shadow, rgba(255, 27, 107, 0.25));
   }
 
-  @keyframes toastIn {
-    0%   { transform: translate(-50%, -20px) scale(0.8); opacity: 0; }
-    60%  { transform: translate(-50%, 4px) scale(1.05); opacity: 1; }
-    100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+  .reactions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
   }
-  .toast {
-    position: fixed;
-    top: 28px;
-    left: 50%;
-    transform: translateX(-50%);
+  .react-btn {
+    border: 1.5px solid var(--line);
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    padding: 6px 11px 6px 9px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
+  }
+  .react-btn:hover { transform: translateY(-2px) scale(1.05); border-color: var(--ink); background: #fff; }
+  .react-btn .e { font-size: 15px; line-height: 1; }
+  .react-btn.mine {
+    background: var(--ink);
+    color: var(--lime);
+    border-color: var(--ink);
+  }
+
+  .comments {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .comment {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+    align-items: flex-start;
+  }
+  .comment .c-avatar {
+    width: 22px; height: 22px;
+    border-radius: 8px;
+    background: rgba(10, 10, 20, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .comment .c-body { flex: 1; min-width: 0; }
+  .comment .c-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.3px;
+    margin-bottom: 1px;
+  }
+  .comment .c-name { color: var(--ink); font-weight: 700; }
+  .comment .c-text {
+    font-family: var(--font-ko);
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  .comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .comment-form input {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-family: var(--font-ko);
+    font-size: 13.5px;
+    color: var(--ink);
+    outline: none;
+    background: rgba(255, 255, 255, 0.85);
+    transition: all 0.2s ease;
+  }
+  .comment-form input:focus { border-color: var(--ink); background: #fff; }
+  .comment-form button {
+    border: none;
     background: var(--ink);
     color: #fff;
-    padding: 12px 22px;
-    border-radius: 999px;
+    border-radius: 12px;
+    padding: 10px 14px;
     font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
     letter-spacing: -0.2px;
-    box-shadow: 0 12px 32px rgba(10, 10, 20, 0.30);
-    z-index: 100;
-    animation: toastIn 0.4s cubic-bezier(.34, 1.6, .64, 1);
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
-  .toast::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--lime);
-    box-shadow: 0 0 10px var(--lime);
+  .comment-form button:hover { background: var(--hot); }
+  .comment-form button:disabled { background: var(--ink-mute); cursor: not-allowed; }
+
+  @keyframes toastIn {
+    0% { transform: translate(-50%, -20px) scale(0.8); opacity: 0; }
+    60% { transform: translate(-50%, 4px) scale(1.05); opacity: 1; }
+    100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
   }
+  .toast { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 22px; border-radius: 999px; font-family: var(--font-ko); font-weight: 700; font-size: 14px; letter-spacing: -0.2px; box-shadow: 0 12px 32px rgba(10, 10, 20, 0.30); z-index: 100; animation: toastIn 0.4s cubic-bezier(.34, 1.6, .64, 1); display: flex; align-items: center; gap: 8px; }
+  .toast::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
 
   @media (max-width: 480px) {
     #root { padding: 28px 14px 70px; }
     header.top h1 { font-size: 40px; letter-spacing: -1.2px; }
     .user-chip .user-mail { max-width: 70px; }
     .user-chip { font-size: 11px; }
+    .mood-cats { gap: 5px; }
+    .mood-cat { padding: 7px 11px; font-size: 12px; }
     .mood-grid { gap: 6px; }
     .mood-btn { padding: 12px 2px 8px; border-radius: 16px; }
-    .mood-btn .emoji { font-size: 28px; }
-    .mood-btn .name { font-size: 11px; }
+    .mood-btn .emoji { font-size: 26px; }
+    .mood-btn .name { font-size: 10.5px; }
     .write-card, .mood-picker { padding: 22px 18px; }
     .line-input input { font-size: 16px; }
     .auth-card { padding: 32px 24px 24px; }
     .auth-title { font-size: 32px; }
+    .open-avatar { width: 36px; height: 36px; font-size: 18px; }
+    .card-mood-bubble { width: 48px; height: 48px; font-size: 26px; }
   }
 </style>
 </head>
@@ -1063,26 +600,71 @@
 <script type="text/babel">
 const { useState, useEffect, useMemo } = React;
 
+// ============ MOOD CATEGORIES ============
+const MOOD_CATS = [
+  { id: 'bright', ko: '밝음',   en: 'Bright',  emoji: '🌞', color: '#FFB627', end: '#FF6B35' },
+  { id: 'calm',   ko: '잔잔',   en: 'Calm',    emoji: '🌊', color: '#00D9FF', end: '#00E5A0' },
+  { id: 'hazy',   ko: '흐림',   en: 'Hazy',    emoji: '☁️', color: '#C77DFF', end: '#B5C0CC' },
+  { id: 'heavy',  ko: '어두움', en: 'Heavy',   emoji: '🌧️', color: '#4A6FFF', end: '#6F6E78' },
+];
+
+// ============ 48 MOODS (4 cats × 12) ============
 const MOODS = [
-  { id: 'happy',    emoji: '😊', ko: '행복',   en: 'Happy',    moodLineKo: '행복한',     moodLineEn: 'a happy',    color: '#FFB627', end: '#FF6B35' },
-  { id: 'love',     emoji: '🥰', ko: '사랑',   en: 'Love',     moodLineKo: '사랑스러운', moodLineEn: 'a lovely',   color: '#FF1B6B', end: '#FF6B9D' },
-  { id: 'thrill',   emoji: '💓', ko: '설렘',   en: 'Fluttery', moodLineKo: '설레는',     moodLineEn: 'a fluttery', color: '#FF6B9D', end: '#C77DFF' },
-  { id: 'excited',  emoji: '🤩', ko: '신남',   en: 'Excited',  moodLineKo: '신나는',     moodLineEn: 'an exciting',color: '#C77DFF', end: '#3D5AFE' },
+  // BRIGHT
+  { id: 'happy',     cat: 'bright', emoji: '😊', ko: '행복',   en: 'Happy',     moodLineKo: '행복한',     moodLineEn: 'a happy',     color: '#FFB627', end: '#FF6B35' },
+  { id: 'love',      cat: 'bright', emoji: '🥰', ko: '사랑',   en: 'Love',      moodLineKo: '사랑스러운', moodLineEn: 'a lovely',    color: '#FF1B6B', end: '#FF6B9D' },
+  { id: 'thrill',    cat: 'bright', emoji: '💓', ko: '설렘',   en: 'Fluttery',  moodLineKo: '설레는',     moodLineEn: 'a fluttery',  color: '#FF6B9D', end: '#C77DFF' },
+  { id: 'excited',   cat: 'bright', emoji: '🤩', ko: '신남',   en: 'Excited',   moodLineKo: '신나는',     moodLineEn: 'an exciting', color: '#C77DFF', end: '#3D5AFE' },
+  { id: 'proud',     cat: 'bright', emoji: '😇', ko: '뿌듯',   en: 'Proud',     moodLineKo: '뿌듯한',     moodLineEn: 'a proud',     color: '#FFD700', end: '#FFB627' },
+  { id: 'sparkle',   cat: 'bright', emoji: '✨', ko: '반짝',   en: 'Sparkly',   moodLineKo: '반짝이는',   moodLineEn: 'a sparkly',   color: '#FFEB3B', end: '#FFD700' },
+  { id: 'cool',      cat: 'bright', emoji: '😎', ko: '당당',   en: 'Confident', moodLineKo: '당당한',     moodLineEn: 'a confident', color: '#FF6B35', end: '#FFB627' },
+  { id: 'grateful',  cat: 'bright', emoji: '🙏', ko: '감사',   en: 'Grateful',  moodLineKo: '감사한',     moodLineEn: 'a grateful',  color: '#FF99CC', end: '#FFCDB2' },
+  { id: 'hopeful',   cat: 'bright', emoji: '🌅', ko: '희망',   en: 'Hopeful',   moodLineKo: '희망찬',     moodLineEn: 'a hopeful',   color: '#FFB627', end: '#FF6B9D' },
+  { id: 'energized', cat: 'bright', emoji: '⚡', ko: '활기',   en: 'Energized', moodLineKo: '활기찬',     moodLineEn: 'an energized',color: '#FFEB3B', end: '#FF6B35' },
+  { id: 'free',      cat: 'bright', emoji: '🦋', ko: '자유',   en: 'Free',      moodLineKo: '자유로운',   moodLineEn: 'a free',      color: '#C77DFF', end: '#FF6B9D' },
+  { id: 'joy',       cat: 'bright', emoji: '🥳', ko: '환희',   en: 'Joyful',    moodLineKo: '환희로운',   moodLineEn: 'a joyful',    color: '#FFD700', end: '#FF1B6B' },
 
-  { id: 'proud',    emoji: '😇', ko: '뿌듯',   en: 'Proud',    moodLineKo: '뿌듯한',     moodLineEn: 'a proud',    color: '#FFD700', end: '#FFB627' },
-  { id: 'sparkle',  emoji: '✨', ko: '반짝',   en: 'Sparkly',  moodLineKo: '반짝이는',   moodLineEn: 'a sparkly',  color: '#FFEB3B', end: '#FFD700' },
-  { id: 'cool',     emoji: '😎', ko: '당당',   en: 'Cool',     moodLineKo: '당당한',     moodLineEn: 'a cool',     color: '#3D5AFE', end: '#00B0FF' },
-  { id: 'calm',     emoji: '😌', ko: '평온',   en: 'Calm',     moodLineKo: '평온한',     moodLineEn: 'a calm',     color: '#00D9FF', end: '#00E5A0' },
+  // CALM
+  { id: 'calm',      cat: 'calm',   emoji: '😌', ko: '평온',   en: 'Calm',      moodLineKo: '평온한',     moodLineEn: 'a calm',      color: '#00D9FF', end: '#00E5A0' },
+  { id: 'peaceful',  cat: 'calm',   emoji: '🕊️', ko: '평화',   en: 'Peaceful',  moodLineKo: '평화로운',   moodLineEn: 'a peaceful',  color: '#00E5A0', end: '#D4FF3D' },
+  { id: 'dreamy',    cat: 'calm',   emoji: '🌙', ko: '몽환',   en: 'Dreamy',    moodLineKo: '몽환적인',   moodLineEn: 'a dreamy',    color: '#C77DFF', end: '#FF6B9D' },
+  { id: 'focused',   cat: 'calm',   emoji: '🎯', ko: '집중',   en: 'Focused',   moodLineKo: '집중하는',   moodLineEn: 'a focused',   color: '#3D5AFE', end: '#00D9FF' },
+  { id: 'satisfied', cat: 'calm',   emoji: '😋', ko: '만족',   en: 'Satisfied', moodLineKo: '만족스런',   moodLineEn: 'a satisfied', color: '#00E5A0', end: '#FFD700' },
+  { id: 'cozy',      cat: 'calm',   emoji: '🫖', ko: '아늑',   en: 'Cozy',      moodLineKo: '아늑한',     moodLineEn: 'a cozy',      color: '#FFA88B', end: '#E8AB8B' },
+  { id: 'refreshed', cat: 'calm',   emoji: '🌿', ko: '상쾌',   en: 'Refreshed', moodLineKo: '상쾌한',     moodLineEn: 'a refreshed', color: '#00E5A0', end: '#D4FF3D' },
+  { id: 'balanced',  cat: 'calm',   emoji: '⚖️', ko: '균형',   en: 'Balanced',  moodLineKo: '균형잡힌',   moodLineEn: 'a balanced',  color: '#B5C0CC', end: '#C7B8E6' },
+  { id: 'content',   cat: 'calm',   emoji: '🙂', ko: '흡족',   en: 'Content',   moodLineKo: '흡족한',     moodLineEn: 'a content',   color: '#B5E5C7', end: '#D4FF3D' },
+  { id: 'soft',      cat: 'calm',   emoji: '🌸', ko: '말랑',   en: 'Soft',      moodLineKo: '말랑한',     moodLineEn: 'a soft',      color: '#FFB6D9', end: '#FFD6E0' },
+  { id: 'nostalgic', cat: 'calm',   emoji: '🍃', ko: '그리움', en: 'Nostalgic', moodLineKo: '그리운',     moodLineEn: 'a nostalgic', color: '#A5C7B8', end: '#C7B8E6' },
+  { id: 'mellow',    cat: 'calm',   emoji: '🍯', ko: '느긋',   en: 'Mellow',    moodLineKo: '느긋한',     moodLineEn: 'a mellow',    color: '#FFB627', end: '#FFD700' },
 
-  { id: 'peaceful', emoji: '🕊️', ko: '평화',   en: 'Peaceful', moodLineKo: '평화로운',   moodLineEn: 'a peaceful', color: '#00E5A0', end: '#D4FF3D' },
-  { id: 'dreamy',   emoji: '🌙', ko: '몽환',   en: 'Dreamy',   moodLineKo: '몽환적인',   moodLineEn: 'a dreamy',   color: '#C77DFF', end: '#FF6B9D' },
-  { id: 'shy',      emoji: '🫣', ko: '부끄',   en: 'Shy',      moodLineKo: '부끄러웠던', moodLineEn: 'a shy',      color: '#FF99CC', end: '#FF6B9D' },
-  { id: 'melty',    emoji: '🫠', ko: '녹는중', en: 'Melty',    moodLineKo: '녹아내린',   moodLineEn: 'a melty',    color: '#FFA800', end: '#FF6B35' },
+  // HAZY
+  { id: 'shy',         cat: 'hazy',  emoji: '🫣', ko: '부끄',   en: 'Shy',          moodLineKo: '부끄러웠던', moodLineEn: 'a shy',         color: '#FF99CC', end: '#FF6B9D' },
+  { id: 'melty',       cat: 'hazy',  emoji: '🫠', ko: '녹는중', en: 'Melty',        moodLineKo: '녹아내린',   moodLineEn: 'a melty',       color: '#FFA800', end: '#FF6B35' },
+  { id: 'blank',       cat: 'hazy',  emoji: '😶‍🌫️',ko: '멍',    en: 'Blank',        moodLineKo: '멍했던',     moodLineEn: 'a blank',       color: '#B5C0CC', end: '#6F6E78' },
+  { id: 'dazed',       cat: 'hazy',  emoji: '😵‍💫',ko: '혼란',  en: 'Dazed',        moodLineKo: '혼란스런',   moodLineEn: 'a dazed',       color: '#C77DFF', end: '#B5C0CC' },
+  { id: 'drained',     cat: 'hazy',  emoji: '😮‍💨',ko: '진빠짐',en: 'Drained',      moodLineKo: '진빠진',     moodLineEn: 'a drained',     color: '#B5C0CC', end: '#8B8B95' },
+  { id: 'sleepy',      cat: 'hazy',  emoji: '😪', ko: '졸림',   en: 'Sleepy',       moodLineKo: '졸린',       moodLineEn: 'a sleepy',      color: '#B5BCE0', end: '#C7B8E6' },
+  { id: 'bored',       cat: 'hazy',  emoji: '😐', ko: '지루',   en: 'Bored',        moodLineKo: '지루한',     moodLineEn: 'a bored',       color: '#B5C0CC', end: '#9B9BA8' },
+  { id: 'awkward',     cat: 'hazy',  emoji: '😬', ko: '어색',   en: 'Awkward',      moodLineKo: '어색한',     moodLineEn: 'an awkward',    color: '#FFB6C9', end: '#C77DFF' },
+  { id: 'lazy',        cat: 'hazy',  emoji: '🦥', ko: '게으름', en: 'Lazy',         moodLineKo: '게으른',     moodLineEn: 'a lazy',        color: '#C7B8E6', end: '#B5C0CC' },
+  { id: 'sluggish',    cat: 'hazy',  emoji: '🐢', ko: '굼뜸',   en: 'Sluggish',     moodLineKo: '굼뜬',       moodLineEn: 'a sluggish',    color: '#9B9BA8', end: '#6F6E78' },
+  { id: 'embarrassed', cat: 'hazy',  emoji: '🫥', ko: '민망',   en: 'Embarrassed',  moodLineKo: '민망한',     moodLineEn: 'an embarrassing',color:'#FF99CC',end: '#B5C0CC' },
+  { id: 'meh',         cat: 'hazy',  emoji: '🤷', ko: '글쎄',   en: 'Meh',          moodLineKo: '글쎄였던',   moodLineEn: 'a meh',         color: '#B5C0CC', end: '#C7B8E6' },
 
-  { id: 'sad',      emoji: '🥺', ko: '울적',   en: 'Blue',     moodLineKo: '울적한',     moodLineEn: 'a blue',     color: '#4A6FFF', end: '#00B0FF' },
-  { id: 'angry',    emoji: '😤', ko: '화남',   en: 'Angry',    moodLineKo: '화났던',     moodLineEn: 'an angry',   color: '#FF1B6B', end: '#FF3D5A' },
-  { id: 'blank',    emoji: '😶‍🌫️', ko: '멍',    en: 'Hazy',     moodLineKo: '멍했던',     moodLineEn: 'a hazy',     color: '#B5C0CC', end: '#6F6E78' },
-  { id: 'tired',    emoji: '😴', ko: '피곤',   en: 'Tired',    moodLineKo: '피곤한',     moodLineEn: 'a tired',    color: '#6F6E78', end: '#4A4A55' },
+  // HEAVY
+  { id: 'sad',         cat: 'heavy', emoji: '🥺', ko: '울적',   en: 'Blue',         moodLineKo: '울적한',     moodLineEn: 'a blue',        color: '#4A6FFF', end: '#00B0FF' },
+  { id: 'angry',       cat: 'heavy', emoji: '😤', ko: '화남',   en: 'Angry',        moodLineKo: '화났던',     moodLineEn: 'an angry',      color: '#FF1B6B', end: '#FF3D5A' },
+  { id: 'tired',       cat: 'heavy', emoji: '😴', ko: '피곤',   en: 'Tired',        moodLineKo: '피곤한',     moodLineEn: 'a tired',       color: '#6F6E78', end: '#4A4A55' },
+  { id: 'lonely',      cat: 'heavy', emoji: '🥀', ko: '외로움', en: 'Lonely',       moodLineKo: '외로운',     moodLineEn: 'a lonely',      color: '#6F6E78', end: '#4A6FFF' },
+  { id: 'anxious',     cat: 'heavy', emoji: '😰', ko: '불안',   en: 'Anxious',      moodLineKo: '불안한',     moodLineEn: 'an anxious',    color: '#4A6FFF', end: '#6F6E78' },
+  { id: 'frustrated',  cat: 'heavy', emoji: '😖', ko: '답답',   en: 'Frustrated',   moodLineKo: '답답한',     moodLineEn: 'a frustrated',  color: '#FF3D5A', end: '#FF6B35' },
+  { id: 'hurt',        cat: 'heavy', emoji: '💔', ko: '상처',   en: 'Hurt',         moodLineKo: '상처받은',   moodLineEn: 'a hurt',        color: '#FF1B6B', end: '#6F6E78' },
+  { id: 'jealous',     cat: 'heavy', emoji: '😒', ko: '시샘',   en: 'Jealous',      moodLineKo: '시샘난',     moodLineEn: 'a jealous',     color: '#00B0FF', end: '#6F6E78' },
+  { id: 'scared',      cat: 'heavy', emoji: '😨', ko: '겁남',   en: 'Scared',       moodLineKo: '겁났던',     moodLineEn: 'a scared',      color: '#4A4A55', end: '#6F6E78' },
+  { id: 'regretful',   cat: 'heavy', emoji: '😔', ko: '후회',   en: 'Regretful',    moodLineKo: '후회되는',   moodLineEn: 'a regretful',   color: '#6F6E78', end: '#4A6FFF' },
+  { id: 'overwhelmed', cat: 'heavy', emoji: '🌪️', ko: '압도',   en: 'Overwhelmed',  moodLineKo: '압도된',     moodLineEn: 'an overwhelmed',color:'#4A6FFF',end: '#FF1B6B' },
+  { id: 'lost',        cat: 'heavy', emoji: '🌫️', ko: '길잃음', en: 'Lost',         moodLineKo: '길잃은',     moodLineEn: 'a lost',        color: '#B5C0CC', end: '#4A4A55' },
 ];
 
 function hexToRgba(hex, a) {
@@ -1102,114 +684,90 @@ const WEATHERS = [
   { ko: '노을 🌇', en: 'Sunset 🌇' },
 ];
 
+const REACTIONS = ['💗', '👏', '🌟', '🌈', '🤝'];
+
 const I18N = {
   ko: {
     htmlLang: 'ko',
     tag: 'today · log',
-    titlePre: '오늘의',
-    titleAccent: '세 줄',
+    titlePre: '오늘의', titleAccent: '세 줄',
     sub: 'A piece of your mind, just three lines',
-    moodLabel: '지금 내 마음',
-    moodLabelSub: 'PICK YOUR MOOD',
+    moodLabel: '지금 내 마음', moodLabelSub: 'PICK YOUR MOOD',
     lines: [
       { emoji: '🌟', label: '칭찬하기', placeholder: '오늘 잘한 점, 스스로 칭찬할 일은?' },
       { emoji: '🔁', label: '시행착오', placeholder: '오늘 시도해본 것, 잘 안 됐던 건?' },
       { emoji: '💡', label: '인사이트', hint: '사장일기 · 직장인 한 줄 등', placeholder: '오늘의 깨달음 — 사장님 한 줄, 직장인 한 줄.' },
     ],
-    saveReady: '오늘의 마음 저장하기',
-    saveNoLine: '한 줄이라도 적어주세요',
-    saveNoMood: '먼저 마음을 골라주세요',
-    toast: '저장됐어요',
-    listTitle: '지나간 마음들',
-    badgeUnit: '',
-    emptyMark: '∅',
-    emptyLine1: '아직 적어둔 마음이 없어요',
-    emptyLine2: '오늘의 세 줄, 가볍게 채워볼까요',
-    confirmDel: '이 일기를 지울까요?',
-    delTitle: '삭제',
+    shareLabel: '오픈 공간에 공유',
+    shareSub: 'SHARE TO OPEN · 익명으로 공개돼요',
+    sharedBadge: 'SHARED',
+    shareBtn: 'SHARE',
+    saveReady: '오늘의 마음 저장하기', saveNoLine: '한 줄이라도 적어주세요', saveNoMood: '먼저 마음을 골라주세요',
+    toast: '저장됐어요', sharedToast: '오픈 공간에 공유됐어요',
+    listTitle: '지나간 마음들', emptyMark: '∅',
+    emptyLine1: '아직 적어둔 마음이 없어요', emptyLine2: '오늘의 세 줄, 가볍게 채워볼까요',
+    openTitle: '오픈 공간', openSub: '익명으로 모이는 마음들',
+    emptyOpen1: '아직 공유된 마음이 없어요', emptyOpen2: '오늘 일기를 처음 공유해보세요',
+    confirmDel: '이 일기를 지울까요?', delTitle: '삭제',
     moodDaySuffix: '하루',
-    welcomePre: '환영해요',
-    welcomeAccent: '.',
-    welcomeSub: 'A small space for your mind',
-    tabLogin: '로그인',
-    tabSignup: '회원가입',
-    fieldEmail: 'EMAIL',
-    fieldEmailPh: 'you@example.com',
-    fieldPw: 'PASSWORD',
-    fieldPwPh: '6자 이상',
-    fieldContact: 'CONTACT',
-    fieldContactPh: '010-0000-0000',
-    btnLogin: '로그인',
-    btnSignup: '계정 만들기',
-    footLoginAsk: '아직 계정이 없으신가요?',
-    footLoginGo: '회원가입',
-    footSignupAsk: '이미 계정이 있으신가요?',
-    footSignupGo: '로그인',
+    viewMine: '내 일기', viewOpen: '오픈 공간',
+    commentPh: '응원의 한 줄...', commentSend: '보내기',
+    welcomePre: '환영해요', welcomeAccent: '.', welcomeSub: 'A small space for your mind',
+    tabLogin: '로그인', tabSignup: '회원가입',
+    fieldEmail: 'EMAIL', fieldEmailPh: 'you@example.com',
+    fieldPw: 'PASSWORD', fieldPwPh: '6자 이상',
+    fieldContact: 'CONTACT', fieldContactPh: '010-0000-0000',
+    btnLogin: '로그인', btnSignup: '계정 만들기',
+    footLoginAsk: '아직 계정이 없으신가요?', footLoginGo: '회원가입',
+    footSignupAsk: '이미 계정이 있으신가요?', footSignupGo: '로그인',
     note: 'STORED LOCALLY · 이 기기에만 저장돼요',
-    logout: 'OUT',
-    confirmLogout: '로그아웃 할까요?',
-    errInvalidEmail: '이메일 형식을 확인해주세요',
-    errShortPw: '비밀번호는 6자 이상이어야 해요',
-    errContact: '연락처를 입력해주세요',
-    errNoUser: '가입되지 않은 이메일이에요',
-    errBadPw: '비밀번호가 맞지 않아요',
-    errDup: '이미 가입된 이메일이에요',
-    okSignup: '가입 완료',
-    okLogin: '돌아오신 걸 환영해요',
+    logout: 'OUT', confirmLogout: '로그아웃 할까요?',
+    errInvalidEmail: '이메일 형식을 확인해주세요', errShortPw: '비밀번호는 6자 이상이어야 해요',
+    errContact: '연락처를 입력해주세요', errNoUser: '가입되지 않은 이메일이에요',
+    errBadPw: '비밀번호가 맞지 않아요', errDup: '이미 가입된 이메일이에요',
+    okSignup: '가입 완료', okLogin: '돌아오신 걸 환영해요',
+    timeNow: '방금', timeMin: '분 전', timeHr: '시간 전', timeDay: '일 전',
   },
   en: {
     htmlLang: 'en',
     tag: 'today · log',
-    titlePre: 'Three lines',
-    titleAccent: 'for today',
+    titlePre: 'Three lines', titleAccent: 'for today',
     sub: 'A piece of your mind, just three lines',
-    moodLabel: 'How do you feel',
-    moodLabelSub: 'PICK YOUR MOOD',
+    moodLabel: 'How do you feel', moodLabelSub: 'PICK YOUR MOOD',
     lines: [
       { emoji: '🌟', label: 'Praise',        placeholder: 'What did I do well today?' },
       { emoji: '🔁', label: 'Trial & Error', placeholder: "What did I try that didn't quite work?" },
       { emoji: '💡', label: 'Insight',       hint: 'CEO log · worker one-liner · etc.', placeholder: 'One takeaway — your daily one-liner.' },
     ],
-    saveReady: "Save today's feelings",
-    saveNoLine: 'Write at least one line',
-    saveNoMood: 'Pick a mood first',
-    toast: 'Saved',
-    listTitle: 'Past Moments',
-    badgeUnit: '',
-    emptyMark: '∅',
-    emptyLine1: 'No entries yet',
-    emptyLine2: "Let's fill in today's three lines",
-    confirmDel: 'Delete this entry?',
-    delTitle: 'Delete',
+    shareLabel: 'Share to Open Space',
+    shareSub: 'SHARE TO OPEN · anonymous',
+    sharedBadge: 'SHARED',
+    shareBtn: 'SHARE',
+    saveReady: "Save today's feelings", saveNoLine: 'Write at least one line', saveNoMood: 'Pick a mood first',
+    toast: 'Saved', sharedToast: 'Shared to open space',
+    listTitle: 'Past Moments', emptyMark: '∅',
+    emptyLine1: 'No entries yet', emptyLine2: "Let's fill in today's three lines",
+    openTitle: 'Open Space', openSub: 'Anonymous minds, gathered',
+    emptyOpen1: 'No shared minds yet', emptyOpen2: 'Be the first to share today',
+    confirmDel: 'Delete this entry?', delTitle: 'Delete',
     moodDaySuffix: 'day',
-    welcomePre: 'Welcome',
-    welcomeAccent: '.',
-    welcomeSub: 'A small space for your mind',
-    tabLogin: 'Sign in',
-    tabSignup: 'Sign up',
-    fieldEmail: 'EMAIL',
-    fieldEmailPh: 'you@example.com',
-    fieldPw: 'PASSWORD',
-    fieldPwPh: '6+ characters',
-    fieldContact: 'CONTACT',
-    fieldContactPh: '+1 555 000 0000',
-    btnLogin: 'Sign in',
-    btnSignup: 'Create account',
-    footLoginAsk: "Don't have an account?",
-    footLoginGo: 'Sign up',
-    footSignupAsk: 'Already have an account?',
-    footSignupGo: 'Sign in',
+    viewMine: 'My Lines', viewOpen: 'Open Space',
+    commentPh: 'Cheer on with one line...', commentSend: 'Send',
+    welcomePre: 'Welcome', welcomeAccent: '.', welcomeSub: 'A small space for your mind',
+    tabLogin: 'Sign in', tabSignup: 'Sign up',
+    fieldEmail: 'EMAIL', fieldEmailPh: 'you@example.com',
+    fieldPw: 'PASSWORD', fieldPwPh: '6+ characters',
+    fieldContact: 'CONTACT', fieldContactPh: '+1 555 000 0000',
+    btnLogin: 'Sign in', btnSignup: 'Create account',
+    footLoginAsk: "Don't have an account?", footLoginGo: 'Sign up',
+    footSignupAsk: 'Already have an account?', footSignupGo: 'Sign in',
     note: 'STORED LOCALLY · this device only',
-    logout: 'OUT',
-    confirmLogout: 'Sign out?',
-    errInvalidEmail: 'Check the email format',
-    errShortPw: 'Password must be 6+ characters',
-    errContact: 'Please enter a contact',
-    errNoUser: 'No account found for this email',
-    errBadPw: "Password doesn't match",
-    errDup: 'This email is already registered',
-    okSignup: 'Welcome aboard',
-    okLogin: 'Welcome back',
+    logout: 'OUT', confirmLogout: 'Sign out?',
+    errInvalidEmail: 'Check the email format', errShortPw: 'Password must be 6+ characters',
+    errContact: 'Please enter a contact', errNoUser: 'No account found for this email',
+    errBadPw: "Password doesn't match", errDup: 'This email is already registered',
+    okSignup: 'Welcome aboard', okLogin: 'Welcome back',
+    timeNow: 'now', timeMin: 'm ago', timeHr: 'h ago', timeDay: 'd ago',
   },
 };
 
@@ -1217,6 +775,8 @@ const STORAGE_KEY_LEGACY = 'three_line_diary_v1';
 const USERS_KEY = 'three_line_diary_users';
 const SESSION_KEY = 'three_line_diary_session';
 const LANG_KEY = 'three_line_diary_lang';
+const OPEN_KEY = 'three_line_diary_open_v1';
+const OPEN_SEEDED_KEY = 'three_line_diary_open_seeded_v1';
 const diaryKey = (email) => `three_line_diary_v1_${email}`;
 
 async function sha256(str) {
@@ -1224,12 +784,30 @@ async function sha256(str) {
   const hashBuf = await crypto.subtle.digest('SHA-256', buf);
   return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
-
 function loadUsers() {
   try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); } catch (e) { return []; }
 }
-function saveUsers(arr) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(arr));
+function saveUsers(arr) { localStorage.setItem(USERS_KEY, JSON.stringify(arr)); }
+
+function loadOpen() {
+  try { return JSON.parse(localStorage.getItem(OPEN_KEY) || '[]'); } catch (e) { return []; }
+}
+function saveOpen(arr) { localStorage.setItem(OPEN_KEY, JSON.stringify(arr)); }
+
+function anonName(email, lang) {
+  const seed = Array.from(email).reduce((a, c) => a + c.charCodeAt(0), 0);
+  const ko = ['카페공방','회사원','북커버','오프라이트','새벽러','퇴근중','오후세시','커피러버','책상앞','달리는중','루틴러','새출발','일일이슈','시드유','홀로코딩'];
+  const en = ['Cafer','OfficeOne','BookCover','OffLight','DawnRunner','PostShift','3PM','CoffeeLover','AtDesk','OnTheRun','Routinist','FreshStart','DailyIssue','SeedYou','SoloCoder'];
+  const arr = lang === 'en' ? en : ko;
+  const idx = seed % arr.length;
+  const num = (seed * 7) % 9999;
+  return `${arr[idx]}${String(num).padStart(4, '0')}`;
+}
+
+function avatarEmoji(email) {
+  const seed = Array.from(email).reduce((a, c) => a + c.charCodeAt(0), 0);
+  const arr = ['🐱','🐶','🦊','🐰','🐻','🦄','🐢','🦋','🐳','🦉','🦔','🦦','🐧','🐯','🦁','🐼','🐨'];
+  return arr[seed % arr.length];
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1244,7 +822,6 @@ function todayStr(lang) {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${days[d.getDay()]}`;
 }
-
 function shortDate(iso, lang) {
   const d = new Date(iso);
   const hh = String(d.getHours()).padStart(2,'0');
@@ -1255,6 +832,82 @@ function shortDate(iso, lang) {
   }
   const days = ['일','월','화','수','목','금','토'];
   return `${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} · ${days[d.getDay()]} · ${hh}:${mm}`;
+}
+function relativeTime(iso, t) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const min = Math.floor(diff / 60000);
+  if (min < 1) return t.timeNow;
+  if (min < 60) return `${min}${t.timeMin}`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr}${t.timeHr}`;
+  const day = Math.floor(hr / 24);
+  return `${day}${t.timeDay}`;
+}
+
+function seedOpenIfNeeded() {
+  if (localStorage.getItem(OPEN_SEEDED_KEY)) return;
+  const now = Date.now();
+  const sample = [
+    {
+      id: now - 8 * 60000,
+      authorEmail: 'seed1@example',
+      mood: 'tired', weatherIdx: 1,
+      lines: ['새벽 5시 출근, 그래도 가게 문 잘 열었다.', '재료 발주 깜빡해서 점심 메뉴 두 개 빠짐.', '직원이 알아서 메모해줘서 다음부턴 안 잊을듯.'],
+      createdAt: new Date(now - 8 * 60000).toISOString(),
+      reactions: { '💗': 4, '👏': 2, '🤝': 1 },
+      comments: [{ id: now - 7*60000, author: '오늘도화이팅', text: '사장님 진짜 부지런하시네요 ㅠㅠ 응원합니다', createdAt: new Date(now - 7*60000).toISOString() }],
+    },
+    {
+      id: now - 26 * 60000,
+      authorEmail: 'seed2@example',
+      mood: 'proud', weatherIdx: 0,
+      lines: ['처음 맡은 PT 미팅, 끝까지 안 떨었다.', '슬라이드에 오타 하나 있었지만 그냥 넘김 ㅋㅋ', '준비한 만큼 나오는 건 진짜다.'],
+      createdAt: new Date(now - 26 * 60000).toISOString(),
+      reactions: { '👏': 7, '🌟': 5, '💗': 2 },
+      comments: [],
+    },
+    {
+      id: now - 55 * 60000,
+      authorEmail: 'seed3@example',
+      mood: 'anxious', weatherIdx: 2,
+      lines: ['', '내일 면접 생각에 잠이 안 와.', '준비한 답변 한 번만 더 보고 자자.'],
+      createdAt: new Date(now - 55 * 60000).toISOString(),
+      reactions: { '🤝': 6, '💗': 3 },
+      comments: [
+        { id: now - 50*60000, author: '겪어본사람', text: '잘 될거에요. 손에 든 거 다 보여주고만 와요!', createdAt: new Date(now - 50*60000).toISOString() },
+        { id: now - 40*60000, author: '같은처지', text: '저도 내일 면접;; 같이 화이팅', createdAt: new Date(now - 40*60000).toISOString() },
+      ],
+    },
+    {
+      id: now - 120 * 60000,
+      authorEmail: 'seed4@example',
+      mood: 'love', weatherIdx: 5,
+      lines: ['오랜만에 엄마랑 점심.', '음식 다 못 먹어서 죄송한 마음만 들었다.', '다음 주엔 좋아하시는 데로 모시고 가야지.'],
+      createdAt: new Date(now - 120 * 60000).toISOString(),
+      reactions: { '💗': 12, '🌈': 3 },
+      comments: [],
+    },
+    {
+      id: now - 5 * 3600 * 1000,
+      authorEmail: 'seed5@example',
+      mood: 'frustrated', weatherIdx: 4,
+      lines: ['세 번째 제출, 또 거절.', '내가 뭘 빠뜨린 건지 모르겠음.', '내일 다시 처음부터 — 모르겠으면 물어보자.'],
+      createdAt: new Date(now - 5 * 3600 * 1000).toISOString(),
+      reactions: { '🤝': 9, '💗': 4 },
+      comments: [{ id: now - 4*3600*1000, author: '비슷한경험', text: '저도 그때 동료한테 물어보고 한 방에 풀린 적 있어요. 부끄러워하지 말고 ㅎㅎ', createdAt: new Date(now - 4*3600*1000).toISOString() }],
+    },
+    {
+      id: now - 10 * 3600 * 1000,
+      authorEmail: 'seed6@example',
+      mood: 'sparkle', weatherIdx: 0,
+      lines: ['아침에 책 30분 읽고 출근.', '꾸준한게 진짜 어렵단 걸 또 느낌.', '작은 습관 하나가 하루를 다르게 만든다.'],
+      createdAt: new Date(now - 10 * 3600 * 1000).toISOString(),
+      reactions: { '🌟': 8, '👏': 3 },
+      comments: [],
+    },
+  ];
+  saveOpen(sample);
+  localStorage.setItem(OPEN_SEEDED_KEY, '1');
 }
 
 function LangToggle({ lang, setLang, variant }) {
@@ -1276,10 +929,7 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
   const [errField, setErrField] = useState('');
   const [busy, setBusy] = useState(false);
 
-  function fail(msg, field) {
-    setErr(msg);
-    setErrField(field || '');
-  }
+  function fail(msg, field) { setErr(msg); setErrField(field || ''); }
 
   async function submit(e) {
     e.preventDefault();
@@ -1292,7 +942,6 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
     try {
       const users = loadUsers();
       const hash = await sha256(pw);
-
       if (mode === 'signup') {
         if (!contact.trim()) { setBusy(false); return fail(t.errContact, 'contact'); }
         if (users.some(u => u.email === mail)) { setBusy(false); return fail(t.errDup, 'email'); }
@@ -1321,72 +970,42 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
     <div className="auth-wrap">
       <div className="auth-card">
         <LangToggle lang={lang} setLang={setLang} variant="auth" />
-
         <div className="auth-head">
           <div className="auth-tag"><span className="dot"></span>{t.tag}</div>
           <div className="auth-title">{t.welcomePre}<span className="accent">{t.welcomeAccent}</span></div>
           <div className="auth-sub">{t.welcomeSub}</div>
         </div>
-
         <div className="auth-tabs">
           <button className={mode === 'login' ? 'on' : ''} onClick={() => { setMode('login'); setErr(''); }}>{t.tabLogin}</button>
           <button className={mode === 'signup' ? 'on' : ''} onClick={() => { setMode('signup'); setErr(''); }}>{t.tabSignup}</button>
         </div>
-
         <form onSubmit={submit} autoComplete="on">
           <div className={`auth-field ${errField === 'email' ? 'error' : ''}`}>
             <label>{t.fieldEmail}</label>
             <div className="input-wrap">
               <span className="auth-field-key">@</span>
-              <input
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                placeholder={t.fieldEmailPh}
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
+              <input type="email" inputMode="email" autoComplete="email" placeholder={t.fieldEmailPh} value={email} onChange={e => setEmail(e.target.value)} />
             </div>
           </div>
-
           <div className={`auth-field ${errField === 'pw' ? 'error' : ''}`}>
             <label>{t.fieldPw}</label>
             <div className="input-wrap">
               <span className="auth-field-key">··</span>
-              <input
-                type="password"
-                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                placeholder={t.fieldPwPh}
-                value={pw}
-                onChange={e => setPw(e.target.value)}
-              />
+              <input type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} placeholder={t.fieldPwPh} value={pw} onChange={e => setPw(e.target.value)} />
             </div>
           </div>
-
           {mode === 'signup' && (
             <div className={`auth-field ${errField === 'contact' ? 'error' : ''}`}>
               <label>{t.fieldContact}</label>
               <div className="input-wrap">
                 <span className="auth-field-key">#</span>
-                <input
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  placeholder={t.fieldContactPh}
-                  value={contact}
-                  onChange={e => setContact(e.target.value)}
-                />
+                <input type="tel" inputMode="tel" autoComplete="tel" placeholder={t.fieldContactPh} value={contact} onChange={e => setContact(e.target.value)} />
               </div>
             </div>
           )}
-
           {err && <div className="auth-err">{err}</div>}
-
-          <button className="auth-btn" type="submit" disabled={busy}>
-            {mode === 'login' ? t.btnLogin : t.btnSignup}
-          </button>
+          <button className="auth-btn" type="submit" disabled={busy}>{mode === 'login' ? t.btnLogin : t.btnSignup}</button>
         </form>
-
         <div className="auth-foot">
           {mode === 'login'
             ? <>{t.footLoginAsk} <a onClick={() => { setMode('signup'); setErr(''); }}>{t.footLoginGo}</a></>
@@ -1399,34 +1018,131 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
   );
 }
 
+function OpenCard({ entry, lang, t, onReact, onComment, currentEmail }) {
+  const m = MOODS.find(x => x.id === entry.mood) || MOODS[0];
+  const w = WEATHERS[entry.weatherIdx] || WEATHERS[0];
+  const [commentText, setCommentText] = useState('');
+  const author = anonName(entry.authorEmail, lang);
+  const avatar = avatarEmoji(entry.authorEmail);
+  const moodLabel = lang === 'en' ? m.en : m.ko;
+
+  function submitComment(e) {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+    onComment(entry.id, commentText.trim());
+    setCommentText('');
+  }
+
+  return (
+    <article
+      className="diary-card"
+      style={{
+        '--card-mood': m.color,
+        '--card-mood-end': m.end,
+        '--card-mood-shadow': hexToRgba(m.color, 0.35),
+      }}
+    >
+      <div className="open-author">
+        <div className="open-avatar">{avatar}</div>
+        <div className="open-author-meta">
+          <div className="open-author-name">{author}</div>
+          <div className="open-author-time">{relativeTime(entry.createdAt, t)} · {lang === 'en' ? w.en : w.ko}</div>
+        </div>
+        <span className="open-mood-pill">{m.emoji} {moodLabel}</span>
+      </div>
+
+      {entry.lines.map((line, i) => line && (
+        <div key={i} className="card-line">
+          <div className="card-line-head">
+            <span className="card-line-emoji">{t.lines[i].emoji}</span>
+            <span>{t.lines[i].label}</span>
+          </div>
+          <div className="card-line-text">{line}</div>
+        </div>
+      ))}
+
+      <div className="reactions">
+        {REACTIONS.map(em => {
+          const cnt = (entry.reactions && entry.reactions[em]) || 0;
+          const mine = entry.myReactions && entry.myReactions.includes(em);
+          return (
+            <button
+              key={em}
+              className={`react-btn ${mine ? 'mine' : ''}`}
+              onClick={() => onReact(entry.id, em)}
+              type="button"
+            >
+              <span className="e">{em}</span>
+              <span>{cnt}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="comments">
+        {(entry.comments || []).map(c => (
+          <div key={c.id} className="comment">
+            <div className="c-avatar">{(c.author[0] || '?').toUpperCase()}</div>
+            <div className="c-body">
+              <div className="c-meta"><span className="c-name">{c.author}</span> · {relativeTime(c.createdAt, t)}</div>
+              <div className="c-text">{c.text}</div>
+            </div>
+          </div>
+        ))}
+        <form className="comment-form" onSubmit={submitComment}>
+          <input
+            type="text"
+            maxLength={140}
+            placeholder={t.commentPh}
+            value={commentText}
+            onChange={e => setCommentText(e.target.value)}
+          />
+          <button type="submit" disabled={!commentText.trim()}>{t.commentSend}</button>
+        </form>
+      </div>
+    </article>
+  );
+}
+
 function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   const t = I18N[lang];
 
+  const [view, setView] = useState('mine'); // 'mine' | 'open'
+  const [activeCat, setActiveCat] = useState('bright');
   const [mood, setMood] = useState(null);
   const [lines, setLines] = useState(['', '', '']);
   const [weatherIdx, setWeatherIdx] = useState(0);
+  const [shareOnSave, setShareOnSave] = useState(false);
+
   const [diaries, setDiaries] = useState([]);
+  const [openEntries, setOpenEntries] = useState([]);
 
   useEffect(() => {
+    seedOpenIfNeeded();
     try {
       const userKey = diaryKey(user.email);
       const raw = localStorage.getItem(userKey);
       if (raw) {
         setDiaries(JSON.parse(raw));
-        return;
+      } else {
+        const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
+        if (legacy) {
+          localStorage.setItem(userKey, legacy);
+          localStorage.removeItem(STORAGE_KEY_LEGACY);
+          setDiaries(JSON.parse(legacy));
+        }
       }
-      const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
-      if (legacy) {
-        localStorage.setItem(userKey, legacy);
-        localStorage.removeItem(STORAGE_KEY_LEGACY);
-        setDiaries(JSON.parse(legacy));
-      }
+      setOpenEntries(loadOpen());
     } catch (e) {}
   }, [user.email]);
 
   useEffect(() => {
     localStorage.setItem(diaryKey(user.email), JSON.stringify(diaries));
   }, [diaries, user.email]);
+
+  useEffect(() => {
+    saveOpen(openEntries);
+  }, [openEntries]);
 
   const moodObj = MOODS.find(m => m.id === mood);
   const cssVars = useMemo(() => moodObj ? {
@@ -1438,22 +1154,85 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
 
   function handleSave() {
     if (!canSave) return;
+    const id = Date.now();
     const entry = {
-      id: Date.now(),
-      mood,
-      weatherIdx,
+      id, mood, weatherIdx,
       lines: lines.map(l => l.trim()),
       createdAt: new Date().toISOString(),
+      shared: shareOnSave,
     };
     setDiaries([entry, ...diaries]);
+
+    if (shareOnSave) {
+      const openEntry = {
+        id,
+        authorEmail: user.email,
+        mood, weatherIdx,
+        lines: entry.lines,
+        createdAt: entry.createdAt,
+        reactions: {}, myReactions: [], comments: [],
+      };
+      setOpenEntries([openEntry, ...openEntries]);
+      onToast(t.sharedToast);
+    } else {
+      onToast(t.toast);
+    }
+
     setMood(null);
     setLines(['', '', '']);
-    onToast(t.toast);
+    setShareOnSave(false);
   }
 
   function handleDelete(id) {
     if (!confirm(t.confirmDel)) return;
     setDiaries(diaries.filter(d => d.id !== id));
+    setOpenEntries(openEntries.filter(o => o.id !== id));
+  }
+
+  function handleShareExisting(id) {
+    const d = diaries.find(x => x.id === id);
+    if (!d) return;
+    if (openEntries.some(o => o.id === id)) return;
+    const openEntry = {
+      id: d.id,
+      authorEmail: user.email,
+      mood: d.mood, weatherIdx: d.weatherIdx,
+      lines: d.lines,
+      createdAt: d.createdAt,
+      reactions: {}, myReactions: [], comments: [],
+    };
+    setOpenEntries([openEntry, ...openEntries]);
+    setDiaries(diaries.map(x => x.id === id ? { ...x, shared: true } : x));
+    onToast(t.sharedToast);
+  }
+
+  function handleReact(openId, emoji) {
+    setOpenEntries(openEntries.map(o => {
+      if (o.id !== openId) return o;
+      const reactions = { ...(o.reactions || {}) };
+      const myReactions = [...(o.myReactions || [])];
+      if (myReactions.includes(emoji)) {
+        reactions[emoji] = Math.max(0, (reactions[emoji] || 0) - 1);
+        return { ...o, reactions, myReactions: myReactions.filter(e => e !== emoji) };
+      } else {
+        reactions[emoji] = (reactions[emoji] || 0) + 1;
+        myReactions.push(emoji);
+        return { ...o, reactions, myReactions };
+      }
+    }));
+  }
+
+  function handleComment(openId, text) {
+    setOpenEntries(openEntries.map(o => {
+      if (o.id !== openId) return o;
+      const comments = [...(o.comments || []), {
+        id: Date.now(),
+        author: anonName(user.email, lang),
+        text,
+        createdAt: new Date().toISOString(),
+      }];
+      return { ...o, comments };
+    }));
   }
 
   function handleLogout() {
@@ -1462,6 +1241,10 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   }
 
   const initial = (user.email[0] || '?').toUpperCase();
+
+  // moods filtered by active category
+  const visibleMoods = MOODS.filter(m => m.cat === activeCat);
+  const catObj = MOOD_CATS.find(c => c.id === activeCat) || MOOD_CATS[0];
 
   return (
     <div style={cssVars}>
@@ -1477,124 +1260,216 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         <div className="sub">{t.sub}</div>
       </header>
 
-      <section className="mood-picker glass">
-        <div className="mood-label">
-          <span className="l">{t.moodLabel}</span>
-          <span className="r">{t.moodLabelSub}</span>
-        </div>
-        <div className="mood-grid">
-          {MOODS.map(m => (
-            <button
-              key={m.id}
-              className={`mood-btn ${mood === m.id ? 'active' : ''}`}
-              style={{
-                '--mood-color': m.color,
-                '--mood-end': m.end,
-                '--mood-color-shadow': hexToRgba(m.color, 0.35),
-              }}
-              onClick={() => setMood(m.id)}
-              type="button"
-              aria-label={lang === 'en' ? m.en : m.ko}
-            >
-              <span className="emoji">{m.emoji}</span>
-              <span className="name">{lang === 'en' ? m.en : m.ko}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className={`write-card glass ${mood ? 'has-mood' : ''}`}>
-        <div className="date-row">
-          <span className="today">{todayStr(lang)}</span>
-          <select
-            className="weather"
-            value={weatherIdx}
-            onChange={e => setWeatherIdx(Number(e.target.value))}
-          >
-            {WEATHERS.map((w, i) => <option key={i} value={i}>{lang === 'en' ? w.en : w.ko}</option>)}
-          </select>
-        </div>
-
-        {t.lines.map((meta, i) => (
-          <div key={i} className="line-input">
-            <div className="line-head">
-              <span className="num">{String(i+1).padStart(2,'0')}</span>
-              <span className="line-emoji">{meta.emoji}</span>
-              <span className="line-name">{meta.label}</span>
-              {meta.hint && <span className="line-hint">({meta.hint})</span>}
-            </div>
-            <input
-              type="text"
-              maxLength={120}
-              placeholder={meta.placeholder}
-              value={lines[i]}
-              onChange={e => {
-                const next = [...lines];
-                next[i] = e.target.value;
-                setLines(next);
-              }}
-            />
-          </div>
-        ))}
-
-        <button
-          className={`save-btn ${canSave ? 'ready' : ''}`}
-          onClick={handleSave}
-          disabled={!canSave}
-        >
-          <span>{canSave ? t.saveReady : mood ? t.saveNoLine : t.saveNoMood}</span>
-          {canSave && <span className="arrow">→</span>}
+      {/* View tabs */}
+      <div className="view-tabs" role="tablist">
+        <button className={view === 'mine' ? 'on' : ''} onClick={() => setView('mine')}>
+          <span>{t.viewMine}</span>
+          <span className="cnt">{String(diaries.length).padStart(2, '0')}</span>
         </button>
-      </section>
-
-      <div className="list-title">
-        <h2>{t.listTitle}</h2>
-        <span className="count">{String(diaries.length).padStart(2, '0')}</span>
+        <button className={view === 'open' ? 'on' : ''} onClick={() => setView('open')}>
+          <span className="live-dot"></span>
+          <span>{t.viewOpen}</span>
+          <span className="cnt">{String(openEntries.length).padStart(2, '0')}</span>
+        </button>
       </div>
 
-      {diaries.length === 0 ? (
-        <div className="empty">
-          <div className="empty-mark">{t.emptyMark}</div>
-          <div className="l1">{t.emptyLine1}</div>
-          <div className="l2">{t.emptyLine2}</div>
-        </div>
-      ) : (
-        diaries.map(d => {
-          const m = MOODS.find(x => x.id === d.mood) || MOODS[0];
-          const w = WEATHERS[d.weatherIdx] || WEATHERS[0];
-          const moodPhrase = lang === 'en'
-            ? `${m.moodLineEn} ${t.moodDaySuffix}`
-            : `${m.moodLineKo} ${t.moodDaySuffix}`;
-          return (
-            <article
-              key={d.id}
-              className="diary-card"
-              style={{
-                '--card-mood': m.color,
-                '--card-mood-end': m.end,
-                '--card-mood-shadow': hexToRgba(m.color, 0.35),
-              }}
-            >
-              <div className="card-head">
-                <div className="card-mood-bubble">{m.emoji}</div>
-                <div className="card-meta">
-                  <div className="card-date">{shortDate(d.createdAt, lang)} · {lang === 'en' ? w.en : w.ko}</div>
-                  <div className="card-mood-name">{moodPhrase}</div>
-                </div>
-                <button className="del-btn" onClick={() => handleDelete(d.id)} title={t.delTitle}>✕</button>
-              </div>
-              {d.lines.map((line, i) => line && (
-                <div key={i} className="card-line">
-                  <div className="card-line-head">
-                    <span className="card-line-emoji">{t.lines[i].emoji}</span>
-                    <span>{t.lines[i].label}</span>
-                  </div>
-                  <div className="card-line-text">{line}</div>
-                </div>
+      {view === 'mine' && (
+        <>
+          <section className="mood-picker glass">
+            <div className="mood-label">
+              <span className="l">{t.moodLabel}</span>
+              <span className="r">{t.moodLabelSub}</span>
+            </div>
+
+            <div className="mood-cats">
+              {MOOD_CATS.map(c => (
+                <button
+                  key={c.id}
+                  className={`mood-cat ${activeCat === c.id ? 'on' : ''}`}
+                  style={{
+                    '--cat-color': c.color,
+                    '--cat-end': c.end,
+                    '--cat-shadow': hexToRgba(c.color, 0.3),
+                  }}
+                  onClick={() => setActiveCat(c.id)}
+                  type="button"
+                >
+                  <span className="cat-emoji">{c.emoji}</span>
+                  <span>{lang === 'en' ? c.en : c.ko}</span>
+                  <span className="cat-count">12</span>
+                </button>
               ))}
-            </article>
-          );
-        })
+            </div>
+
+            <div className="mood-grid">
+              {visibleMoods.map(m => (
+                <button
+                  key={m.id}
+                  className={`mood-btn ${mood === m.id ? 'active' : ''}`}
+                  style={{
+                    '--mood-color': m.color,
+                    '--mood-end': m.end,
+                    '--mood-color-shadow': hexToRgba(m.color, 0.35),
+                  }}
+                  onClick={() => setMood(m.id)}
+                  type="button"
+                  aria-label={lang === 'en' ? m.en : m.ko}
+                >
+                  <span className="emoji">{m.emoji}</span>
+                  <span className="name">{lang === 'en' ? m.en : m.ko}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className={`write-card glass ${mood ? 'has-mood' : ''}`}>
+            <div className="date-row">
+              <span className="today">{todayStr(lang)}</span>
+              <select className="weather" value={weatherIdx} onChange={e => setWeatherIdx(Number(e.target.value))}>
+                {WEATHERS.map((w, i) => <option key={i} value={i}>{lang === 'en' ? w.en : w.ko}</option>)}
+              </select>
+            </div>
+
+            {t.lines.map((meta, i) => (
+              <div key={i} className="line-input">
+                <div className="line-head">
+                  <span className="num">{String(i+1).padStart(2,'0')}</span>
+                  <span className="line-emoji">{meta.emoji}</span>
+                  <span className="line-name">{meta.label}</span>
+                  {meta.hint && <span className="line-hint">({meta.hint})</span>}
+                </div>
+                <input
+                  type="text"
+                  maxLength={120}
+                  placeholder={meta.placeholder}
+                  value={lines[i]}
+                  onChange={e => {
+                    const next = [...lines];
+                    next[i] = e.target.value;
+                    setLines(next);
+                  }}
+                />
+              </div>
+            ))}
+
+            <div
+              className={`share-toggle ${shareOnSave ? 'on' : ''}`}
+              onClick={() => setShareOnSave(!shareOnSave)}
+              role="checkbox"
+              aria-checked={shareOnSave}
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setShareOnSave(!shareOnSave); } }}
+            >
+              <div className="box"></div>
+              <div className="info">
+                <div className="info-l">{t.shareLabel}</div>
+                <div className="info-s">{t.shareSub}</div>
+              </div>
+            </div>
+
+            <button
+              className={`save-btn ${canSave ? 'ready' : ''}`}
+              onClick={handleSave}
+              disabled={!canSave}
+            >
+              <span>{canSave ? t.saveReady : mood ? t.saveNoLine : t.saveNoMood}</span>
+              {canSave && <span className="arrow">→</span>}
+            </button>
+          </section>
+
+          <div className="list-title">
+            <h2>{t.listTitle}</h2>
+            <span className="count">{String(diaries.length).padStart(2, '0')}</span>
+          </div>
+
+          {diaries.length === 0 ? (
+            <div className="empty">
+              <div className="empty-mark">{t.emptyMark}</div>
+              <div className="l1">{t.emptyLine1}</div>
+              <div className="l2">{t.emptyLine2}</div>
+            </div>
+          ) : (
+            diaries.map(d => {
+              const m = MOODS.find(x => x.id === d.mood) || MOODS[0];
+              const w = WEATHERS[d.weatherIdx] || WEATHERS[0];
+              const moodPhrase = lang === 'en'
+                ? `${m.moodLineEn} ${t.moodDaySuffix}`
+                : `${m.moodLineKo} ${t.moodDaySuffix}`;
+              const isShared = d.shared || openEntries.some(o => o.id === d.id);
+              return (
+                <article
+                  key={d.id}
+                  className="diary-card"
+                  style={{
+                    '--card-mood': m.color,
+                    '--card-mood-end': m.end,
+                    '--card-mood-shadow': hexToRgba(m.color, 0.35),
+                  }}
+                >
+                  <div className="card-head">
+                    <div className="card-mood-bubble">{m.emoji}</div>
+                    <div className="card-meta">
+                      <div className="card-date">{shortDate(d.createdAt, lang)} · {lang === 'en' ? w.en : w.ko}</div>
+                      <div className="card-mood-name">{moodPhrase}</div>
+                    </div>
+                    <div className="card-actions">
+                      <button
+                        className={`share-pill ${isShared ? 'shared' : ''}`}
+                        onClick={() => !isShared && handleShareExisting(d.id)}
+                        disabled={isShared}
+                        title={isShared ? t.sharedBadge : t.shareBtn}
+                      >
+                        {isShared ? t.sharedBadge : t.shareBtn}
+                      </button>
+                      <button className="del-btn" onClick={() => handleDelete(d.id)} title={t.delTitle}>✕</button>
+                    </div>
+                  </div>
+                  {d.lines.map((line, i) => line && (
+                    <div key={i} className="card-line">
+                      <div className="card-line-head">
+                        <span className="card-line-emoji">{t.lines[i].emoji}</span>
+                        <span>{t.lines[i].label}</span>
+                      </div>
+                      <div className="card-line-text">{line}</div>
+                    </div>
+                  ))}
+                </article>
+              );
+            })
+          )}
+        </>
+      )}
+
+      {view === 'open' && (
+        <>
+          <div className="list-title">
+            <h2>{t.openTitle}</h2>
+            <span className="count">{String(openEntries.length).padStart(2, '0')}</span>
+          </div>
+          <div style={{ marginBottom: 18, marginLeft: 4, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-mute)', letterSpacing: 0.5 }}>
+            {t.openSub}
+          </div>
+
+          {openEntries.length === 0 ? (
+            <div className="empty">
+              <div className="empty-mark">∞</div>
+              <div className="l1">{t.emptyOpen1}</div>
+              <div className="l2">{t.emptyOpen2}</div>
+            </div>
+          ) : (
+            openEntries.map(entry => (
+              <OpenCard
+                key={entry.id}
+                entry={entry}
+                lang={lang}
+                t={t}
+                onReact={handleReact}
+                onComment={handleComment}
+                currentEmail={user.email}
+              />
+            ))
+          )}
+        </>
       )}
     </div>
   );
