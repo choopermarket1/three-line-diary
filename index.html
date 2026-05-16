@@ -1001,68 +1001,74 @@ function makeSeedEntries() {
   ];
 }
 
-function Moody({ size = 88, expr = 'happy', accent = '#FF1B6B', accent2 = '#C77DFF', className = '', style }) {
-  // 일기 요정 — 유령형 캐릭터. expr: happy | sleepy | sad | hazy | wink | love
+function Moody({ size = 88, expr = 'happy', accent = '#FF6B9D', accent2 = '#C77DFF', className = '', style }) {
+  // chibi 일기 요정 — 머리 위 별만 무드 색. 본체는 따뜻한 크림.
   const gid = React.useId().replace(/:/g, '');
+
+  const BODY = '#FFF0D6';
+  const BODY_LIGHT = '#FFF8E8';
+  const LINE = '#C99573';
+  const EYE = '#2B1B12';
+  const BLUSH = '#FFB6C9';
+
   let eyes, mouth;
 
   if (expr === 'sleepy') {
     eyes = (
       <g>
-        <path d="M 36 58 Q 43 65 50 58" stroke="#0A0A14" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-        <path d="M 70 58 Q 77 65 84 58" stroke="#0A0A14" strokeWidth="3.2" fill="none" strokeLinecap="round" />
+        <path d="M 38 56 Q 44 62 50 56" stroke={EYE} strokeWidth="2.8" fill="none" strokeLinecap="round" />
+        <path d="M 70 56 Q 76 62 82 56" stroke={EYE} strokeWidth="2.8" fill="none" strokeLinecap="round" />
       </g>
     );
-    mouth = <ellipse cx="60" cy="78" rx="5" ry="6.5" fill="#0A0A14" />;
+    mouth = <ellipse cx="60" cy="76" rx="3.8" ry="5" fill={EYE} />;
   } else if (expr === 'sad') {
     eyes = (
       <g>
-        <ellipse cx="43" cy="56" rx="4.5" ry="6" fill="#0A0A14" />
-        <ellipse cx="77" cy="56" rx="4.5" ry="6" fill="#0A0A14" />
-        <circle cx="44.5" cy="54" r="1.8" fill="#fff" />
-        <circle cx="78.5" cy="54" r="1.8" fill="#fff" />
-        <path d="M 39 66 Q 43 73 47 66 Q 47 70 43 73 Q 39 70 39 66 Z" fill="#7AB5E3" />
+        <ellipse cx="44" cy="56" rx="5" ry="6.5" fill={EYE} />
+        <ellipse cx="76" cy="56" rx="5" ry="6.5" fill={EYE} />
+        <circle cx="46.5" cy="53" r="2" fill="#fff" />
+        <circle cx="78.5" cy="53" r="2" fill="#fff" />
+        <path d="M 40 66 Q 44 73 48 66 Q 48 70 44 73 Q 40 70 40 66 Z" fill="#7AB5E3" />
       </g>
     );
-    mouth = <path d="M 48 84 Q 60 76 72 84" stroke="#0A0A14" strokeWidth="3" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 50 82 Q 60 76 70 82" stroke={EYE} strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   } else if (expr === 'hazy') {
     eyes = (
       <g>
-        <circle cx="43" cy="57" r="3" fill="#0A0A14" />
-        <circle cx="77" cy="57" r="3" fill="#0A0A14" />
+        <circle cx="44" cy="58" r="2.6" fill={EYE} />
+        <circle cx="76" cy="58" r="2.6" fill={EYE} />
       </g>
     );
-    mouth = <line x1="53" y1="80" x2="67" y2="80" stroke="#0A0A14" strokeWidth="3" strokeLinecap="round" />;
+    mouth = <line x1="54" y1="78" x2="66" y2="78" stroke={EYE} strokeWidth="2.6" strokeLinecap="round" />;
   } else if (expr === 'wink') {
     eyes = (
       <g>
-        <path d="M 36 56 Q 43 62 50 56" stroke="#0A0A14" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-        <ellipse cx="77" cy="56" rx="4.5" ry="6" fill="#0A0A14" />
-        <circle cx="78.5" cy="54" r="1.8" fill="#fff" />
+        <path d="M 38 55 Q 44 61 50 55" stroke={EYE} strokeWidth="2.8" fill="none" strokeLinecap="round" />
+        <ellipse cx="76" cy="55" rx="5" ry="6.5" fill={EYE} />
+        <circle cx="78.5" cy="52" r="2" fill="#fff" />
       </g>
     );
-    mouth = <path d="M 48 78 Q 60 88 72 78" stroke="#0A0A14" strokeWidth="3" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 50 76 Q 60 86 70 76" stroke={EYE} strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   } else if (expr === 'love') {
     eyes = (
       <g>
-        <path d="M 37 51 Q 37 46 42 46 Q 47 46 47 51 Q 47 56 42 62 Q 37 56 37 51 Z" fill="#FF1B6B" />
-        <path d="M 71 51 Q 71 46 76 46 Q 81 46 81 51 Q 81 56 76 62 Q 71 56 71 51 Z" fill="#FF1B6B" />
+        <path d="M 38 50 Q 38 45 43 45 Q 48 45 48 50 Q 48 55 43 61 Q 38 55 38 50 Z" fill="#FF6B9D" />
+        <path d="M 72 50 Q 72 45 77 45 Q 82 45 82 50 Q 82 55 77 61 Q 72 55 72 50 Z" fill="#FF6B9D" />
       </g>
     );
-    mouth = <path d="M 47 78 Q 60 90 73 78" stroke="#0A0A14" strokeWidth="3" fill="none" strokeLinecap="round" />;
-  } else { // happy / default
+    mouth = <path d="M 49 78 Q 60 88 71 78" stroke={EYE} strokeWidth="2.6" fill="none" strokeLinecap="round" />;
+  } else { // happy
     eyes = (
       <g>
-        <ellipse cx="43" cy="55" rx="4.5" ry="6" fill="#0A0A14" />
-        <ellipse cx="77" cy="55" rx="4.5" ry="6" fill="#0A0A14" />
-        <circle cx="44.5" cy="53" r="1.8" fill="#fff" />
-        <circle cx="78.5" cy="53" r="1.8" fill="#fff" />
+        <ellipse cx="44" cy="55" rx="5" ry="6.5" fill={EYE} />
+        <ellipse cx="76" cy="55" rx="5" ry="6.5" fill={EYE} />
+        <circle cx="46.5" cy="52" r="2" fill="#fff" />
+        <circle cx="78.5" cy="52" r="2" fill="#fff" />
       </g>
     );
-    mouth = <path d="M 48 78 Q 60 88 72 78" stroke="#0A0A14" strokeWidth="3" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 50 76 Q 60 84 70 76" stroke={EYE} strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   }
 
-  // 4-pointed sparkle
   const sparkle = (cx, cy, r, fill, opacity = 1) => (
     <path
       d={`M ${cx} ${cy - r} Q ${cx + r*0.28} ${cy - r*0.28} ${cx + r} ${cy} Q ${cx + r*0.28} ${cy + r*0.28} ${cx} ${cy + r} Q ${cx - r*0.28} ${cy + r*0.28} ${cx - r} ${cy} Q ${cx - r*0.28} ${cy - r*0.28} ${cx} ${cy - r} Z`}
@@ -1071,72 +1077,66 @@ function Moody({ size = 88, expr = 'happy', accent = '#FF1B6B', accent2 = '#C77D
     />
   );
 
-  // 볼터치 (sad/hazy 빼고 표시)
   const showBlush = !['sad', 'hazy'].includes(expr);
 
   return (
     <svg
-      viewBox="0 0 120 140"
+      viewBox="0 0 120 130"
       width={size}
-      height={Math.round(size * 140 / 120)}
+      height={Math.round(size * 130 / 120)}
       className={`mascot ${className}`}
       style={style}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
         <linearGradient id={`bg-${gid}`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={BODY_LIGHT} />
+          <stop offset="100%" stopColor={BODY} />
+        </linearGradient>
+        <radialGradient id={`hi-${gid}`} cx="35%" cy="30%" r="38%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id={`star-${gid}`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={accent} />
           <stop offset="100%" stopColor={accent2} />
         </linearGradient>
-        <radialGradient id={`hi-${gid}`} cx="35%" cy="32%" r="40%">
-          <stop offset="0%" stopColor="#fff" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-        </radialGradient>
       </defs>
 
-      {/* glow halo */}
-      <ellipse cx="60" cy="62" rx="56" ry="52" fill={accent} opacity="0.20" />
+      {/* 무드 색 부드러운 후광 */}
+      <ellipse cx="60" cy="64" rx="54" ry="50" fill={accent} opacity="0.14" />
 
-      {/* floating shadow under (떠있는 느낌) */}
-      <ellipse cx="60" cy="132" rx="22" ry="3" fill="rgba(10,10,20,0.20)" />
+      {/* 떠있는 그림자 */}
+      <ellipse cx="60" cy="120" rx="22" ry="3" fill="rgba(60,40,30,0.18)" />
 
-      {/* 머리 위 작은 안테나/별 (요정 느낌) */}
-      <line x1="60" y1="6" x2="60" y2="14" stroke="#0A0A14" strokeWidth="2.4" strokeLinecap="round" />
-      <g style={{ transformOrigin: '60px 5px' }}>
-        {sparkle(60, 4, 4.5, '#FFE066')}
+      {/* 머리 위 별 (무드 색 — 본 캐릭터 컬러 액센트) */}
+      <g style={{ transformOrigin: '60px 12px' }}>
+        <path
+          d="M 60 0 Q 62 7 68 9 Q 62 11 60 18 Q 58 11 52 9 Q 58 7 60 0 Z"
+          fill={`url(#star-${gid})`}
+          stroke={LINE}
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
       </g>
 
-      {/* body — ghost/요정 형태 (둥근 머리 + 물결 꼬리) */}
-      <path
-        d="M 60 14
-           C 30 14 18 36 18 62
-           L 18 112
-           C 18 116 22 119 26 116
-           C 32 111 38 121 44 116
-           C 50 110 56 121 62 116
-           C 68 110 74 121 80 116
-           C 86 111 92 121 98 116
-           C 102 113 102 113 102 112
-           L 102 62
-           C 102 36 90 14 60 14 Z"
+      {/* body — chibi 둥근 모찌 형태 */}
+      <ellipse
+        cx="60" cy="62"
+        rx="40" ry="44"
         fill={`url(#bg-${gid})`}
-        stroke="#0A0A14"
-        strokeWidth="2.6"
-        strokeLinejoin="round"
+        stroke={LINE}
+        strokeWidth="1.8"
       />
 
-      {/* 안쪽 빛 하이라이트 */}
-      <ellipse cx="44" cy="36" rx="16" ry="10" fill={`url(#hi-${gid})`} transform="rotate(-22 44 36)" />
-
-      {/* 양쪽 둥근 손/팔 (작은 점) */}
-      <circle cx="14" cy="76" r="5.5" fill={`url(#bg-${gid})`} stroke="#0A0A14" strokeWidth="2.4" />
-      <circle cx="106" cy="76" r="5.5" fill={`url(#bg-${gid})`} stroke="#0A0A14" strokeWidth="2.4" />
+      {/* 안쪽 하이라이트 */}
+      <ellipse cx="46" cy="40" rx="16" ry="10" fill={`url(#hi-${gid})`} transform="rotate(-22 46 40)" />
 
       {/* 볼터치 */}
       {showBlush && (
         <g>
-          <ellipse cx="30" cy="68" rx="6.5" ry="3.5" fill="#FF8FB1" opacity="0.55" />
-          <ellipse cx="90" cy="68" rx="6.5" ry="3.5" fill="#FF8FB1" opacity="0.55" />
+          <ellipse cx="32" cy="66" rx="6.5" ry="4" fill={BLUSH} opacity="0.75" />
+          <ellipse cx="88" cy="66" rx="6.5" ry="4" fill={BLUSH} opacity="0.75" />
         </g>
       )}
 
@@ -1144,15 +1144,15 @@ function Moody({ size = 88, expr = 'happy', accent = '#FF1B6B', accent2 = '#C77D
       {eyes}
       {mouth}
 
-      {/* sparkle decorations */}
-      <g className="twinkle" style={{ transformOrigin: '112px 30px' }}>
-        {sparkle(112, 30, 4.5, '#FFE066')}
+      {/* 옆 별 반짝이 — 무드 컬러로 살짝만 */}
+      <g className="twinkle" style={{ transformOrigin: '106px 32px' }}>
+        {sparkle(106, 32, 4, accent, 0.85)}
       </g>
-      <g className="twinkle t2" style={{ transformOrigin: '8px 46px' }}>
-        {sparkle(8, 46, 3.5, '#FFB6E6', 0.9)}
+      <g className="twinkle t2" style={{ transformOrigin: '14px 48px' }}>
+        {sparkle(14, 48, 3, accent2, 0.7)}
       </g>
-      <g className="twinkle t3" style={{ transformOrigin: '100px 108px' }}>
-        {sparkle(100, 108, 3, '#B5FFEC', 0.85)}
+      <g className="twinkle t3" style={{ transformOrigin: '104px 100px' }}>
+        {sparkle(104, 100, 2.5, '#FFE066', 0.7)}
       </g>
     </svg>
   );
