@@ -3,56 +3,82 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>오늘의 세 줄 · 마음 일기장</title>
+<title>오늘의 세 줄 · Three Lines</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nanum+Pen+Script&family=Caveat:wght@400;600&family=Gowun+Dodum&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --paper: #FBF7EF;
-    --paper-dark: #F2EADB;
-    --ink: #3D2C20;
-    --ink-soft: #7A6657;
-    --accent: #E8A87C;
-    --shadow: 0 10px 30px rgba(80, 50, 30, 0.10), 0 2px 6px rgba(80, 50, 30, 0.06);
+    --bg: #FFFFFF;
+    --ink: #0A0A14;
+    --ink-soft: #6B6B7B;
+    --ink-mute: #9B9BA8;
+    --line: rgba(10, 10, 20, 0.08);
+    --line-strong: rgba(10, 10, 20, 0.16);
+    --surface: rgba(255, 255, 255, 0.7);
+    --surface-strong: rgba(255, 255, 255, 0.92);
+
+    --hot: #FF1B6B;
+    --hot-2: #FF4D8D;
+    --electric: #3D5AFE;
+    --cyan: #00D9FF;
+    --lime: #D4FF3D;
+    --orange: #FF6B35;
+    --purple: #C77DFF;
+    --gold: #FFD700;
+
+    --shadow-card: 0 16px 40px rgba(15, 15, 35, 0.06), 0 4px 12px rgba(15, 15, 35, 0.04);
+    --shadow-pop: 0 24px 60px rgba(15, 15, 35, 0.10), 0 8px 24px rgba(15, 15, 35, 0.06);
+
+    --font-ko: 'Pretendard Variable', 'Pretendard', system-ui, -apple-system, sans-serif;
+    --font-en: 'Space Grotesk', 'Pretendard Variable', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
   }
 
   html, body {
     min-height: 100%;
-    font-family: 'Gowun Dodum', 'Gaegu', system-ui, sans-serif;
+    font-family: var(--font-ko);
     color: var(--ink);
-    background:
-      radial-gradient(circle at 20% 10%, #FFE8D6 0%, transparent 45%),
-      radial-gradient(circle at 80% 0%, #DDE5FF 0%, transparent 40%),
-      radial-gradient(circle at 90% 90%, #FFD6E8 0%, transparent 45%),
-      radial-gradient(circle at 10% 90%, #D6F0FF 0%, transparent 40%),
-      linear-gradient(180deg, #FFF8EE 0%, #F6EFE0 100%);
-    background-attachment: fixed;
+    background: #FAFAFF;
+    overflow-x: hidden;
   }
 
   body::before {
     content: '';
     position: fixed;
-    inset: 0;
-    pointer-events: none;
+    inset: -10%;
     z-index: 0;
-    opacity: 0.35;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 12% 8%,  #FFB6E6 0%, transparent 32%),
+      radial-gradient(circle at 88% 5%,  #B5D5FF 0%, transparent 30%),
+      radial-gradient(circle at 95% 92%, #B5FFEC 0%, transparent 32%),
+      radial-gradient(circle at 5% 88%,  #D5B5FF 0%, transparent 30%),
+      radial-gradient(circle at 50% 50%, #FFE0B5 0%, transparent 28%);
+    filter: saturate(1.15);
+    animation: bgDrift 28s ease-in-out infinite alternate;
+  }
+  @keyframes bgDrift {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(20px, -16px) scale(1.06); }
   }
 
   #root {
     position: relative;
     z-index: 1;
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 40px 20px 80px;
+    padding: 40px 20px 100px;
   }
 
-  /* ---------- Auth Screen ---------- */
+  ::selection { background: var(--hot); color: #fff; }
+
+  /* ---------- Auth ---------- */
   .auth-wrap {
     min-height: calc(100vh - 80px);
     display: flex;
@@ -64,32 +90,49 @@
   }
   .auth-card {
     width: 100%;
-    max-width: 420px;
-    background: var(--paper);
-    border-radius: 28px;
-    padding: 36px 30px 30px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(120, 90, 60, 0.12);
+    max-width: 440px;
+    background: var(--surface-strong);
+    backdrop-filter: blur(28px) saturate(1.3);
+    -webkit-backdrop-filter: blur(28px) saturate(1.3);
+    border-radius: 32px;
+    padding: 40px 32px 28px;
+    box-shadow: var(--shadow-pop);
+    border: 1px solid rgba(255, 255, 255, 0.9);
     position: relative;
     overflow: hidden;
+  }
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -30%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, var(--hot), transparent 65%);
+    opacity: 0.25;
+    pointer-events: none;
+    filter: blur(20px);
   }
   .auth-card::after {
     content: '';
     position: absolute;
-    inset: 0;
+    bottom: -50%;
+    left: -30%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, var(--electric), transparent 65%);
+    opacity: 0.18;
     pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity: 0.5;
-    mix-blend-mode: multiply;
+    filter: blur(20px);
   }
   .auth-card > * { position: relative; z-index: 1; }
+
   .auth-lang {
     position: absolute;
-    top: 14px;
-    right: 14px;
+    top: 16px;
+    right: 16px;
     display: flex;
-    background: rgba(255, 252, 246, 0.85);
-    border: 1.5px solid rgba(120, 90, 60, 0.18);
+    background: rgba(10, 10, 20, 0.06);
     border-radius: 999px;
     padding: 3px;
     z-index: 5;
@@ -97,112 +140,127 @@
   .auth-lang button {
     border: none;
     background: transparent;
-    padding: 4px 10px;
+    padding: 5px 11px;
     border-radius: 999px;
-    font-family: 'Caveat', cursive;
-    font-size: 14px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
     color: var(--ink-soft);
     cursor: pointer;
     letter-spacing: 1px;
+    transition: all 0.2s ease;
   }
   .auth-lang button.on {
     background: var(--ink);
-    color: var(--paper);
+    color: #fff;
   }
 
-  .auth-head {
-    text-align: center;
-    margin-bottom: 26px;
+  .auth-head { margin-bottom: 28px; }
+  .auth-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
   }
-  .auth-emoji {
-    font-size: 56px;
-    display: inline-block;
-    line-height: 1;
-    margin-bottom: 12px;
-    animation: float 3.2s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.10));
+  .auth-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 8px var(--lime);
+    animation: dotPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(0.7); opacity: 0.6; }
   }
   .auth-title {
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 40px;
+    font-family: var(--font-ko);
+    font-size: 38px;
+    font-weight: 800;
     color: var(--ink);
-    line-height: 1;
+    line-height: 1.05;
+    letter-spacing: -1.2px;
   }
-  .auth-title .heart {
-    color: #E76F8F;
-    display: inline-block;
-    transform: translateY(-3px) rotate(-12deg);
+  .auth-title .accent {
+    background: linear-gradient(135deg, var(--hot), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .auth-sub {
-    font-family: 'Caveat', cursive;
-    font-size: 18px;
+    font-family: var(--font-en);
+    font-size: 14px;
+    font-weight: 500;
     color: var(--ink-soft);
-    margin-top: 6px;
+    margin-top: 8px;
+    letter-spacing: 0.2px;
   }
 
   .auth-tabs {
     display: flex;
-    background: rgba(245, 235, 220, 0.6);
+    background: rgba(10, 10, 20, 0.05);
     padding: 4px;
     border-radius: 999px;
     margin-bottom: 22px;
-    border: 1.5px solid rgba(120, 90, 60, 0.12);
   }
   .auth-tabs button {
     flex: 1;
     border: none;
     background: transparent;
-    padding: 10px;
+    padding: 11px;
     border-radius: 999px;
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.25s ease;
   }
   .auth-tabs button.on {
-    background: var(--paper);
-    color: var(--ink);
-    box-shadow: 0 2px 6px rgba(80, 50, 30, 0.10);
+    background: var(--ink);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(10, 10, 20, 0.18);
   }
 
-  .auth-field {
-    margin-bottom: 14px;
-    position: relative;
-  }
+  .auth-field { margin-bottom: 12px; }
   .auth-field label {
     display: block;
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 4px 14px;
-    letter-spacing: 0.5px;
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    margin: 0 0 5px 4px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
   }
   .auth-field .input-wrap {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.7);
-    border: 1.5px solid rgba(120, 90, 60, 0.18);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1.5px solid var(--line);
     border-radius: 16px;
-    padding: 0 14px;
+    padding: 0 16px;
     transition: all 0.2s ease;
   }
   .auth-field .input-wrap:focus-within {
-    border-color: var(--accent);
+    border-color: var(--ink);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(232, 168, 124, 0.15);
+    box-shadow: 0 0 0 4px rgba(10, 10, 20, 0.08);
   }
   .auth-field.error .input-wrap {
-    border-color: #E27D7D;
-    background: #FFF3F3;
-  }
-  .auth-field .icon {
-    font-size: 18px;
-    margin-right: 8px;
-    line-height: 1;
+    border-color: var(--hot);
+    background: #FFF5F8;
+    box-shadow: 0 0 0 4px rgba(255, 27, 107, 0.10);
   }
   .auth-field input {
     flex: 1;
@@ -210,49 +268,90 @@
     outline: none;
     background: transparent;
     padding: 14px 0;
-    font-family: 'Gowun Dodum', sans-serif;
-    font-size: 15px;
+    font-family: var(--font-ko);
+    font-size: 14.5px;
+    font-weight: 500;
     color: var(--ink);
   }
   .auth-field input::placeholder {
-    color: rgba(122, 102, 87, 0.55);
-    font-family: 'Gaegu', sans-serif;
+    color: var(--ink-mute);
+    font-weight: 400;
+  }
+  .auth-field-key {
+    width: 26px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-mute);
+    text-align: left;
   }
 
   .auth-err {
-    background: #FFE8E8;
-    border: 1.5px dashed #E27D7D;
-    color: #B84545;
+    background: linear-gradient(135deg, rgba(255, 27, 107, 0.10), rgba(255, 77, 141, 0.06));
+    border: 1.5px solid var(--hot);
+    color: var(--hot);
     padding: 10px 14px;
-    border-radius: 14px;
-    font-family: 'Gaegu', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    text-align: center;
+    border-radius: 12px;
+    font-family: var(--font-ko);
+    font-weight: 600;
+    font-size: 13px;
     margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .auth-err::before {
+    content: '!';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--hot);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
   }
 
   .auth-btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
     border-radius: 16px;
-    background: linear-gradient(135deg, #E8A87C 0%, #E76F8F 100%);
+    background: linear-gradient(135deg, var(--hot) 0%, var(--purple) 100%);
+    background-size: 200% 200%;
     color: #fff;
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 1px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(231, 111, 143, 0.30);
-    transition: all 0.2s ease;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.10);
-    margin-top: 6px;
+    box-shadow: 0 8px 24px rgba(255, 27, 107, 0.30);
+    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
   }
-  .auth-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(231, 111, 143, 0.40); }
+  .auth-btn::after {
+    content: '→';
+    margin-left: 8px;
+    display: inline-block;
+    transition: transform 0.25s ease;
+    font-family: var(--font-en);
+    font-weight: 500;
+  }
+  .auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 27, 107, 0.40);
+    background-position: 100% 50%;
+  }
+  .auth-btn:hover::after { transform: translateX(4px); }
   .auth-btn:active { transform: translateY(0); }
   .auth-btn:disabled {
-    background: #D5CEC0;
+    background: var(--ink-mute);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -260,42 +359,50 @@
 
   .auth-foot {
     text-align: center;
-    margin-top: 16px;
-    font-family: 'Gaegu', sans-serif;
-    font-size: 14px;
+    margin-top: 18px;
+    font-family: var(--font-ko);
+    font-size: 13px;
     color: var(--ink-soft);
+    font-weight: 500;
   }
   .auth-foot a {
     color: var(--ink);
-    text-decoration: underline;
     cursor: pointer;
     font-weight: 700;
+    border-bottom: 2px solid var(--lime);
+    padding-bottom: 1px;
+    transition: all 0.2s ease;
+  }
+  .auth-foot a:hover {
+    color: var(--hot);
+    border-bottom-color: var(--hot);
   }
   .auth-note {
-    margin-top: 10px;
+    margin-top: 14px;
     text-align: center;
-    font-family: 'Caveat', cursive;
-    font-size: 14px;
-    color: var(--ink-soft);
-    opacity: 0.7;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.8px;
   }
 
   /* ---------- Header ---------- */
   header.top {
-    text-align: center;
     margin-bottom: 32px;
     position: relative;
+    padding-top: 50px;
   }
+
   .lang-toggle {
     position: absolute;
     top: 0;
-    right: 4px;
+    right: 0;
     display: flex;
-    background: rgba(255, 252, 246, 0.85);
-    border: 1.5px solid rgba(120, 90, 60, 0.18);
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
     border-radius: 999px;
     padding: 3px;
-    box-shadow: 0 2px 8px rgba(80, 50, 30, 0.08);
     z-index: 5;
   }
   .lang-toggle button {
@@ -303,9 +410,9 @@
     background: transparent;
     padding: 5px 12px;
     border-radius: 999px;
-    font-family: 'Caveat', cursive;
-    font-size: 16px;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
     color: var(--ink-soft);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -313,124 +420,153 @@
   }
   .lang-toggle button.on {
     background: var(--ink);
-    color: var(--paper);
+    color: #fff;
   }
 
   .user-chip {
     position: absolute;
     top: 0;
-    left: 4px;
+    left: 0;
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255, 252, 246, 0.85);
-    border: 1.5px solid rgba(120, 90, 60, 0.18);
+    gap: 8px;
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 4px 6px 4px 12px;
-    box-shadow: 0 2px 8px rgba(80, 50, 30, 0.08);
-    font-family: 'Gaegu', sans-serif;
-    font-size: 13px;
+    padding: 4px 6px 4px 14px;
+    font-family: var(--font-ko);
+    font-size: 12px;
     color: var(--ink);
-    font-weight: 700;
-    max-width: 60%;
+    font-weight: 600;
+    max-width: 70%;
     z-index: 5;
+  }
+  .user-chip .user-avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--hot), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
   }
   .user-chip .user-mail {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 120px;
+    max-width: 140px;
+    font-family: var(--font-mono);
+    font-size: 11px;
   }
   .user-chip .logout-btn {
     border: none;
     background: var(--ink);
-    color: var(--paper);
+    color: #fff;
     border-radius: 999px;
-    padding: 3px 9px;
-    font-family: 'Gaegu', sans-serif;
-    font-size: 12px;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
     font-weight: 700;
     cursor: pointer;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
   }
-  .user-chip .logout-btn:hover { background: #E76F8F; }
+  .user-chip .logout-btn:hover {
+    background: var(--hot);
+  }
+
+  .head-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 11px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .head-tag .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 8px var(--lime);
+    animation: dotPulse 1.6s ease-in-out infinite;
+  }
 
   header.top h1 {
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 56px;
-    line-height: 1;
+    font-family: var(--font-ko);
+    font-size: 54px;
+    font-weight: 800;
     color: var(--ink);
-    letter-spacing: 1px;
-    margin-top: 36px;
+    line-height: 1.0;
+    letter-spacing: -1.8px;
+    margin-bottom: 6px;
   }
-  header.top .stamp {
-    display: inline-block;
-    padding: 6px 18px;
-    border: 1.5px dashed var(--ink-soft);
-    border-radius: 999px;
-    color: var(--ink-soft);
-    font-family: 'Caveat', cursive;
-    font-size: 18px;
-    letter-spacing: 2px;
-    transform: rotate(-2deg);
-    margin-bottom: 14px;
-    background: rgba(255, 252, 245, 0.6);
-    margin-top: 8px;
+  header.top h1 .accent {
+    background: linear-gradient(135deg, var(--hot) 0%, var(--electric) 60%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 6s ease-in-out infinite;
+    background-size: 200% 200%;
   }
-  header.top h1 .heart {
-    color: #E76F8F;
-    display: inline-block;
-    transform: translateY(-4px) rotate(-12deg);
-    animation: heartbeat 1.8s ease-in-out infinite;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: translateY(-4px) rotate(-12deg) scale(1); }
-    50% { transform: translateY(-6px) rotate(-12deg) scale(1.12); }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
   }
   header.top .sub {
-    font-family: 'Caveat', cursive;
-    font-size: 22px;
+    font-family: var(--font-en);
+    font-size: 15px;
+    font-weight: 500;
     color: var(--ink-soft);
-    margin-top: 4px;
+    letter-spacing: 0.2px;
+  }
+
+  .glass {
+    background: var(--surface-strong);
+    backdrop-filter: blur(28px) saturate(1.3);
+    -webkit-backdrop-filter: blur(28px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 28px;
+    box-shadow: var(--shadow-card);
   }
 
   /* ---------- Mood picker ---------- */
   .mood-picker {
-    background: rgba(255, 252, 246, 0.85);
-    border-radius: 28px;
-    padding: 24px 22px 22px;
-    margin-bottom: 22px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(120, 90, 60, 0.10);
-    position: relative;
-    overflow: hidden;
+    padding: 24px 22px;
+    margin-bottom: 18px;
   }
-  .mood-picker::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-  }
-  .mood-picker > * { position: relative; z-index: 1; }
-
   .mood-label {
-    font-family: 'Gaegu', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--ink);
-    margin-bottom: 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    margin-bottom: 14px;
   }
-  .mood-label small {
-    font-family: 'Caveat', cursive;
-    font-weight: 400;
+  .mood-label .l {
+    font-family: var(--font-ko);
+    font-weight: 700;
     font-size: 16px;
-    color: var(--ink-soft);
+    color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+  .mood-label .r {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
   }
 
   .mood-grid {
@@ -440,24 +576,34 @@
   }
   .mood-btn {
     cursor: pointer;
-    border: none;
-    background: rgba(255, 255, 255, 0.45);
-    padding: 12px 4px 10px;
+    border: 1.5px solid transparent;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 14px 4px 10px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    transition: all 0.3s cubic-bezier(.34, 1.56, .64, 1);
+    transition: all 0.35s cubic-bezier(.34, 1.56, .64, 1);
     font-family: inherit;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
   }
+  .mood-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple)));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+  .mood-btn > * { position: relative; z-index: 1; }
   .mood-btn .emoji {
     font-size: 32px;
     line-height: 1;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.10));
     display: inline-block;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.10));
     animation: moodFloat 3.6s ease-in-out infinite;
   }
   .mood-btn:nth-child(4n+1) .emoji { animation-delay: 0s; }
@@ -467,371 +613,435 @@
 
   @keyframes moodFloat {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50%      { transform: translateY(-3px) rotate(2deg); }
+    50%      { transform: translateY(-4px) rotate(2deg); }
   }
   .mood-btn .name {
-    font-family: 'Gaegu', sans-serif;
-    font-size: 13px;
+    font-family: var(--font-ko);
+    font-size: 12px;
     color: var(--ink-soft);
     font-weight: 700;
     margin-top: 2px;
+    letter-spacing: -0.2px;
+    transition: color 0.3s ease;
   }
   .mood-btn:hover {
-    background: rgba(255, 255, 255, 0.85);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    border-color: var(--mood-color, var(--hot));
+    background: #fff;
   }
   .mood-btn:hover .emoji {
-    animation: moodWiggle 0.6s ease-in-out infinite;
+    animation: moodWiggle 0.5s ease-in-out infinite;
   }
   @keyframes moodWiggle {
-    0%, 100% { transform: scale(1.2) rotate(-8deg); }
-    50%      { transform: scale(1.2) rotate(8deg); }
+    0%, 100% { transform: scale(1.2) rotate(-10deg); }
+    50%      { transform: scale(1.2) rotate(10deg); }
   }
   .mood-btn.active {
-    background:
-      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 100%);
-    box-shadow:
-      0 6px 16px rgba(80, 50, 30, 0.15),
-      inset 0 0 0 2.5px var(--mood-color, var(--accent)),
-      0 0 0 6px var(--mood-color-soft, rgba(255,255,255,0.4));
-    transform: translateY(-3px) scale(1.04);
+    transform: translateY(-4px) scale(1.04);
+    border-color: transparent;
+    box-shadow: 0 12px 28px var(--mood-color-shadow, rgba(255, 27, 107, 0.30));
   }
-  .mood-btn.active .name { color: var(--ink); }
+  .mood-btn.active::before { opacity: 1; }
+  .mood-btn.active .name {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
   .mood-btn.active .emoji {
-    animation: moodPop 0.45s cubic-bezier(.34, 1.8, .64, 1);
+    animation: moodPop 0.5s cubic-bezier(.34, 1.8, .64, 1);
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.20));
   }
   @keyframes moodPop {
-    0%   { transform: scale(0.8) rotate(0deg); }
-    50%  { transform: scale(1.35) rotate(-8deg); }
-    100% { transform: scale(1.15) rotate(0deg); }
-  }
-  .mood-btn.active::before {
-    content: '✨';
-    position: absolute;
-    top: -6px;
-    right: -4px;
-    font-size: 16px;
-    animation: sparkleSpin 1.4s ease-in-out infinite;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
-    pointer-events: none;
-  }
-  .mood-btn.active::after {
-    content: '♥';
-    position: absolute;
-    bottom: 2px;
-    left: 6px;
-    color: var(--mood-color, var(--accent));
-    font-size: 11px;
-    opacity: 0.7;
-    animation: heartPulse 1.6s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes sparkleSpin {
-    0%, 100% { transform: scale(0.9) rotate(-15deg); opacity: 0.9; }
-    50%      { transform: scale(1.2) rotate(15deg);  opacity: 1; }
-  }
-  @keyframes heartPulse {
-    0%, 100% { transform: scale(0.9); opacity: 0.6; }
-    50%      { transform: scale(1.15); opacity: 1; }
+    0%   { transform: scale(0.85) rotate(0); }
+    50%  { transform: scale(1.4) rotate(-8deg); }
+    100% { transform: scale(1.15) rotate(0); }
   }
 
-  /* ---------- Form ---------- */
+  /* ---------- Write Card ---------- */
   .write-card {
-    background: var(--paper);
-    border-radius: 24px;
     padding: 28px 26px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(120, 90, 60, 0.10);
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     position: relative;
-    transition: background 0.6s ease;
     overflow: hidden;
+    transition: all 0.6s ease;
   }
   .write-card.has-mood {
-    background:
-      radial-gradient(circle at 30% 20%, var(--mood-color-light, transparent) 0%, transparent 60%),
-      radial-gradient(circle at 80% 90%, var(--mood-color, transparent) 0%, transparent 55%),
-      var(--paper);
+    box-shadow: var(--shadow-pop), 0 0 0 1px var(--mood-color, var(--hot));
   }
-  .write-card::after {
+  .write-card.has-mood::before {
     content: '';
     position: absolute;
-    inset: 0;
+    top: -50%;
+    right: -30%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, var(--mood-color, var(--hot)), transparent 65%);
+    opacity: 0.15;
     pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity: 0.5;
-    mix-blend-mode: multiply;
+    filter: blur(20px);
+    z-index: 0;
   }
   .write-card > * { position: relative; z-index: 1; }
 
   .date-row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 18px;
-    font-family: 'Caveat', cursive;
-    color: var(--ink-soft);
+    margin-bottom: 20px;
   }
   .date-row .today {
-    font-size: 26px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
     color: var(--ink);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(10, 10, 20, 0.05);
+    padding: 6px 12px;
+    border-radius: 999px;
   }
   .date-row .weather {
-    font-size: 22px;
+    font-family: var(--font-ko);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    background: rgba(10, 10, 20, 0.05);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  .date-row .weather:hover {
+    background: rgba(10, 10, 20, 0.10);
   }
 
   .line-input {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 12px 0;
-    border-bottom: 1.5px dashed rgba(120, 90, 60, 0.25);
+    gap: 6px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
   }
   .line-input:last-of-type { border-bottom: none; }
   .line-head {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
   .line-head .num {
-    font-family: 'Caveat', cursive;
-    font-size: 22px;
-    color: var(--mood-color, var(--accent));
-    font-weight: 600;
-    line-height: 1;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--mood-color, var(--ink-mute));
+    letter-spacing: 0.5px;
+    transition: color 0.4s ease;
   }
   .line-head .line-emoji {
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
   }
   .line-head .line-name {
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 14px;
     color: var(--ink);
-    letter-spacing: 0.5px;
+    letter-spacing: -0.2px;
   }
   .line-input input {
     border: none;
     outline: none;
     background: transparent;
-    font-family: 'Gowun Dodum', sans-serif;
-    font-size: 17px;
+    font-family: var(--font-ko);
+    font-size: 16px;
+    font-weight: 500;
     color: var(--ink);
-    padding: 4px 4px 4px 32px;
-    line-height: 1.6;
+    padding: 6px 0 4px 36px;
+    line-height: 1.5;
     width: 100%;
   }
   .line-input input::placeholder {
-    color: rgba(122, 102, 87, 0.55);
-    font-family: 'Gaegu', sans-serif;
+    color: var(--ink-mute);
+    font-weight: 400;
   }
 
   .save-btn {
-    margin-top: 20px;
+    margin-top: 24px;
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border: none;
     border-radius: 16px;
-    background: var(--mood-color, #E8A87C);
+    background: var(--ink);
     color: #fff;
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 1px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(80, 50, 30, 0.15);
-    transition: all 0.2s ease;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(10, 10, 20, 0.20);
+    transition: all 0.25s cubic-bezier(.4, 1.4, .6, 1);
+    position: relative;
+    overflow: hidden;
   }
-  .save-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(80, 50, 30, 0.20); }
-  .save-btn:active { transform: translateY(0); }
+  .save-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--mood-color, var(--hot)), var(--mood-end, var(--purple)));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+  .save-btn.ready::before { opacity: 1; }
+  .save-btn > * { position: relative; z-index: 1; }
+  .save-btn .arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.25s ease;
+    font-family: var(--font-en);
+  }
+  .save-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(10, 10, 20, 0.25);
+  }
+  .save-btn:hover .arrow { transform: translateX(5px); }
   .save-btn:disabled {
-    background: #D5CEC0;
+    background: var(--ink-mute);
     cursor: not-allowed;
-    transform: none;
     box-shadow: none;
   }
+  .save-btn:disabled::before { opacity: 0; }
 
-  /* ---------- Diary list ---------- */
+  /* ---------- List ---------- */
   .list-title {
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 32px;
-    color: var(--ink);
-    margin: 36px 0 18px 4px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin: 42px 0 18px 4px;
   }
-  .list-title .badge {
-    font-family: 'Caveat', cursive;
-    font-size: 18px;
+  .list-title h2 {
+    font-family: var(--font-ko);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.6px;
+  }
+  .list-title .count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
     background: var(--ink);
-    color: var(--paper);
-    padding: 2px 12px;
+    padding: 4px 10px;
     border-radius: 999px;
-    transform: rotate(-2deg);
+    letter-spacing: 0.5px;
   }
 
   .empty {
     text-align: center;
-    padding: 50px 20px;
+    padding: 56px 20px;
     color: var(--ink-soft);
-    font-family: 'Gaegu', sans-serif;
-    font-size: 18px;
   }
-  .empty .big-emoji {
-    font-size: 56px;
-    display: block;
+  .empty .empty-mark {
+    font-family: var(--font-en);
+    font-size: 64px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--hot), var(--electric), var(--cyan));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
     margin-bottom: 14px;
-    animation: float 3s ease-in-out infinite;
+    letter-spacing: -3px;
+    animation: gradientShift 5s ease-in-out infinite;
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-8px) rotate(3deg); }
+  .empty .l1 {
+    font-family: var(--font-ko);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .empty .l2 {
+    font-family: var(--font-ko);
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 4px;
   }
 
   .diary-card {
-    background: var(--paper);
-    border-radius: 22px;
     padding: 22px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(120, 90, 60, 0.08);
+    margin-bottom: 14px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.25s ease;
-    background:
-      radial-gradient(circle at 100% 0%, var(--card-mood-light, transparent) 0%, transparent 50%),
-      radial-gradient(circle at 0% 100%, var(--card-mood, transparent) 0%, transparent 50%),
-      var(--paper);
+    transition: all 0.3s cubic-bezier(.34, 1.4, .64, 1);
+    background: var(--surface-strong);
+    backdrop-filter: blur(28px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
   }
-  .diary-card:hover { transform: translateY(-2px); }
+  .diary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-pop);
+  }
+  .diary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple)));
+  }
   .diary-card::after {
     content: '';
     position: absolute;
-    inset: 0;
+    top: -40%;
+    right: -20%;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, var(--card-mood, var(--hot)), transparent 65%);
+    opacity: 0.10;
     pointer-events: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity: 0.4;
-    mix-blend-mode: multiply;
+    filter: blur(16px);
+    z-index: 0;
   }
   .diary-card > * { position: relative; z-index: 1; }
 
   .card-head {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 14px;
+    margin-bottom: 16px;
   }
-  .card-mood {
-    font-size: 38px;
-    line-height: 1;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08));
+  .card-mood-bubble {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--card-mood, var(--hot)), var(--card-mood-end, var(--purple)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 6px 18px var(--card-mood-shadow, rgba(255, 27, 107, 0.30));
+    flex-shrink: 0;
   }
-  .card-meta { flex: 1; }
+  .card-meta { flex: 1; min-width: 0; }
   .card-date {
-    font-family: 'Caveat', cursive;
-    font-size: 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
     color: var(--ink);
-    line-height: 1.1;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
   }
   .card-mood-name {
-    font-family: 'Gaegu', sans-serif;
-    font-size: 15px;
+    font-family: var(--font-ko);
+    font-size: 13.5px;
     color: var(--ink-soft);
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: -0.2px;
   }
   .del-btn {
     border: none;
-    background: rgba(255,255,255,0.6);
+    background: rgba(10, 10, 20, 0.05);
     width: 32px;
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--ink-soft);
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
   .del-btn:hover {
-    background: #FFE0E0;
-    color: #C0392B;
+    background: var(--hot);
+    color: #fff;
     transform: rotate(90deg);
   }
 
   .card-line {
-    font-family: 'Gowun Dodum', sans-serif;
-    font-size: 16px;
-    color: var(--ink);
-    line-height: 1.7;
-    padding: 8px 0;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    border-bottom: 1px dashed rgba(120, 90, 60, 0.15);
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
   }
-  .card-line:last-child { border-bottom: none; }
-  .card-line .card-line-head {
+  .card-line:last-child { border-bottom: none; padding-bottom: 0; }
+  .card-line:first-of-type { padding-top: 0; }
+  .card-line-head {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-family: 'Gaegu', sans-serif;
-    font-size: 14px;
-    color: var(--ink-soft);
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
   }
-  .card-line .card-line-emoji {
-    font-size: 16px;
-    line-height: 1;
-  }
-  .card-line .card-line-text {
+  .card-line-emoji { font-size: 14px; line-height: 1; }
+  .card-line-text {
     padding-left: 24px;
     color: var(--ink);
+    font-family: var(--font-ko);
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 500;
   }
 
-  @keyframes flash {
-    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-    50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  @keyframes toastIn {
+    0%   { transform: translate(-50%, -20px) scale(0.8); opacity: 0; }
+    60%  { transform: translate(-50%, 4px) scale(1.05); opacity: 1; }
+    100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
   }
   .toast {
     position: fixed;
-    top: 30px;
+    top: 28px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(61, 44, 32, 0.95);
-    color: #FFF6E5;
-    padding: 12px 24px;
+    background: var(--ink);
+    color: #fff;
+    padding: 12px 22px;
     border-radius: 999px;
-    font-family: 'Gaegu', sans-serif;
+    font-family: var(--font-ko);
     font-weight: 700;
-    font-size: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    font-size: 14px;
+    letter-spacing: -0.2px;
+    box-shadow: 0 12px 32px rgba(10, 10, 20, 0.30);
     z-index: 100;
-    animation: flash 0.5s ease;
+    animation: toastIn 0.4s cubic-bezier(.34, 1.6, .64, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toast::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 10px var(--lime);
   }
 
   @media (max-width: 480px) {
-    #root { padding: 28px 14px 60px; }
-    header.top h1 { font-size: 44px; }
-    .user-chip { font-size: 12px; padding: 3px 5px 3px 10px; }
-    .user-chip .user-mail { max-width: 80px; }
-    .mood-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .mood-btn { padding: 10px 2px 8px; border-radius: 16px; }
+    #root { padding: 28px 14px 70px; }
+    header.top h1 { font-size: 40px; letter-spacing: -1.2px; }
+    .user-chip .user-mail { max-width: 70px; }
+    .user-chip { font-size: 11px; }
+    .mood-grid { gap: 6px; }
+    .mood-btn { padding: 12px 2px 8px; border-radius: 16px; }
     .mood-btn .emoji { font-size: 28px; }
     .mood-btn .name { font-size: 11px; }
-    .mood-btn.active::before { font-size: 13px; top: -4px; right: -2px; }
-    .mood-btn.active::after { font-size: 10px; }
-    .write-card, .mood-picker { padding: 20px 18px; }
+    .write-card, .mood-picker { padding: 22px 18px; }
     .line-input input { font-size: 16px; }
-    .auth-card { padding: 28px 22px 24px; }
-    .auth-title { font-size: 34px; }
-    .auth-emoji { font-size: 48px; }
+    .auth-card { padding: 32px 24px 24px; }
+    .auth-title { font-size: 32px; }
   }
 </style>
 </head>
@@ -846,26 +1056,34 @@
 const { useState, useEffect, useMemo } = React;
 
 const MOODS = [
-  { id: 'happy',    emoji: '😊', ko: '행복',   en: 'Happy',    moodLineKo: '행복한',     moodLineEn: 'a happy',    color: '#F5C56B', light: '#FFE8B8' },
-  { id: 'love',     emoji: '🥰', ko: '사랑',   en: 'Love',     moodLineKo: '사랑스러운', moodLineEn: 'a lovely',   color: '#F19BB0', light: '#FFD0DC' },
-  { id: 'thrill',   emoji: '💓', ko: '설렘',   en: 'Fluttery', moodLineKo: '설레는',     moodLineEn: 'a fluttery', color: '#F4A4B8', light: '#FFD6E0' },
-  { id: 'excited',  emoji: '🤩', ko: '신남',   en: 'Excited',  moodLineKo: '신나는',     moodLineEn: 'an exciting',color: '#C99BE3', light: '#E7D0F4' },
+  { id: 'happy',    emoji: '😊', ko: '행복',   en: 'Happy',    moodLineKo: '행복한',     moodLineEn: 'a happy',    color: '#FFB627', end: '#FF6B35' },
+  { id: 'love',     emoji: '🥰', ko: '사랑',   en: 'Love',     moodLineKo: '사랑스러운', moodLineEn: 'a lovely',   color: '#FF1B6B', end: '#FF6B9D' },
+  { id: 'thrill',   emoji: '💓', ko: '설렘',   en: 'Fluttery', moodLineKo: '설레는',     moodLineEn: 'a fluttery', color: '#FF6B9D', end: '#C77DFF' },
+  { id: 'excited',  emoji: '🤩', ko: '신남',   en: 'Excited',  moodLineKo: '신나는',     moodLineEn: 'an exciting',color: '#C77DFF', end: '#3D5AFE' },
 
-  { id: 'proud',    emoji: '😇', ko: '뿌듯',   en: 'Proud',    moodLineKo: '뿌듯한',     moodLineEn: 'a proud',    color: '#F4D55C', light: '#FFEFB8' },
-  { id: 'sparkle',  emoji: '✨', ko: '반짝',   en: 'Sparkly',  moodLineKo: '반짝이는',   moodLineEn: 'a sparkly',  color: '#E8C547', light: '#F7E6A8' },
-  { id: 'cool',     emoji: '😎', ko: '당당',   en: 'Cool',     moodLineKo: '당당한',     moodLineEn: 'a cool',     color: '#7DA8D9', light: '#C5DAF0' },
-  { id: 'calm',     emoji: '😌', ko: '평온',   en: 'Calm',     moodLineKo: '평온한',     moodLineEn: 'a calm',     color: '#9BC9B4', light: '#CFE9DA' },
+  { id: 'proud',    emoji: '😇', ko: '뿌듯',   en: 'Proud',    moodLineKo: '뿌듯한',     moodLineEn: 'a proud',    color: '#FFD700', end: '#FFB627' },
+  { id: 'sparkle',  emoji: '✨', ko: '반짝',   en: 'Sparkly',  moodLineKo: '반짝이는',   moodLineEn: 'a sparkly',  color: '#FFEB3B', end: '#FFD700' },
+  { id: 'cool',     emoji: '😎', ko: '당당',   en: 'Cool',     moodLineKo: '당당한',     moodLineEn: 'a cool',     color: '#3D5AFE', end: '#00B0FF' },
+  { id: 'calm',     emoji: '😌', ko: '평온',   en: 'Calm',     moodLineKo: '평온한',     moodLineEn: 'a calm',     color: '#00D9FF', end: '#00E5A0' },
 
-  { id: 'peaceful', emoji: '🕊️', ko: '평화',   en: 'Peaceful', moodLineKo: '평화로운',   moodLineEn: 'a peaceful', color: '#A8D5BA', light: '#D2EBDC' },
-  { id: 'dreamy',   emoji: '🌙', ko: '몽환',   en: 'Dreamy',   moodLineKo: '몽환적인',   moodLineEn: 'a dreamy',   color: '#B59BE3', light: '#DCC9F2' },
-  { id: 'shy',      emoji: '🫣', ko: '부끄',   en: 'Shy',      moodLineKo: '부끄러웠던', moodLineEn: 'a shy',      color: '#F2A8B8', light: '#FFD8E0' },
-  { id: 'melty',    emoji: '🫠', ko: '녹는중', en: 'Melty',    moodLineKo: '녹아내린',   moodLineEn: 'a melty',    color: '#F4A06E', light: '#FFD2B0' },
+  { id: 'peaceful', emoji: '🕊️', ko: '평화',   en: 'Peaceful', moodLineKo: '평화로운',   moodLineEn: 'a peaceful', color: '#00E5A0', end: '#D4FF3D' },
+  { id: 'dreamy',   emoji: '🌙', ko: '몽환',   en: 'Dreamy',   moodLineKo: '몽환적인',   moodLineEn: 'a dreamy',   color: '#C77DFF', end: '#FF6B9D' },
+  { id: 'shy',      emoji: '🫣', ko: '부끄',   en: 'Shy',      moodLineKo: '부끄러웠던', moodLineEn: 'a shy',      color: '#FF99CC', end: '#FF6B9D' },
+  { id: 'melty',    emoji: '🫠', ko: '녹는중', en: 'Melty',    moodLineKo: '녹아내린',   moodLineEn: 'a melty',    color: '#FFA800', end: '#FF6B35' },
 
-  { id: 'sad',      emoji: '🥺', ko: '울적',   en: 'Blue',     moodLineKo: '울적한',     moodLineEn: 'a blue',     color: '#9BB5E3', light: '#CFDDF4' },
-  { id: 'angry',    emoji: '😤', ko: '화남',   en: 'Angry',    moodLineKo: '화났던',     moodLineEn: 'an angry',   color: '#E89B8C', light: '#F7CFC4' },
-  { id: 'blank',    emoji: '😶‍🌫️', ko: '멍',    en: 'Hazy',     moodLineKo: '멍했던',     moodLineEn: 'a hazy',     color: '#B5C0CC', light: '#DBE2EA' },
-  { id: 'tired',    emoji: '😴', ko: '피곤',   en: 'Tired',    moodLineKo: '피곤한',     moodLineEn: 'a tired',    color: '#B5AEA2', light: '#DAD4C8' },
+  { id: 'sad',      emoji: '🥺', ko: '울적',   en: 'Blue',     moodLineKo: '울적한',     moodLineEn: 'a blue',     color: '#4A6FFF', end: '#00B0FF' },
+  { id: 'angry',    emoji: '😤', ko: '화남',   en: 'Angry',    moodLineKo: '화났던',     moodLineEn: 'an angry',   color: '#FF1B6B', end: '#FF3D5A' },
+  { id: 'blank',    emoji: '😶‍🌫️', ko: '멍',    en: 'Hazy',     moodLineKo: '멍했던',     moodLineEn: 'a hazy',     color: '#B5C0CC', end: '#6F6E78' },
+  { id: 'tired',    emoji: '😴', ko: '피곤',   en: 'Tired',    moodLineKo: '피곤한',     moodLineEn: 'a tired',    color: '#6F6E78', end: '#4A4A55' },
 ];
+
+function hexToRgba(hex, a) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.substring(0,2), 16);
+  const g = parseInt(h.substring(2,4), 16);
+  const b = parseInt(h.substring(4,6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
 
 const WEATHERS = [
   { ko: '맑음 ☀️', en: 'Sunny ☀️' },
@@ -879,47 +1097,48 @@ const WEATHERS = [
 const I18N = {
   ko: {
     htmlLang: 'ko',
-    stamp: "today's three lines",
-    title: '오늘의 세 줄',
-    sub: '마음 한 조각, 살며시 적어둘게요',
-    moodLabel: '지금 내 마음은?',
-    moodLabelSub: 'pick your mood',
+    tag: 'today · log',
+    titlePre: '오늘의',
+    titleAccent: '세 줄',
+    sub: 'A piece of your mind, just three lines',
+    moodLabel: '지금 내 마음',
+    moodLabelSub: 'PICK YOUR MOOD',
     lines: [
       { emoji: '🌟', label: '칭찬하기', placeholder: '오늘 잘한 점, 스스로 칭찬할 일은?' },
       { emoji: '🔁', label: '시행착오', placeholder: '오늘 시도해본 것, 잘 안 됐던 건?' },
       { emoji: '💡', label: '인사이트', placeholder: '오늘의 깨달음 한 줄.' },
     ],
-    saveReady: '✿ 오늘의 마음 저장하기',
+    saveReady: '오늘의 마음 저장하기',
     saveNoLine: '한 줄이라도 적어주세요',
     saveNoMood: '먼저 마음을 골라주세요',
-    toast: '마음 저장 완료 ♥',
+    toast: '저장됐어요',
     listTitle: '지나간 마음들',
-    badgeUnit: '장',
-    emptyLine1: '아직 적어둔 마음이 없어요.',
-    emptyLine2: '오늘의 세 줄, 살며시 채워볼까요?',
+    badgeUnit: '',
+    emptyMark: '∅',
+    emptyLine1: '아직 적어둔 마음이 없어요',
+    emptyLine2: '오늘의 세 줄, 가볍게 채워볼까요',
     confirmDel: '이 일기를 지울까요?',
     delTitle: '삭제',
     moodDaySuffix: '하루',
-    // Auth
-    authEmoji: '🌷',
-    welcome: '환영해요',
-    welcomeSub: '마음을 적어볼 작은 공간',
+    welcomePre: '환영해요',
+    welcomeAccent: '.',
+    welcomeSub: 'A small space for your mind',
     tabLogin: '로그인',
     tabSignup: '회원가입',
-    fieldEmail: '이메일',
+    fieldEmail: 'EMAIL',
     fieldEmailPh: 'you@example.com',
-    fieldPw: '비밀번호',
+    fieldPw: 'PASSWORD',
     fieldPwPh: '6자 이상',
-    fieldContact: '연락처',
+    fieldContact: 'CONTACT',
     fieldContactPh: '010-0000-0000',
-    btnLogin: '로그인 ♥',
-    btnSignup: '가입하기 ✿',
+    btnLogin: '로그인',
+    btnSignup: '계정 만들기',
     footLoginAsk: '아직 계정이 없으신가요?',
     footLoginGo: '회원가입',
     footSignupAsk: '이미 계정이 있으신가요?',
     footSignupGo: '로그인',
-    note: '※ 이 기기에만 저장돼요 (로컬 전용)',
-    logout: '로그아웃',
+    note: 'STORED LOCALLY · 이 기기에만 저장돼요',
+    logout: 'OUT',
     confirmLogout: '로그아웃 할까요?',
     errInvalidEmail: '이메일 형식을 확인해주세요',
     errShortPw: '비밀번호는 6자 이상이어야 해요',
@@ -927,52 +1146,53 @@ const I18N = {
     errNoUser: '가입되지 않은 이메일이에요',
     errBadPw: '비밀번호가 맞지 않아요',
     errDup: '이미 가입된 이메일이에요',
-    okSignup: '가입 완료! 환영해요 ♥',
-    okLogin: '돌아오신 걸 환영해요 ♥',
+    okSignup: '가입 완료',
+    okLogin: '돌아오신 걸 환영해요',
   },
   en: {
     htmlLang: 'en',
-    stamp: "today's three lines",
-    title: 'Three Lines for Today',
-    sub: 'A little piece of your heart, gently written down',
-    moodLabel: 'How do you feel right now?',
-    moodLabelSub: 'pick your mood',
+    tag: 'today · log',
+    titlePre: 'Three lines',
+    titleAccent: 'for today',
+    sub: 'A piece of your mind, just three lines',
+    moodLabel: 'How do you feel',
+    moodLabelSub: 'PICK YOUR MOOD',
     lines: [
       { emoji: '🌟', label: 'Praise',        placeholder: 'What did I do well today?' },
       { emoji: '🔁', label: 'Trial & Error', placeholder: "What did I try that didn't quite work?" },
       { emoji: '💡', label: 'Insight',       placeholder: 'One takeaway from today.' },
     ],
-    saveReady: "✿ Save today's feelings",
+    saveReady: "Save today's feelings",
     saveNoLine: 'Write at least one line',
     saveNoMood: 'Pick a mood first',
-    toast: 'Saved with love ♥',
+    toast: 'Saved',
     listTitle: 'Past Moments',
-    badgeUnit: ' entries',
-    emptyLine1: 'No entries yet.',
-    emptyLine2: "Let's gently fill in today's three lines.",
+    badgeUnit: '',
+    emptyMark: '∅',
+    emptyLine1: 'No entries yet',
+    emptyLine2: "Let's fill in today's three lines",
     confirmDel: 'Delete this entry?',
     delTitle: 'Delete',
     moodDaySuffix: 'day',
-    // Auth
-    authEmoji: '🌷',
-    welcome: 'Welcome',
-    welcomeSub: 'A small space for your heart',
+    welcomePre: 'Welcome',
+    welcomeAccent: '.',
+    welcomeSub: 'A small space for your mind',
     tabLogin: 'Sign in',
     tabSignup: 'Sign up',
-    fieldEmail: 'Email',
+    fieldEmail: 'EMAIL',
     fieldEmailPh: 'you@example.com',
-    fieldPw: 'Password',
+    fieldPw: 'PASSWORD',
     fieldPwPh: '6+ characters',
-    fieldContact: 'Contact',
+    fieldContact: 'CONTACT',
     fieldContactPh: '+1 555 000 0000',
-    btnLogin: 'Sign in ♥',
-    btnSignup: 'Create account ✿',
+    btnLogin: 'Sign in',
+    btnSignup: 'Create account',
     footLoginAsk: "Don't have an account?",
     footLoginGo: 'Sign up',
     footSignupAsk: 'Already have an account?',
     footSignupGo: 'Sign in',
-    note: '※ Stored only on this device (local)',
-    logout: 'Sign out',
+    note: 'STORED LOCALLY · this device only',
+    logout: 'OUT',
     confirmLogout: 'Sign out?',
     errInvalidEmail: 'Check the email format',
     errShortPw: 'Password must be 6+ characters',
@@ -980,8 +1200,8 @@ const I18N = {
     errNoUser: 'No account found for this email',
     errBadPw: "Password doesn't match",
     errDup: 'This email is already registered',
-    okSignup: 'Welcome aboard ♥',
-    okLogin: 'Welcome back ♥',
+    okSignup: 'Welcome aboard',
+    okLogin: 'Welcome back',
   },
 };
 
@@ -1009,12 +1229,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function todayStr(lang) {
   const d = new Date();
   if (lang === 'en') {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} · ${days[d.getDay()]}`;
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2,'0')} · ${days[d.getDay()]}`;
   }
   const days = ['일', '월', '화', '수', '목', '금', '토'];
-  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${days[d.getDay()]}요일`;
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${days[d.getDay()]}`;
 }
 
 function shortDate(iso, lang) {
@@ -1022,16 +1242,16 @@ function shortDate(iso, lang) {
   const hh = String(d.getHours()).padStart(2,'0');
   const mm = String(d.getMinutes()).padStart(2,'0');
   if (lang === 'en') {
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} (${days[d.getDay()]}) ${hh}:${mm}`;
+    const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    return `${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} · ${days[d.getDay()]} · ${hh}:${mm}`;
   }
   const days = ['일','월','화','수','목','금','토'];
-  return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} (${days[d.getDay()]}) ${hh}:${mm}`;
+  return `${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} · ${days[d.getDay()]} · ${hh}:${mm}`;
 }
 
-function LangToggle({ lang, setLang, position = 'top-right' }) {
+function LangToggle({ lang, setLang, variant }) {
   return (
-    <div className={position === 'auth' ? 'auth-lang' : 'lang-toggle'} role="group" aria-label="language">
+    <div className={variant === 'auth' ? 'auth-lang' : 'lang-toggle'} role="group" aria-label="language">
       <button className={lang === 'ko' ? 'on' : ''} onClick={() => setLang('ko')}>KO</button>
       <button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>EN</button>
     </div>
@@ -1092,11 +1312,11 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
   return (
     <div className="auth-wrap">
       <div className="auth-card">
-        <LangToggle lang={lang} setLang={setLang} position="auth" />
+        <LangToggle lang={lang} setLang={setLang} variant="auth" />
 
         <div className="auth-head">
-          <div className="auth-emoji">{t.authEmoji}</div>
-          <div className="auth-title">{t.welcome}<span className="heart">♥</span></div>
+          <div className="auth-tag"><span className="dot"></span>{t.tag}</div>
+          <div className="auth-title">{t.welcomePre}<span className="accent">{t.welcomeAccent}</span></div>
           <div className="auth-sub">{t.welcomeSub}</div>
         </div>
 
@@ -1109,7 +1329,7 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
           <div className={`auth-field ${errField === 'email' ? 'error' : ''}`}>
             <label>{t.fieldEmail}</label>
             <div className="input-wrap">
-              <span className="icon">📧</span>
+              <span className="auth-field-key">@</span>
               <input
                 type="email"
                 inputMode="email"
@@ -1124,7 +1344,7 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
           <div className={`auth-field ${errField === 'pw' ? 'error' : ''}`}>
             <label>{t.fieldPw}</label>
             <div className="input-wrap">
-              <span className="icon">🔒</span>
+              <span className="auth-field-key">··</span>
               <input
                 type="password"
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
@@ -1139,7 +1359,7 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
             <div className={`auth-field ${errField === 'contact' ? 'error' : ''}`}>
               <label>{t.fieldContact}</label>
               <div className="input-wrap">
-                <span className="icon">📞</span>
+                <span className="auth-field-key">#</span>
                 <input
                   type="tel"
                   inputMode="tel"
@@ -1179,7 +1399,6 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   const [weatherIdx, setWeatherIdx] = useState(0);
   const [diaries, setDiaries] = useState([]);
 
-  // load entries for this user (with one-time migration from legacy key)
   useEffect(() => {
     try {
       const userKey = diaryKey(user.email);
@@ -1188,7 +1407,6 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         setDiaries(JSON.parse(raw));
         return;
       }
-      // migrate legacy unsegmented diary into the first user only once
       const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
       if (legacy) {
         localStorage.setItem(userKey, legacy);
@@ -1198,7 +1416,6 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
     } catch (e) {}
   }, [user.email]);
 
-  // save entries
   useEffect(() => {
     localStorage.setItem(diaryKey(user.email), JSON.stringify(diaries));
   }, [diaries, user.email]);
@@ -1206,7 +1423,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   const moodObj = MOODS.find(m => m.id === mood);
   const cssVars = useMemo(() => moodObj ? {
     '--mood-color': moodObj.color,
-    '--mood-color-light': moodObj.light,
+    '--mood-end': moodObj.end,
   } : {}, [moodObj]);
 
   const canSave = mood && lines.some(l => l.trim().length > 0);
@@ -1236,30 +1453,37 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
     onLogout();
   }
 
+  const initial = (user.email[0] || '?').toUpperCase();
+
   return (
     <div style={cssVars}>
       <header className="top">
         <div className="user-chip">
-          <span>👤</span>
+          <span className="user-avatar">{initial}</span>
           <span className="user-mail">{user.email}</span>
           <button className="logout-btn" onClick={handleLogout}>{t.logout}</button>
         </div>
         <LangToggle lang={lang} setLang={setLang} />
-        <span className="stamp">{t.stamp}</span>
-        <h1>{t.title}<span className="heart">♥</span></h1>
+        <div className="head-tag"><span className="dot"></span>{t.tag}</div>
+        <h1>{t.titlePre} <span className="accent">{t.titleAccent}</span></h1>
         <div className="sub">{t.sub}</div>
       </header>
 
-      <section className="mood-picker">
+      <section className="mood-picker glass">
         <div className="mood-label">
-          {t.moodLabel} <small>{t.moodLabelSub}</small>
+          <span className="l">{t.moodLabel}</span>
+          <span className="r">{t.moodLabelSub}</span>
         </div>
         <div className="mood-grid">
           {MOODS.map(m => (
             <button
               key={m.id}
               className={`mood-btn ${mood === m.id ? 'active' : ''}`}
-              style={{ '--mood-color': m.color, '--mood-color-soft': m.light }}
+              style={{
+                '--mood-color': m.color,
+                '--mood-end': m.end,
+                '--mood-color-shadow': hexToRgba(m.color, 0.35),
+              }}
               onClick={() => setMood(m.id)}
               type="button"
               aria-label={lang === 'en' ? m.en : m.ko}
@@ -1271,18 +1495,13 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         </div>
       </section>
 
-      <section className={`write-card ${mood ? 'has-mood' : ''}`}>
+      <section className={`write-card glass ${mood ? 'has-mood' : ''}`}>
         <div className="date-row">
           <span className="today">{todayStr(lang)}</span>
           <select
             className="weather"
             value={weatherIdx}
             onChange={e => setWeatherIdx(Number(e.target.value))}
-            style={{
-              border: 'none', background: 'transparent',
-              fontFamily: 'Caveat, cursive', fontSize: 22,
-              color: 'var(--ink-soft)', cursor: 'pointer', outline: 'none',
-            }}
           >
             {WEATHERS.map((w, i) => <option key={i} value={i}>{lang === 'en' ? w.en : w.ko}</option>)}
           </select>
@@ -1291,7 +1510,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         {t.lines.map((meta, i) => (
           <div key={i} className="line-input">
             <div className="line-head">
-              <span className="num">{i+1}.</span>
+              <span className="num">{String(i+1).padStart(2,'0')}</span>
               <span className="line-emoji">{meta.emoji}</span>
               <span className="line-name">{meta.label}</span>
             </div>
@@ -1309,21 +1528,26 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
           </div>
         ))}
 
-        <button className="save-btn" onClick={handleSave} disabled={!canSave}>
-          {canSave ? t.saveReady : mood ? t.saveNoLine : t.saveNoMood}
+        <button
+          className={`save-btn ${canSave ? 'ready' : ''}`}
+          onClick={handleSave}
+          disabled={!canSave}
+        >
+          <span>{canSave ? t.saveReady : mood ? t.saveNoLine : t.saveNoMood}</span>
+          {canSave && <span className="arrow">→</span>}
         </button>
       </section>
 
-      <h2 className="list-title">
-        {t.listTitle}
-        <span className="badge">{diaries.length}{t.badgeUnit}</span>
-      </h2>
+      <div className="list-title">
+        <h2>{t.listTitle}</h2>
+        <span className="count">{String(diaries.length).padStart(2, '0')}</span>
+      </div>
 
       {diaries.length === 0 ? (
         <div className="empty">
-          <span className="big-emoji">🌷</span>
-          {t.emptyLine1}<br/>
-          {t.emptyLine2}
+          <div className="empty-mark">{t.emptyMark}</div>
+          <div className="l1">{t.emptyLine1}</div>
+          <div className="l2">{t.emptyLine2}</div>
         </div>
       ) : (
         diaries.map(d => {
@@ -1338,12 +1562,12 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
               className="diary-card"
               style={{
                 '--card-mood': m.color,
-                '--card-mood-light': m.light,
-                '--card-mood-strong': m.color,
+                '--card-mood-end': m.end,
+                '--card-mood-shadow': hexToRgba(m.color, 0.35),
               }}
             >
               <div className="card-head">
-                <span className="card-mood">{m.emoji}</span>
+                <div className="card-mood-bubble">{m.emoji}</div>
                 <div className="card-meta">
                   <div className="card-date">{shortDate(d.createdAt, lang)} · {lang === 'en' ? w.en : w.ko}</div>
                   <div className="card-mood-name">{moodPhrase}</div>
@@ -1379,7 +1603,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [toast, setToast] = useState('');
 
-  // restore session
   useEffect(() => {
     try {
       const email = localStorage.getItem(SESSION_KEY);
@@ -1389,11 +1612,10 @@ function App() {
     } catch (e) {}
   }, []);
 
-  // persist lang
   useEffect(() => {
     localStorage.setItem(LANG_KEY, lang);
     document.documentElement.lang = I18N[lang].htmlLang;
-    document.title = lang === 'en' ? "Three Lines for Today · Mood Diary" : "오늘의 세 줄 · 마음 일기장";
+    document.title = lang === 'en' ? "Three Lines · Daily Mood Log" : "오늘의 세 줄 · 데일리 무드 로그";
   }, [lang]);
 
   function showToast(msg) {
