@@ -819,6 +819,32 @@ const OPEN_KEY = 'three_line_diary_open_v1';
 const OPEN_SEEDED_KEY = 'three_line_diary_open_seeded_v1';
 const diaryKey = (email) => `three_line_diary_v1_${email}`;
 
+// ============ Pantry (shared open-space backend) ============
+const PANTRY_ID = '6f94ed89-6b93-4573-9332-6fedf3ed8f2a';
+const PANTRY_BASKET = 'open';
+const PANTRY_URL = `https://getpantry.cloud/apiv1/pantry/${PANTRY_ID}/basket/${PANTRY_BASKET}`;
+const POLL_MS = 5000;
+
+async function pantryGet() {
+  try {
+    const r = await fetch(PANTRY_URL, { method: 'GET' });
+    if (r.status === 400) return null; // basket not yet created
+    if (!r.ok) throw new Error('GET ' + r.status);
+    return await r.json();
+  } catch (e) { console.warn('pantryGet', e.message); return null; }
+}
+async function pantryPut(data) {
+  try {
+    const r = await fetch(PANTRY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!r.ok) throw new Error('POST ' + r.status);
+    return true;
+  } catch (e) { console.warn('pantryPut', e.message); return false; }
+}
+
 async function sha256(str) {
   const buf = new TextEncoder().encode(str);
   const hashBuf = await crypto.subtle.digest('SHA-256', buf);
@@ -884,18 +910,17 @@ function relativeTime(iso, t) {
   return `${day}${t.timeDay}`;
 }
 
-function seedOpenIfNeeded() {
-  if (localStorage.getItem(OPEN_SEEDED_KEY)) return;
+function makeSeedEntries() {
   const now = Date.now();
-  const sample = [
+  return [
     {
       id: now - 8 * 60000,
       authorEmail: 'seed1@example',
       mood: 'tired', weatherIdx: 1,
       lines: ['새벽 5시 출근, 그래도 가게 문 잘 열었다.', '재료 발주 깜빡해서 점심 메뉴 두 개 빠짐.', '직원이 알아서 메모해줘서 다음부턴 안 잊을듯.'],
       createdAt: new Date(now - 8 * 60000).toISOString(),
-      reactions: { '💗': 4, '👏': 2, '🤝': 1 },
-      comments: [{ id: now - 7*60000, author: '오늘도화이팅', text: '사장님 진짜 부지런하시네요 ㅠㅠ 응원합니다', createdAt: new Date(now - 7*60000).toISOString() }],
+      reactions: { '💗': ['_s1','_s2','_s3','_s4'], '👏': ['_s5','_s6'], '🤝': ['_s7'] },
+      comments: [{ id: now - 7*60000, authorEmail: '_c1@seed', authorName: '오늘도화이팅', text: '사장님 진짜 부지런하시네요 ㅠㅠ 응원합니다', createdAt: new Date(now - 7*60000).toISOString() }],
     },
     {
       id: now - 26 * 60000,
@@ -903,7 +928,7 @@ function seedOpenIfNeeded() {
       mood: 'proud', weatherIdx: 0,
       lines: ['처음 맡은 PT 미팅, 끝까지 안 떨었다.', '슬라이드에 오타 하나 있었지만 그냥 넘김 ㅋㅋ', '준비한 만큼 나오는 건 진짜다.'],
       createdAt: new Date(now - 26 * 60000).toISOString(),
-      reactions: { '👏': 7, '🌟': 5, '💗': 2 },
+      reactions: { '👏': ['_s8','_s9','_s10','_s11','_s12','_s13','_s14'], '🌟': ['_s15','_s16','_s17','_s18','_s19'], '💗': ['_s20','_s21'] },
       comments: [],
     },
     {
@@ -912,10 +937,10 @@ function seedOpenIfNeeded() {
       mood: 'anxious', weatherIdx: 2,
       lines: ['', '내일 면접 생각에 잠이 안 와.', '준비한 답변 한 번만 더 보고 자자.'],
       createdAt: new Date(now - 55 * 60000).toISOString(),
-      reactions: { '🤝': 6, '💗': 3 },
+      reactions: { '🤝': ['_s22','_s23','_s24','_s25','_s26','_s27'], '💗': ['_s28','_s29','_s30'] },
       comments: [
-        { id: now - 50*60000, author: '겪어본사람', text: '잘 될거에요. 손에 든 거 다 보여주고만 와요!', createdAt: new Date(now - 50*60000).toISOString() },
-        { id: now - 40*60000, author: '같은처지', text: '저도 내일 면접;; 같이 화이팅', createdAt: new Date(now - 40*60000).toISOString() },
+        { id: now - 50*60000, authorEmail: '_c2@seed', authorName: '겪어본사람', text: '잘 될거에요. 손에 든 거 다 보여주고만 와요!', createdAt: new Date(now - 50*60000).toISOString() },
+        { id: now - 40*60000, authorEmail: '_c3@seed', authorName: '같은처지', text: '저도 내일 면접;; 같이 화이팅', createdAt: new Date(now - 40*60000).toISOString() },
       ],
     },
     {
@@ -924,7 +949,7 @@ function seedOpenIfNeeded() {
       mood: 'love', weatherIdx: 5,
       lines: ['오랜만에 엄마랑 점심.', '음식 다 못 먹어서 죄송한 마음만 들었다.', '다음 주엔 좋아하시는 데로 모시고 가야지.'],
       createdAt: new Date(now - 120 * 60000).toISOString(),
-      reactions: { '💗': 12, '🌈': 3 },
+      reactions: { '💗': Array.from({length:12}, (_,i) => '_s'+(40+i)), '🌈': ['_s52','_s53','_s54'] },
       comments: [],
     },
     {
@@ -933,8 +958,8 @@ function seedOpenIfNeeded() {
       mood: 'frustrated', weatherIdx: 4,
       lines: ['세 번째 제출, 또 거절.', '내가 뭘 빠뜨린 건지 모르겠음.', '내일 다시 처음부터 — 모르겠으면 물어보자.'],
       createdAt: new Date(now - 5 * 3600 * 1000).toISOString(),
-      reactions: { '🤝': 9, '💗': 4 },
-      comments: [{ id: now - 4*3600*1000, author: '비슷한경험', text: '저도 그때 동료한테 물어보고 한 방에 풀린 적 있어요. 부끄러워하지 말고 ㅎㅎ', createdAt: new Date(now - 4*3600*1000).toISOString() }],
+      reactions: { '🤝': Array.from({length:9}, (_,i) => '_s'+(60+i)), '💗': ['_s70','_s71','_s72','_s73'] },
+      comments: [{ id: now - 4*3600*1000, authorEmail: '_c4@seed', authorName: '비슷한경험', text: '저도 그때 동료한테 물어보고 한 방에 풀린 적 있어요. 부끄러워하지 말고 ㅎㅎ', createdAt: new Date(now - 4*3600*1000).toISOString() }],
     },
     {
       id: now - 10 * 3600 * 1000,
@@ -942,12 +967,10 @@ function seedOpenIfNeeded() {
       mood: 'sparkle', weatherIdx: 0,
       lines: ['아침에 책 30분 읽고 출근.', '꾸준한게 진짜 어렵단 걸 또 느낌.', '작은 습관 하나가 하루를 다르게 만든다.'],
       createdAt: new Date(now - 10 * 3600 * 1000).toISOString(),
-      reactions: { '🌟': 8, '👏': 3 },
+      reactions: { '🌟': Array.from({length:8}, (_,i) => '_s'+(80+i)), '👏': ['_s90','_s91','_s92'] },
       comments: [],
     },
   ];
-  saveOpen(sample);
-  localStorage.setItem(OPEN_SEEDED_KEY, '1');
 }
 
 function Potato({ size = 88, expr = 'happy', accent = '#FF8FB1', className = '', style }) {
@@ -1201,8 +1224,9 @@ function OpenCard({ entry, lang, t, onReact, onComment, currentEmail }) {
 
       <div className="reactions">
         {REACTIONS.map(em => {
-          const cnt = (entry.reactions && entry.reactions[em]) || 0;
-          const mine = entry.myReactions && entry.myReactions.includes(em);
+          const arr = (entry.reactions && entry.reactions[em]) || [];
+          const cnt = Array.isArray(arr) ? arr.length : (typeof arr === 'number' ? arr : 0);
+          const mine = Array.isArray(arr) && arr.includes(currentEmail);
           return (
             <button
               key={em}
@@ -1218,15 +1242,18 @@ function OpenCard({ entry, lang, t, onReact, onComment, currentEmail }) {
       </div>
 
       <div className="comments">
-        {(entry.comments || []).map(c => (
-          <div key={c.id} className="comment">
-            <div className="c-avatar">{(c.author[0] || '?').toUpperCase()}</div>
-            <div className="c-body">
-              <div className="c-meta"><span className="c-name">{c.author}</span> · {relativeTime(c.createdAt, t)}</div>
-              <div className="c-text">{c.text}</div>
+        {(entry.comments || []).map(c => {
+          const name = c.authorName || c.author || '?';
+          return (
+            <div key={c.id} className="comment">
+              <div className="c-avatar">{(name[0] || '?').toUpperCase()}</div>
+              <div className="c-body">
+                <div className="c-meta"><span className="c-name">{name}</span> · {relativeTime(c.createdAt, t)}</div>
+                <div className="c-text">{c.text}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         <form className="comment-form" onSubmit={submitComment}>
           <input
             type="text"
@@ -1255,8 +1282,8 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   const [diaries, setDiaries] = useState([]);
   const [openEntries, setOpenEntries] = useState([]);
 
+  // local diaries load
   useEffect(() => {
-    seedOpenIfNeeded();
     try {
       const userKey = diaryKey(user.email);
       const raw = localStorage.getItem(userKey);
@@ -1270,7 +1297,8 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
           setDiaries(JSON.parse(legacy));
         }
       }
-      setOpenEntries(loadOpen());
+      const cached = loadOpen();
+      if (cached && cached.length) setOpenEntries(cached);
     } catch (e) {}
   }, [user.email]);
 
@@ -1278,9 +1306,28 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
     localStorage.setItem(diaryKey(user.email), JSON.stringify(diaries));
   }, [diaries, user.email]);
 
+  // Pantry sync: initial seed + 5s polling
   useEffect(() => {
-    saveOpen(openEntries);
-  }, [openEntries]);
+    let cancelled = false;
+    async function load(isInit) {
+      const data = await pantryGet();
+      if (cancelled) return;
+      if (data && Array.isArray(data.entries)) {
+        setOpenEntries(data.entries);
+        saveOpen(data.entries);
+      } else if (isInit) {
+        const seed = makeSeedEntries();
+        const ok = await pantryPut({ entries: seed, updatedAt: Date.now() });
+        if (!cancelled && ok) {
+          setOpenEntries(seed);
+          saveOpen(seed);
+        }
+      }
+    }
+    load(true);
+    const id = setInterval(() => load(false), POLL_MS);
+    return () => { cancelled = true; clearInterval(id); };
+  }, []);
 
   const moodObj = MOODS.find(m => m.id === mood);
   const cssVars = useMemo(() => moodObj ? {
@@ -1290,7 +1337,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
 
   const canSave = mood && lines.some(l => l.trim().length > 0);
 
-  function handleSave() {
+  async function handleSave() {
     if (!canSave) return;
     const id = Date.now();
     const entry = {
@@ -1308,9 +1355,12 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         mood, weatherIdx,
         lines: entry.lines,
         createdAt: entry.createdAt,
-        reactions: {}, myReactions: [], comments: [],
+        reactions: {}, comments: [],
       };
-      setOpenEntries([openEntry, ...openEntries]);
+      const newOpen = [openEntry, ...openEntries];
+      setOpenEntries(newOpen);
+      saveOpen(newOpen);
+      pantryPut({ entries: newOpen, updatedAt: Date.now() });
       onToast(t.sharedToast);
     } else {
       onToast(t.toast);
@@ -1324,7 +1374,13 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   function handleDelete(id) {
     if (!confirm(t.confirmDel)) return;
     setDiaries(diaries.filter(d => d.id !== id));
-    setOpenEntries(openEntries.filter(o => o.id !== id));
+    const wasShared = openEntries.some(o => o.id === id && o.authorEmail === user.email);
+    if (wasShared) {
+      const newOpen = openEntries.filter(o => !(o.id === id && o.authorEmail === user.email));
+      setOpenEntries(newOpen);
+      saveOpen(newOpen);
+      pantryPut({ entries: newOpen, updatedAt: Date.now() });
+    }
   }
 
   function handleShareExisting(id) {
@@ -1337,40 +1393,49 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
       mood: d.mood, weatherIdx: d.weatherIdx,
       lines: d.lines,
       createdAt: d.createdAt,
-      reactions: {}, myReactions: [], comments: [],
+      reactions: {}, comments: [],
     };
-    setOpenEntries([openEntry, ...openEntries]);
+    const newOpen = [openEntry, ...openEntries];
+    setOpenEntries(newOpen);
+    saveOpen(newOpen);
     setDiaries(diaries.map(x => x.id === id ? { ...x, shared: true } : x));
+    pantryPut({ entries: newOpen, updatedAt: Date.now() });
     onToast(t.sharedToast);
   }
 
   function handleReact(openId, emoji) {
-    setOpenEntries(openEntries.map(o => {
+    const newOpen = openEntries.map(o => {
       if (o.id !== openId) return o;
       const reactions = { ...(o.reactions || {}) };
-      const myReactions = [...(o.myReactions || [])];
-      if (myReactions.includes(emoji)) {
-        reactions[emoji] = Math.max(0, (reactions[emoji] || 0) - 1);
-        return { ...o, reactions, myReactions: myReactions.filter(e => e !== emoji) };
+      const arr = Array.isArray(reactions[emoji]) ? [...reactions[emoji]] : [];
+      if (arr.includes(user.email)) {
+        reactions[emoji] = arr.filter(e => e !== user.email);
       } else {
-        reactions[emoji] = (reactions[emoji] || 0) + 1;
-        myReactions.push(emoji);
-        return { ...o, reactions, myReactions };
+        arr.push(user.email);
+        reactions[emoji] = arr;
       }
-    }));
+      return { ...o, reactions };
+    });
+    setOpenEntries(newOpen);
+    saveOpen(newOpen);
+    pantryPut({ entries: newOpen, updatedAt: Date.now() });
   }
 
   function handleComment(openId, text) {
-    setOpenEntries(openEntries.map(o => {
+    const newOpen = openEntries.map(o => {
       if (o.id !== openId) return o;
       const comments = [...(o.comments || []), {
         id: Date.now(),
-        author: anonName(user.email, lang),
+        authorEmail: user.email,
+        authorName: anonName(user.email, lang),
         text,
         createdAt: new Date().toISOString(),
       }];
       return { ...o, comments };
-    }));
+    });
+    setOpenEntries(newOpen);
+    saveOpen(newOpen);
+    pantryPut({ entries: newOpen, updatedAt: Date.now() });
   }
 
   function handleLogout() {
