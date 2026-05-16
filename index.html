@@ -79,44 +79,72 @@
 
   ::selection { background: var(--hot); color: #fff; }
 
-  /* ---------- Mascot: 감쟈 ---------- */
-  .potato { display: block; pointer-events: none; }
-  .potato-wave {
+  /* ---------- Mascot: 무디 (Moody) ---------- */
+  .mascot {
+    display: block;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 12px rgba(20, 10, 40, 0.12));
+  }
+  .mascot-wave {
     display: inline-block;
-    animation: potatoWave 3.4s ease-in-out infinite;
+    animation: moodyWave 3.6s ease-in-out infinite;
     transform-origin: 50% 90%;
   }
-  @keyframes potatoWave {
-    0%, 100% { transform: translateY(0) rotate(-4deg); }
-    50%      { transform: translateY(-9px) rotate(4deg); }
+  @keyframes moodyWave {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-10px) rotate(3deg); }
   }
-  .potato-bounce { animation: potatoBounce 2.2s ease-in-out infinite; display: inline-block; transform-origin: 50% 100%; }
-  @keyframes potatoBounce {
-    0%, 100% { transform: translateY(0) scale(1, 1); }
-    50%      { transform: translateY(-6px) scale(1.02, 0.98); }
+  .mascot-pulse {
+    display: inline-block;
+    animation: moodyPulse 2.4s ease-in-out infinite;
+    transform-origin: 50% 100%;
   }
-  .potato-zzz {
+  @keyframes moodyPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+  }
+  .mascot-sleep {
+    display: inline-block;
+    animation: moodySleep 3.2s ease-in-out infinite;
+    transform-origin: 50% 100%;
+  }
+  @keyframes moodySleep {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-4px) rotate(2deg); }
+  }
+  .mascot-zzz {
     position: absolute;
     font-family: var(--font-en);
     font-weight: 700;
     color: var(--ink-mute);
     font-size: 18px;
-    animation: zzzFloat 2.4s ease-in-out infinite;
+    animation: zzzFloat 2.8s ease-in-out infinite;
+    pointer-events: none;
   }
   @keyframes zzzFloat {
-    0%   { transform: translate(0, 0); opacity: 0; }
+    0%   { transform: translate(0, 0) rotate(-8deg); opacity: 0; }
     30%  { opacity: 1; }
-    100% { transform: translate(14px, -22px); opacity: 0; }
+    100% { transform: translate(18px, -26px) rotate(8deg); opacity: 0; }
   }
-  .header-potato {
+  .header-mascot {
     position: absolute;
-    right: -8px;
-    bottom: -8px;
+    right: -6px;
+    bottom: -4px;
     z-index: 4;
     pointer-events: none;
   }
+  .twinkle {
+    animation: twinkle 2.1s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .twinkle.t2 { animation-delay: -0.7s; }
+  .twinkle.t3 { animation-delay: -1.4s; }
+  @keyframes twinkle {
+    0%, 100% { transform: scale(1) rotate(0); opacity: 0.9; }
+    50%      { transform: scale(1.3) rotate(60deg); opacity: 1; }
+  }
   @media (max-width: 480px) {
-    .header-potato { right: -10px; bottom: -4px; }
+    .header-mascot { right: -8px; bottom: 0; }
   }
 
   /* ---------- Auth ---------- */
@@ -973,97 +1001,134 @@ function makeSeedEntries() {
   ];
 }
 
-function Potato({ size = 88, expr = 'happy', accent = '#FF8FB1', className = '', style }) {
+function Moody({ size = 88, expr = 'happy', accent = '#FF1B6B', accent2 = '#C77DFF', className = '', style }) {
   // expr: 'happy' | 'sleepy' | 'sad' | 'hazy' | 'wink' | 'love'
-  let eyes, mouth, extra = null;
+  const gid = React.useId().replace(/:/g, '');
+  let eyes, mouth;
 
   if (expr === 'sleepy') {
     eyes = (
       <g>
-        <path d="M 39 56 Q 44 62 49 56" stroke="#2A1810" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-        <path d="M 71 56 Q 76 62 81 56" stroke="#2A1810" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+        <path d="M 39 56 Q 44 62 49 56" stroke="#0A0A14" strokeWidth="2.8" fill="none" strokeLinecap="round" />
+        <path d="M 71 56 Q 76 62 81 56" stroke="#0A0A14" strokeWidth="2.8" fill="none" strokeLinecap="round" />
       </g>
     );
-    mouth = <ellipse cx="60" cy="80" rx="4.5" ry="6" fill="#2A1810" />;
+    mouth = <ellipse cx="60" cy="78" rx="4.5" ry="6" fill="#0A0A14" />;
   } else if (expr === 'sad') {
     eyes = (
       <g>
-        <ellipse cx="44" cy="56" rx="3" ry="4" fill="#2A1810" />
-        <ellipse cx="76" cy="56" rx="3" ry="4" fill="#2A1810" />
-        <path d="M 41 64 Q 44 68 47 64" stroke="#7AB5E3" strokeWidth="1.8" fill="#A5D0F2" strokeLinecap="round" />
+        <ellipse cx="44" cy="56" rx="3.2" ry="4.2" fill="#0A0A14" />
+        <ellipse cx="76" cy="56" rx="3.2" ry="4.2" fill="#0A0A14" />
+        <path d="M 41 64 Q 44 70 47 64 Q 47 67 44 70 Q 41 67 41 64 Z" fill="#7AB5E3" />
       </g>
     );
-    mouth = <path d="M 48 82 Q 60 75 72 82" stroke="#2A1810" strokeWidth="2.2" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 48 82 Q 60 75 72 82" stroke="#0A0A14" strokeWidth="2.4" fill="none" strokeLinecap="round" />;
   } else if (expr === 'hazy') {
     eyes = (
       <g>
-        <circle cx="44" cy="56" r="2.2" fill="#2A1810" />
-        <circle cx="76" cy="56" r="2.2" fill="#2A1810" />
+        <circle cx="44" cy="56" r="2.2" fill="#0A0A14" />
+        <circle cx="76" cy="56" r="2.2" fill="#0A0A14" />
       </g>
     );
-    mouth = <line x1="54" y1="78" x2="66" y2="78" stroke="#2A1810" strokeWidth="2.4" strokeLinecap="round" />;
+    mouth = <line x1="54" y1="78" x2="66" y2="78" stroke="#0A0A14" strokeWidth="2.6" strokeLinecap="round" />;
   } else if (expr === 'wink') {
     eyes = (
       <g>
-        <path d="M 39 55 Q 44 60 49 55" stroke="#2A1810" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-        <ellipse cx="76" cy="55" rx="3" ry="4" fill="#2A1810" />
-        <circle cx="77.5" cy="53" r="1.2" fill="#fff" />
+        <path d="M 39 55 Q 44 60 49 55" stroke="#0A0A14" strokeWidth="2.8" fill="none" strokeLinecap="round" />
+        <ellipse cx="76" cy="55" rx="3.2" ry="4.2" fill="#0A0A14" />
+        <circle cx="77.5" cy="53" r="1.3" fill="#fff" />
       </g>
     );
-    mouth = <path d="M 48 76 Q 60 86 72 76" stroke="#2A1810" strokeWidth="2.4" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 48 76 Q 60 86 72 76" stroke="#0A0A14" strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   } else if (expr === 'love') {
     eyes = (
       <g>
-        <path d="M 38 53 Q 38 49 42 49 Q 46 49 46 53 Q 46 57 42 60 Q 38 57 38 53 Z" fill="#FF1B6B" />
-        <path d="M 70 53 Q 70 49 74 49 Q 78 49 78 53 Q 78 57 74 60 Q 70 57 70 53 Z" fill="#FF1B6B" />
+        <path d="M 39 51 Q 39 47 43 47 Q 47 47 47 51 Q 47 55 43 59 Q 39 55 39 51 Z" fill="#FF1B6B" />
+        <path d="M 71 51 Q 71 47 75 47 Q 79 47 79 51 Q 79 55 75 59 Q 71 55 71 51 Z" fill="#FF1B6B" />
       </g>
     );
-    mouth = <path d="M 48 76 Q 60 88 72 76" stroke="#2A1810" strokeWidth="2.4" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 48 76 Q 60 88 72 76" stroke="#0A0A14" strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   } else { // happy / default
     eyes = (
       <g>
-        <ellipse cx="44" cy="55" rx="3" ry="4" fill="#2A1810" />
-        <ellipse cx="76" cy="55" rx="3" ry="4" fill="#2A1810" />
-        <circle cx="45.5" cy="53" r="1.2" fill="#fff" />
-        <circle cx="77.5" cy="53" r="1.2" fill="#fff" />
+        <ellipse cx="44" cy="55" rx="3.2" ry="4.4" fill="#0A0A14" />
+        <ellipse cx="76" cy="55" rx="3.2" ry="4.4" fill="#0A0A14" />
+        <circle cx="45.5" cy="53" r="1.3" fill="#fff" />
+        <circle cx="77.5" cy="53" r="1.3" fill="#fff" />
       </g>
     );
-    mouth = <path d="M 48 76 Q 60 86 72 76" stroke="#2A1810" strokeWidth="2.4" fill="none" strokeLinecap="round" />;
+    mouth = <path d="M 48 76 Q 60 86 72 76" stroke="#0A0A14" strokeWidth="2.6" fill="none" strokeLinecap="round" />;
   }
+
+  // 4-pointed sparkle path (centered at 0,0, size ~ ±r)
+  const sparkle = (cx, cy, r, fill, opacity = 1) => (
+    <path
+      d={`M ${cx} ${cy - r} Q ${cx + r*0.3} ${cy - r*0.3} ${cx + r} ${cy} Q ${cx + r*0.3} ${cy + r*0.3} ${cx} ${cy + r} Q ${cx - r*0.3} ${cy + r*0.3} ${cx - r} ${cy} Q ${cx - r*0.3} ${cy - r*0.3} ${cx} ${cy - r} Z`}
+      fill={fill}
+      opacity={opacity}
+    />
+  );
 
   return (
     <svg
       viewBox="0 0 120 130"
       width={size}
       height={Math.round(size * 130 / 120)}
-      className={`potato ${className}`}
+      className={`mascot ${className}`}
       style={style}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* shadow */}
-      <ellipse cx="60" cy="121" rx="28" ry="3.5" fill="rgba(20,10,5,0.10)" />
-      {/* body */}
+      <defs>
+        <linearGradient id={`bg-${gid}`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={accent} />
+          <stop offset="100%" stopColor={accent2} />
+        </linearGradient>
+        <radialGradient id={`hi-${gid}`} cx="35%" cy="32%" r="40%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* soft glow halo */}
+      <ellipse cx="60" cy="65" rx="56" ry="52" fill={accent} opacity="0.16" />
+
+      {/* drop shadow under */}
+      <ellipse cx="60" cy="119" rx="26" ry="3.5" fill="rgba(10,10,20,0.14)" />
+
+      {/* body — soft asymmetric blob */}
       <path
-        d="M 60 12 C 30 12 18 38 22 70 C 25 100 40 116 60 116 C 80 116 95 100 98 70 C 102 38 90 12 60 12 Z"
-        fill="#F5C988"
-        stroke="#C99362"
-        strokeWidth="2.3"
-        strokeLinejoin="round"
+        d="M 60 16
+           C 36 14 18 36 20 60
+           C 22 84 32 110 56 113
+           C 80 116 98 100 102 74
+           C 106 48 92 18 60 16 Z"
+        fill={`url(#bg-${gid})`}
       />
-      {/* potato spots */}
-      <circle cx="38" cy="32" r="2.2" fill="#A87454" opacity="0.45" />
-      <circle cx="80" cy="30" r="1.6" fill="#A87454" opacity="0.45" />
-      <circle cx="48" cy="102" r="1.6" fill="#A87454" opacity="0.45" />
-      <circle cx="86" cy="92" r="1.4" fill="#A87454" opacity="0.4" />
-      {/* sprout (작은 새싹) */}
-      <path d="M 60 14 Q 56 6 52 8 Q 55 12 58 14" fill="#7BC56E" stroke="#5BAC4E" strokeWidth="1.2" strokeLinejoin="round" />
-      <path d="M 60 14 Q 64 6 68 8 Q 65 12 62 14" fill="#9BD68E" stroke="#5BAC4E" strokeWidth="1.2" strokeLinejoin="round" />
-      {/* cheeks */}
-      <ellipse cx="30" cy="68" rx="7" ry="5" fill={accent} opacity="0.55" />
-      <ellipse cx="90" cy="68" rx="7" ry="5" fill={accent} opacity="0.55" />
+
+      {/* inner highlight */}
+      <ellipse cx="46" cy="42" rx="18" ry="13" fill={`url(#hi-${gid})`} transform="rotate(-20 46 42)" />
+
+      {/* subtle bottom shading */}
+      <path
+        d="M 28 78 C 36 102 56 110 64 110 C 78 110 92 96 96 76 C 90 96 76 106 60 106 C 44 106 32 96 28 78 Z"
+        fill="#000"
+        opacity="0.08"
+      />
+
+      {/* eyes & mouth */}
       {eyes}
       {mouth}
-      {extra}
+
+      {/* sparkle decorations around mascot */}
+      <g className="twinkle" style={{ transformOrigin: '108px 28px' }}>
+        {sparkle(108, 28, 4.5, '#FFE066')}
+      </g>
+      <g className="twinkle t2" style={{ transformOrigin: '14px 50px' }}>
+        {sparkle(14, 50, 3.5, '#FFB6E6', 0.85)}
+      </g>
+      <g className="twinkle t3" style={{ transformOrigin: '100px 100px' }}>
+        {sparkle(100, 100, 3, '#B5D5FF', 0.8)}
+      </g>
     </svg>
   );
 }
@@ -1130,7 +1195,7 @@ function AuthScreen({ lang, setLang, onAuth, onToast }) {
         <LangToggle lang={lang} setLang={setLang} variant="auth" />
         <div className="auth-head">
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
-            <span className="potato-wave"><Potato size={92} expr="happy" /></span>
+            <span className="mascot-wave"><Moody size={104} expr="happy" accent="#FF1B6B" accent2="#C77DFF" /></span>
           </div>
           <div className="auth-tag"><span className="dot"></span>{t.tag}</div>
           <div className="auth-title">{t.welcomePre}<span className="accent">{t.welcomeAccent}</span></div>
@@ -1461,8 +1526,13 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         <div className="head-tag"><span className="dot"></span>{t.tag}</div>
         <h1>{t.titlePre} <span className="accent">{t.titleAccent}</span></h1>
         <div className="sub">{t.sub}</div>
-        <div className="header-potato potato-wave">
-          <Potato size={68} expr={moodObj ? (moodObj.cat === 'heavy' ? 'sad' : moodObj.cat === 'hazy' ? 'hazy' : moodObj.cat === 'calm' ? 'wink' : 'love') : 'happy'} accent={moodObj ? moodObj.color : '#FF8FB1'} />
+        <div className="header-mascot mascot-wave">
+          <Moody
+            size={76}
+            expr={moodObj ? (moodObj.cat === 'heavy' ? 'sad' : moodObj.cat === 'hazy' ? 'hazy' : moodObj.cat === 'calm' ? 'wink' : 'love') : 'happy'}
+            accent={moodObj ? moodObj.color : '#FF1B6B'}
+            accent2={moodObj ? moodObj.end : '#C77DFF'}
+          />
         </div>
       </header>
 
@@ -1591,10 +1661,10 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
           {diaries.length === 0 ? (
             <div className="empty">
               <div style={{ display: 'inline-block', position: 'relative', marginBottom: 16 }}>
-                <span className="potato-bounce"><Potato size={120} expr="sleepy" /></span>
-                <span className="potato-zzz" style={{ top: 8, right: -2 }}>z</span>
-                <span className="potato-zzz" style={{ top: 18, right: 8, fontSize: 14, animationDelay: '0.6s' }}>z</span>
-                <span className="potato-zzz" style={{ top: 28, right: 16, fontSize: 12, animationDelay: '1.2s' }}>z</span>
+                <span className="mascot-sleep"><Moody size={130} expr="sleepy" accent="#C77DFF" accent2="#3D5AFE" /></span>
+                <span className="mascot-zzz" style={{ top: 6, right: 4 }}>z</span>
+                <span className="mascot-zzz" style={{ top: 18, right: 14, fontSize: 14, animationDelay: '0.8s' }}>z</span>
+                <span className="mascot-zzz" style={{ top: 28, right: 22, fontSize: 12, animationDelay: '1.6s' }}>z</span>
               </div>
               <div className="l1">{t.emptyLine1}</div>
               <div className="l2">{t.emptyLine2}</div>
@@ -1664,7 +1734,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
           {openEntries.length === 0 ? (
             <div className="empty">
               <div style={{ display: 'inline-block', marginBottom: 16 }}>
-                <span className="potato-wave"><Potato size={120} expr="wink" /></span>
+                <span className="mascot-wave"><Moody size={130} expr="wink" accent="#00D9FF" accent2="#00E5A0" /></span>
               </div>
               <div className="l1">{t.emptyOpen1}</div>
               <div className="l2">{t.emptyOpen2}</div>
