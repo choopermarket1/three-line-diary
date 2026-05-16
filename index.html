@@ -748,6 +748,14 @@
     color: var(--ink);
     letter-spacing: -0.2px;
   }
+  .line-head .line-hint {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    letter-spacing: 0.3px;
+    margin-left: 2px;
+  }
   .line-input input {
     border: none;
     outline: none;
@@ -1106,7 +1114,7 @@ const I18N = {
     lines: [
       { emoji: '🌟', label: '칭찬하기', placeholder: '오늘 잘한 점, 스스로 칭찬할 일은?' },
       { emoji: '🔁', label: '시행착오', placeholder: '오늘 시도해본 것, 잘 안 됐던 건?' },
-      { emoji: '💡', label: '인사이트', placeholder: '오늘의 깨달음 한 줄.' },
+      { emoji: '💡', label: '인사이트', hint: '사장일기 · 직장인 한 줄 등', placeholder: '오늘의 깨달음 — 사장님 한 줄, 직장인 한 줄.' },
     ],
     saveReady: '오늘의 마음 저장하기',
     saveNoLine: '한 줄이라도 적어주세요',
@@ -1160,7 +1168,7 @@ const I18N = {
     lines: [
       { emoji: '🌟', label: 'Praise',        placeholder: 'What did I do well today?' },
       { emoji: '🔁', label: 'Trial & Error', placeholder: "What did I try that didn't quite work?" },
-      { emoji: '💡', label: 'Insight',       placeholder: 'One takeaway from today.' },
+      { emoji: '💡', label: 'Insight',       hint: 'CEO log · worker one-liner · etc.', placeholder: 'One takeaway — your daily one-liner.' },
     ],
     saveReady: "Save today's feelings",
     saveNoLine: 'Write at least one line',
@@ -1513,6 +1521,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
               <span className="num">{String(i+1).padStart(2,'0')}</span>
               <span className="line-emoji">{meta.emoji}</span>
               <span className="line-name">{meta.label}</span>
+              {meta.hint && <span className="line-hint">({meta.hint})</span>}
             </div>
             <input
               type="text"
