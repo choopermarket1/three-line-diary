@@ -344,7 +344,11 @@
   .write-card.has-mood::before { content: ''; position: absolute; top: -50%; right: -30%; width: 380px; height: 380px; background: radial-gradient(circle, var(--mood-color, var(--hot)), transparent 65%); opacity: 0.15; pointer-events: none; filter: blur(20px); z-index: 0; }
   .write-card > * { position: relative; z-index: 1; }
   .date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .date-row .today { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--ink); letter-spacing: 1px; text-transform: uppercase; background: rgba(10, 10, 20, 0.05); padding: 6px 12px; border-radius: 999px; }
+  .date-row .today { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--ink); letter-spacing: 1px; background: rgba(10, 10, 20, 0.05); padding: 6px 12px; border-radius: 999px; border: none; outline: none; cursor: pointer; transition: all 0.2s ease; color-scheme: light; }
+  .date-row .today:hover { background: rgba(10, 10, 20, 0.10); }
+  .date-row .today:focus { background: rgba(10, 10, 20, 0.12); box-shadow: 0 0 0 3px rgba(255, 27, 107, 0.18); }
+  .date-row .today::-webkit-calendar-picker-indicator { opacity: 0.55; cursor: pointer; margin-left: 4px; padding: 0; }
+  .date-row .today.past { background: linear-gradient(135deg, rgba(255, 27, 107, 0.14), rgba(199, 125, 255, 0.14)); color: var(--hot); }
   .date-row .weather { font-family: var(--font-ko); font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; background: rgba(10, 10, 20, 0.05); padding: 6px 12px; border-radius: 999px; border: none; outline: none; transition: all 0.2s ease; }
   .date-row .weather:hover { background: rgba(10, 10, 20, 0.10); }
   .line-input { display: flex; flex-direction: column; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--line); }
@@ -916,6 +920,10 @@ function todayStr(lang) {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${days[d.getDay()]}`;
 }
+function todayInputValue() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 function shortDate(iso, lang) {
   const d = new Date(iso);
   const hh = String(d.getHours()).padStart(2,'0');
@@ -1368,6 +1376,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   const [lines, setLines] = useState(['', '', '']);
   const [weatherIdx, setWeatherIdx] = useState(0);
   const [shareOnSave, setShareOnSave] = useState(false);
+  const [entryDate, setEntryDate] = useState(todayInputValue());
 
   const [diaries, setDiaries] = useState([]);
   const [openEntries, setOpenEntries] = useState([]);
@@ -1430,13 +1439,19 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
   async function handleSave() {
     if (!canSave) return;
     const id = Date.now();
+    // entryDate(YYYY-MM-DD) + 현재 시각으로 createdAt 구성
+    const now = new Date();
+    const [yy, mm, dd] = entryDate.split('-').map(Number);
+    const dt = new Date(yy, mm - 1, dd, now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+    const createdAt = dt.toISOString();
     const entry = {
       id, mood, weatherIdx,
       lines: lines.map(l => l.trim()),
-      createdAt: new Date().toISOString(),
+      createdAt,
       shared: shareOnSave,
     };
-    setDiaries([entry, ...diaries]);
+    const newDiaries = [entry, ...diaries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    setDiaries(newDiaries);
 
     if (shareOnSave) {
       const openEntry = {
@@ -1444,10 +1459,10 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
         authorEmail: user.email,
         mood, weatherIdx,
         lines: entry.lines,
-        createdAt: entry.createdAt,
+        createdAt,
         reactions: {}, comments: [],
       };
-      const newOpen = [openEntry, ...openEntries];
+      const newOpen = [openEntry, ...openEntries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setOpenEntries(newOpen);
       saveOpen(newOpen);
       pantryPut({ entries: newOpen, updatedAt: Date.now() });
@@ -1459,6 +1474,7 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
     setMood(null);
     setLines(['', '', '']);
     setShareOnSave(false);
+    setEntryDate(todayInputValue());
   }
 
   function handleDelete(id) {
@@ -1625,7 +1641,15 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
 
           <section className={`write-card glass ${mood ? 'has-mood' : ''}`}>
             <div className="date-row">
-              <span className="today">{todayStr(lang)}</span>
+              <input
+                type="date"
+                className={`today${entryDate !== todayInputValue() ? ' past' : ''}`}
+                value={entryDate}
+                max={todayInputValue()}
+                onChange={e => setEntryDate(e.target.value || todayInputValue())}
+                aria-label="entry date"
+                title={lang === 'en' ? 'Pick a date (past dates OK)' : '날짜 선택 (지난 날짜도 OK)'}
+              />
               <select className="weather" value={weatherIdx} onChange={e => setWeatherIdx(Number(e.target.value))}>
                 {WEATHERS.map((w, i) => <option key={i} value={i}>{lang === 'en' ? w.en : w.ko}</option>)}
               </select>
