@@ -429,9 +429,40 @@
   .save-btn:disabled::before { opacity: 0; }
 
   /* ---------- List ---------- */
-  .list-title { display: flex; align-items: center; gap: 12px; margin: 36px 0 16px 4px; }
+  .list-title { display: flex; align-items: center; gap: 12px; margin: 36px 0 16px 4px; flex-wrap: wrap; }
   .list-title h2 { font-family: var(--font-ko); font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.6px; }
   .list-title .count { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #fff; background: var(--ink); padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px; }
+  .list-title .exports { margin-left: auto; display: flex; gap: 6px; }
+  .exports button {
+    border: 1.5px solid var(--line);
+    background: var(--surface-strong);
+    backdrop-filter: blur(8px);
+    padding: 6px 12px 6px 28px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.6px;
+    transition: all 0.22s cubic-bezier(.4, 1.4, .6, 1);
+    position: relative;
+  }
+  .exports button::before {
+    content: '↓';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-en);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .exports button:hover { background: var(--ink); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(10, 10, 20, 0.18); border-color: var(--ink); }
+  .exports button:hover::before { animation: arrowBob 0.6s ease-in-out infinite; }
+  @keyframes arrowBob { 0%, 100% { transform: translateY(-50%); } 50% { transform: translateY(-30%); } }
+  .exports button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+  .exports button:disabled:hover { background: var(--surface-strong); color: var(--ink); }
   .empty { text-align: center; padding: 56px 20px; color: var(--ink-soft); }
   .empty .empty-mark { font-family: var(--font-en); font-size: 64px; font-weight: 700; background: linear-gradient(135deg, var(--hot), var(--electric), var(--cyan)); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 14px; letter-spacing: -3px; animation: gradientShift 5s ease-in-out infinite; }
   .empty .l1 { font-family: var(--font-ko); font-size: 16px; font-weight: 700; color: var(--ink); }
@@ -668,6 +699,7 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script type="text/babel">
 const { useState, useEffect, useMemo } = React;
@@ -777,6 +809,7 @@ const I18N = {
     saveReady: '오늘의 마음 저장하기', saveNoLine: '한 줄이라도 적어주세요', saveNoMood: '먼저 마음을 골라주세요',
     toast: '저장됐어요', sharedToast: '오픈 공간에 공유됐어요',
     listTitle: '지나간 마음들', emptyMark: '∅',
+    exportPdf: 'PDF', exportXlsx: 'EXCEL',
     emptyLine1: '아직 적어둔 마음이 없어요', emptyLine2: '오늘의 세 줄, 가볍게 채워볼까요',
     openTitle: '오픈 공간', openSub: '익명으로 모이는 마음들',
     emptyOpen1: '아직 공유된 마음이 없어요', emptyOpen2: '오늘 일기를 처음 공유해보세요',
@@ -818,6 +851,7 @@ const I18N = {
     saveReady: "Save today's feelings", saveNoLine: 'Write at least one line', saveNoMood: 'Pick a mood first',
     toast: 'Saved', sharedToast: 'Shared to open space',
     listTitle: 'Past Moments', emptyMark: '∅',
+    exportPdf: 'PDF', exportXlsx: 'EXCEL',
     emptyLine1: 'No entries yet', emptyLine2: "Let's fill in today's three lines",
     openTitle: 'Open Space', openSub: 'Anonymous minds, gathered',
     emptyOpen1: 'No shared minds yet', emptyOpen2: 'Be the first to share today',
@@ -923,6 +957,211 @@ function todayStr(lang) {
 function todayInputValue() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function exportToXlsx(diaries, lang, t) {
+  if (!diaries.length) return;
+  if (typeof XLSX === 'undefined') {
+    alert(lang === 'en' ? 'Excel library not loaded yet, try again in a moment.' : 'Excel 라이브러리 로드 전이에요. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+  const headerDate = lang === 'en' ? 'Date' : '날짜';
+  const headerMood = lang === 'en' ? 'Mood' : '무드';
+  const headerWeather = lang === 'en' ? 'Weather' : '날씨';
+  const col1 = `${t.lines[0].emoji} ${t.lines[0].label}`;
+  const col2 = `${t.lines[1].emoji} ${t.lines[1].label}`;
+  const col3 = `${t.lines[2].emoji} ${t.lines[2].label}`;
+  const rows = diaries.map(d => {
+    const m = MOODS.find(x => x.id === d.mood) || {};
+    const w = WEATHERS[d.weatherIdx] || {};
+    return {
+      [headerDate]: shortDate(d.createdAt, lang),
+      [headerMood]: `${m.emoji || ''} ${lang === 'en' ? (m.en || '') : (m.ko || '')}`.trim(),
+      [headerWeather]: lang === 'en' ? (w.en || '') : (w.ko || ''),
+      [col1]: d.lines[0] || '',
+      [col2]: d.lines[1] || '',
+      [col3]: d.lines[2] || '',
+    };
+  });
+  const ws = XLSX.utils.json_to_sheet(rows, { header: [headerDate, headerMood, headerWeather, col1, col2, col3] });
+  ws['!cols'] = [{ wch: 24 }, { wch: 16 }, { wch: 12 }, { wch: 42 }, { wch: 42 }, { wch: 42 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, lang === 'en' ? 'Three Lines' : '오늘의 세 줄');
+  const stamp = new Date().toISOString().slice(0, 10);
+  XLSX.writeFile(wb, `three-line-diary-${stamp}.xlsx`);
+}
+
+function exportToPdf(diaries, lang, t, userEmail) {
+  if (!diaries.length) return;
+  const title = lang === 'en' ? 'Three Lines for Today' : '오늘의 세 줄';
+  const countLabel = lang === 'en' ? `${diaries.length} entries` : `${diaries.length}편`;
+  const stamp = new Date().toISOString().slice(0, 10);
+  const entryHtml = diaries.map(d => {
+    const m = MOODS.find(x => x.id === d.mood) || MOODS[0];
+    const w = WEATHERS[d.weatherIdx] || WEATHERS[0];
+    const moodPhrase = lang === 'en' ? `${m.moodLineEn} ${t.moodDaySuffix}` : `${m.moodLineKo} ${t.moodDaySuffix}`;
+    const linesHtml = d.lines.map((line, i) => line ? `
+      <div class="e-line">
+        <div class="e-label">${t.lines[i].emoji} ${escapeHtml(t.lines[i].label)}</div>
+        <div class="e-text">${escapeHtml(line)}</div>
+      </div>` : '').join('');
+    return `
+      <article class="entry" style="--mc:${m.color}; --me:${m.end};">
+        <div class="e-bar"></div>
+        <div class="e-head">
+          <div class="e-bubble">${m.emoji}</div>
+          <div class="e-meta">
+            <div class="e-date">${escapeHtml(shortDate(d.createdAt, lang))} · ${escapeHtml(lang === 'en' ? w.en : w.ko)}</div>
+            <div class="e-mood">${escapeHtml(moodPhrase)}</div>
+          </div>
+        </div>
+        ${linesHtml}
+      </article>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="${lang === 'en' ? 'en' : 'ko'}">
+<head>
+<meta charset="UTF-8" />
+<title>${escapeHtml(title)} · ${stamp}</title>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard Variable', 'Pretendard', system-ui, sans-serif;
+    color: #0A0A14;
+    padding: 32px 36px 64px;
+    max-width: 760px;
+    margin: 0 auto;
+    background: #FFFFFF;
+  }
+  header { margin-bottom: 24px; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #0A0A14; color: #fff;
+    padding: 4px 10px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 1.4px;
+    text-transform: uppercase; font-weight: 700;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 32px; font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+  h1 .accent {
+    background: linear-gradient(135deg, #FF1B6B, #3D5AFE, #00D9FF);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #6B6B7B; letter-spacing: 0.5px;
+  }
+  .entry {
+    border: 1px solid rgba(10,10,20,0.10);
+    border-radius: 16px;
+    padding: 18px 20px 16px;
+    margin: 14px 0;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .e-bar {
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--mc, #FF1B6B), var(--me, #C77DFF));
+  }
+  .e-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; padding-left: 6px; }
+  .e-bubble {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--mc, #FF1B6B), var(--me, #C77DFF));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .e-meta { flex: 1; }
+  .e-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.6px;
+  }
+  .e-mood { font-size: 12.5px; color: #6B6B7B; font-weight: 600; margin-top: 1px; }
+  .e-line {
+    padding: 6px 0 6px 6px;
+    border-top: 1px dashed rgba(10,10,20,0.08);
+    margin-top: 6px;
+  }
+  .e-line:first-of-type { border-top: none; margin-top: 0; }
+  .e-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: #6B6B7B;
+    font-weight: 700; letter-spacing: 0.6px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .e-text {
+    padding-left: 18px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #0A0A14;
+    font-weight: 500;
+  }
+  .foot {
+    margin-top: 28px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(10,10,20,0.12);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #9B9BA8;
+    letter-spacing: 0.6px;
+  }
+  @page { margin: 18mm 14mm; size: A4; }
+  @media print {
+    body { padding: 0; }
+    .entry { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="tag"><span>${lang === 'en' ? 'export · pdf' : 'export · pdf'}</span></div>
+    <h1>${escapeHtml(lang === 'en' ? 'Three lines' : '오늘의')} <span class="accent">${escapeHtml(lang === 'en' ? 'for today' : '세 줄')}</span></h1>
+    <div class="sub">${escapeHtml(userEmail || '')} · ${escapeHtml(countLabel)} · ${stamp}</div>
+  </header>
+  ${entryHtml}
+  <div class="foot">🌷 three-line-diary · choopermarket1.github.io/three-line-diary</div>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => { window.focus(); window.print(); }, 600);
+    });
+  </script>
+</body>
+</html>`;
+
+  const win = window.open('', '_blank', 'noopener,noreferrer');
+  if (!win) {
+    alert(lang === 'en' ? 'Pop-up blocked. Allow pop-ups for this site to download PDF.' : '팝업이 차단됐어요. 팝업 허용 후 다시 시도해주세요.');
+    return;
+  }
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
 }
 function shortDate(iso, lang) {
   const d = new Date(iso);
@@ -1705,6 +1944,22 @@ function DiaryApp({ user, onLogout, lang, setLang, onToast }) {
           <div className="list-title">
             <h2>{t.listTitle}</h2>
             <span className="count">{String(diaries.length).padStart(2, '0')}</span>
+            <div className="exports">
+              <button
+                onClick={() => exportToPdf(diaries, lang, t, user.email)}
+                disabled={diaries.length === 0}
+                title={lang === 'en' ? 'Download as PDF (browser print)' : 'PDF로 다운로드 (브라우저 인쇄)'}
+              >
+                {t.exportPdf}
+              </button>
+              <button
+                onClick={() => exportToXlsx(diaries, lang, t)}
+                disabled={diaries.length === 0}
+                title={lang === 'en' ? 'Download as Excel (.xlsx)' : '엑셀(.xlsx)로 다운로드'}
+              >
+                {t.exportXlsx}
+              </button>
+            </div>
           </div>
 
           {diaries.length === 0 ? (
