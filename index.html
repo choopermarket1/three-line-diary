@@ -1146,15 +1146,11 @@ function exportToPdf(diaries, lang, t, userEmail) {
   </header>
   ${entryHtml}
   <div class="foot">🌷 three-line-diary · choopermarket1.github.io/three-line-diary</div>
-  <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => { window.focus(); window.print(); }, 600);
-    });
-  <\/script>
+
 </body>
 </html>`;
 
-  const win = window.open('', '_blank', 'noopener,noreferrer');
+  const win = window.open('', '_blank');
   if (!win) {
     alert(lang === 'en' ? 'Pop-up blocked. Allow pop-ups for this site to download PDF.' : '팝업이 차단됐어요. 팝업 허용 후 다시 시도해주세요.');
     return;
@@ -1162,6 +1158,13 @@ function exportToPdf(diaries, lang, t, userEmail) {
   win.document.open();
   win.document.write(html);
   win.document.close();
+  // 외부에서 print 트리거 — 새 창 HTML에는 <script> 안 들어감
+  const triggerPrint = () => { try { win.focus(); win.print(); } catch (e) {} };
+  if (win.document.readyState === 'complete') {
+    setTimeout(triggerPrint, 600);
+  } else {
+    win.addEventListener('load', () => setTimeout(triggerPrint, 600));
+  }
 }
 function shortDate(iso, lang) {
   const d = new Date(iso);
